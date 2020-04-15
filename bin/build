@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+# ------------------------------------------------------------------------------
+# SETTINGS
+# ------------------------------------------------------------------------------
+
+set -e
+
+
+# ------------------------------------------------------------------------------
+# HELPERS
+# ------------------------------------------------------------------------------
+
+function _header {
+    header=$1
+
+    echo "-----------------------------------------------------------"
+    echo "$header"
+    echo -e "-----------------------------------------------------------\n"
+}
+
+function _subheader {
+    subheader=$1
+    length=${#subheader}
+
+    echo "$subheader"
+    printf -- "-%.0s" $(seq $length)
+    echo "" # newline
+}
+
+function _confirm {
+    prompt=$1
+
+    while true; do
+        read -p "$prompt (y/n): " uservar
+
+        case "$uservar" in
+            y|Y|yes|Yes|YES)
+                return 0
+                ;;
+
+            n|N|no|No|NO)
+                return 1
+                ;;
+        esac
+    done
+}
+
+
+# ------------------------------------------------------------------------------
+# MAIN
+# ------------------------------------------------------------------------------
+
+# Create dist dir
+# ---------------
+dist="$(pwd)/dist/"
+[[ ! -d "$dist" ]] && mkdir "$dist"
+
+
+# Update submodules
+# -----------------
+_header "UPDATE: SUBMODULES"
+
+echo -n "Updating submodules from remotes..."
+git submodule update --remote --merge --quiet
+echo -e "done\n\n"
+
+_subheader "Submodule Status (check hashes)"
+git submodule status
+echo -e "\n"
+
+_subheader "Submodule Summary"
+git submodule summary
+
+_confirm "Proceed w/ build?"
+echo -e "\n"
+
+
+# Build Website
+# -------------
+_header "BUILD: KAOS WEBSITE"
+cd src/kaos-website
+
+# TODO: npm install
+# npm ci
+
+npm run build
+
+echo -n "Copying dist folder contents..."
+cp -r .vuepress/dist/* "$dist"
+echo "Done"
+
+echo -e "\n"
+cd -
+
+
+# Build Canvas
+# ------------
+_header "BUILD: KAOS CANVAS"
+cd src/kaos-canvas
+
+# TODO: npm install
+# npm ci
+
+npm run build
+
+echo -n "Copying index.js..."
+cp -r dist/index.js "$dist"
+echo "Done"
+
+echo -e "\n"
+cd -
