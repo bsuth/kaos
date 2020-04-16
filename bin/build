@@ -62,7 +62,7 @@ dist="$(pwd)/dist/"
 _header "UPDATE: SUBMODULES"
 
 echo -n "Updating submodules from remotes..."
-git submodule update --init --recursive --quiet
+git submodule update --init --remote --merge --quiet
 echo -e "done\n\n"
 
 _subheader "Submodule Status (check hashes)"
