@@ -62,7 +62,7 @@ dist="$(pwd)/dist/"
 _header "UPDATE: SUBMODULES"
 
 echo -n "Updating submodules from remotes..."
-git submodule update --remote --merge --quiet
+git submodule update --init --recursive --quiet
 echo -e "done\n\n"
 
 _subheader "Submodule Status (check hashes)"
@@ -81,13 +81,16 @@ echo -e "\n"
 _header "BUILD: KAOS WEBSITE"
 cd src/kaos-website
 
-# TODO: npm install
-# npm ci
+if [[ ! -d node_modules ]]; then
+    _subheader "No node_modules/ detected. Running \`npm ci\`."
+    npm ci
+fi
 
+_subheader "Running \`npm build\`."
 npm run build
 
 echo -n "Copying dist folder contents..."
-cp -r .vuepress/dist/* "$dist"
+cp -r dist/* "$dist"
 echo "Done"
 
 echo -e "\n"
@@ -99,13 +102,16 @@ cd -
 _header "BUILD: KAOS CANVAS"
 cd src/kaos-canvas
 
-# TODO: npm install
-# npm ci
+if [[ ! -d node_modules ]]; then
+    _subheader "No node_modules/ detected. Running \`npm ci\`."
+    npm ci
+fi
 
+_subheader "Running \`npm build\`."
 npm run build
 
 echo -n "Copying index.js..."
-cp -r dist/index.js "$dist"
+cp -r dist/index.js "$dist/canvas.js"
 echo "Done"
 
 echo -e "\n"
