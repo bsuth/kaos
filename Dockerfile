@@ -1,18 +1,20 @@
 # Use an official Node runtime as a parent image
 FROM node:current-slim
 
+# Set the working directory.
 WORKDIR /app
 
+# Copy the dist files
+COPY dist .
+
+# Copy package.json
 COPY package.json .
 
+# Install dependencies
 RUN npm install
-
-COPY . .
-
-RUN npm run build
 
 # Make port available to outside world
 EXPOSE 5000
 
-# Run index.js when the container launches
-CMD ["npm", "start"]
+# Run server when the container launches
+CMD ["node", "server.js"]
