@@ -122,15 +122,10 @@ cd -
 # Update Server
 # -------------
 _header "UPDATE: KAOS SERVER"
-cd src/kaos-newserver
-
-if [[ ! -d node_modules ]]; then
-    _subheader "No node_modules/ detected. Installing dependencies."
-    [[ -f package-lock.json ]] && npm ci || npm install
-fi
+cd src/kaos-server
 
 echo -n "Copying index.js..."
-cp -r src/index.js "$dist/server.js"
+cp -r index.js "$dist/server.js"
 echo "Done"
 
 echo -e "\n"
