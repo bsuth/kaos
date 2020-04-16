@@ -1,6 +1,3 @@
-[submodule "src/kaos-server"]
-	path = src/kaos-server
-	url = https://github.com/kaos-game/kaos-server
 [submodule "src/kaos-canvas"]
 	path = src/kaos-canvas
 	url = https://github.com/kaos-game/kaos-canvas

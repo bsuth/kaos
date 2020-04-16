@@ -9,11 +9,14 @@
   "license": "GPL-3.0",
   "homepage": "https://kagi-game.app",
   "scripts": {
-    "update": "git submodule update --remote --merge",
-    "build": "./bin/build || true"
+    "build": "./bin/build || true",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kaos-game/kaos.git"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }

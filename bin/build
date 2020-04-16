@@ -51,10 +51,11 @@ function _confirm {
 # MAIN
 # ------------------------------------------------------------------------------
 
-# Create dist dir
+# Create/clean dist dir
 # ---------------
-dist="$(pwd)/dist/"
-[[ ! -d "$dist" ]] && mkdir "$dist"
+dist="$(pwd)/dist"
+[[ ! -d "$dist" ]] && mkdir -p "$dist"
+rm -rf $dist/*
 
 
 # Update submodules
@@ -82,15 +83,15 @@ _header "BUILD: KAOS WEBSITE"
 cd src/kaos-website
 
 if [[ ! -d node_modules ]]; then
-    _subheader "No node_modules/ detected. Running \`npm ci\`."
-    npm ci
+    _subheader "No node_modules/ detected. Installing dependencies."
+    [[ -f package-lock.json ]] && npm ci || npm install
 fi
 
 _subheader "Running \`npm build\`."
 npm run build
 
 echo -n "Copying dist folder contents..."
-cp -r dist/* "$dist"
+cp -r dist "$dist/serve"
 echo "Done"
 
 echo -e "\n"
@@ -103,15 +104,33 @@ _header "BUILD: KAOS CANVAS"
 cd src/kaos-canvas
 
 if [[ ! -d node_modules ]]; then
-    _subheader "No node_modules/ detected. Running \`npm ci\`."
-    npm ci
+    _subheader "No node_modules/ detected. Installing dependencies."
+    [[ -f package-lock.json ]] && npm ci || npm install
 fi
 
 _subheader "Running \`npm build\`."
 npm run build
 
 echo -n "Copying index.js..."
-cp -r dist/index.js "$dist/canvas.js"
+cp -r dist/index.js "$dist/serve/canvas.js"
+echo "Done"
+
+echo -e "\n"
+cd -
+
+
+# Update Server
+# -------------
+_header "UPDATE: KAOS SERVER"
+cd src/kaos-newserver
+
+if [[ ! -d node_modules ]]; then
+    _subheader "No node_modules/ detected. Installing dependencies."
+    [[ -f package-lock.json ]] && npm ci || npm install
+fi
+
+echo -n "Copying index.js..."
+cp -r src/index.js "$dist/server.js"
 echo "Done"
 
 echo -e "\n"
