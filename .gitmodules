@@ -1,6 +1,0 @@
-[submodule "src/kaos-canvas"]
-	path = src/kaos-canvas
-	url = https://github.com/kaos-game/kaos-canvas
-[submodule "src/kaos-website"]
-	path = src/kaos-website
-	url = https://github.com/kaos-game/kaos-website
