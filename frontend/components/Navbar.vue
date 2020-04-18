@@ -58,7 +58,8 @@ nav ul li a {
     }
 }
 
-$colors: red, purple, green, blue;
+// Use the four colors from the game.
+$colors: #f55742, #7842f5, #76e635, #4bb6d6;
 @for $i from 1 through length($colors) {
     // Select every fourth child, but skip the first one.
     nav ul li:nth-child(4n + #{$i + 1}) a {
