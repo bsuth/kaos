@@ -24,13 +24,13 @@ const path = require('path');
 // -----------------------------------------------------------------------------
 
 const app = express();
-const PORT = 5000;
-const DIST = path.join(__dirname, 'serve');
+const PORT = 80;
+const DIST = path.join(__dirname, 'public');
 
 
 // -----------------------------------------------------------------------------
 // MAIN
 // -----------------------------------------------------------------------------
 
-app.use(express.static(DIST));
+// app.use(express.static(DIST));
 app.listen(PORT, () => console.log('Started server'));

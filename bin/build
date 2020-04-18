@@ -72,7 +72,7 @@ _subheader "Running \`npm build\`."
 npm run build
 
 echo -n "Copying dist folder contents..."
-cp -r dist "$dist/serve"
+cp -r dist "$dist/public"
 echo "Done"
 
 echo -e "\n"
@@ -93,7 +93,7 @@ _subheader "Running \`npm build\`."
 npm run build
 
 echo -n "Copying index.js..."
-cp -r dist/index.js "$dist/serve/canvas.js"
+cp -r dist/index.js "$dist/public/canvas.js"
 echo "Done"
 
 echo -e "\n"
