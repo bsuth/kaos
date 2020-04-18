@@ -9,6 +9,8 @@
   "license": "GPL-3.0",
   "homepage": "https://kagi-game.app",
   "scripts": {
+    "build:frontend": "webpack",
+    "dev": "webpack-dev-server --env.development",
     "build": "./bin/build || true",
     "stage": "./bin/stage || true",
     "subff": "./bin/subff || true",
@@ -21,5 +23,20 @@
   },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.5.2",
+    "html-webpack-plugin": "^4.2.0",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.1",
+    "vue-router": "^3.1.6",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   }
 }
