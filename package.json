@@ -9,12 +9,10 @@
   "license": "GPL-3.0",
   "homepage": "https://kagi-game.app",
   "scripts": {
-    "build:frontend": "webpack",
     "dev": "webpack-dev-server --env.development",
-    "build": "./bin/build || true",
+    "build": "webpack",
     "stage": "./bin/stage || true",
-    "subff": "./bin/subff || true",
-    "serve": "node dist/server.js",
+    "serve": "node backend/index.js",
     "start": "npm run build; npm run serve"
   },
   "repository": {
