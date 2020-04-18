@@ -58,6 +58,11 @@ dist="$(pwd)/dist"
 rm -rf $dist/*
 
 
+echo -n "Updating submodules from remotes..."
+git submodule update --init --remote --merge --quiet
+echo -e "done\n\n"
+
+
 # Build Website
 # -------------
 _header "BUILD: KAOS WEBSITE"

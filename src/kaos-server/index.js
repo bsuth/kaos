@@ -32,5 +32,5 @@ const DIST = path.join(__dirname, 'public');
 // MAIN
 // -----------------------------------------------------------------------------
 
-// app.use(express.static(DIST));
+app.use(express.static(DIST));
 app.listen(PORT, () => console.log('Started server'));
