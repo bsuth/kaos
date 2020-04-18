@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+# ------------------------------------------------------------------------------
+# SETTINGS
+# ------------------------------------------------------------------------------
+
+set -e
+
+
+# ------------------------------------------------------------------------------
+# HELPERS
+# ------------------------------------------------------------------------------
+
+function _header {
+    header=$1
+
+    echo "-----------------------------------------------------------"
+    echo "$header"
+    echo -e "-----------------------------------------------------------\n"
+}
+
+function _subheader {
+    subheader=$1
+    length=${#subheader}
+
+    echo "$subheader"
+    printf -- "-%.0s" $(seq $length)
+    echo "" # newline
+}
+
+function _confirm {
+    prompt=$1
+
+    while true; do
+        read -p "$prompt (y/n): " uservar
+
+        case "$uservar" in
+            y|Y|yes|Yes|YES)
+                return 0
+                ;;
+
+            n|N|no|No|NO)
+                return 1
+                ;;
+        esac
+    done
+}
+
+function _update_submodule() {
+    submodule="$1"
+
+    _subheader "Updating $submodule"
+    cd "src/$submodule"
+
+    msg="$submodule>>>$(git rev-parse HEAD)"
+    [[ -z $commitmsg ]] && commitmsg="$msg" || commitmsg="$commitmsg:$msg"
+    echo "Fast forwarded $submodule: $msg"
+
+    cd -
+    git add "src/$submodule"
+}
+
+
+# ------------------------------------------------------------------------------
+# MAIN
+# ------------------------------------------------------------------------------
+
+# Deploy to stage server
+# ----------------------
+_header "PUSHING TO STAGE"
+
+echo -n "Updating submodules from remotes..."
+git submodule update --init --remote --merge --quiet
+echo -e "done\n\n"
+
+if _confirm "Build project?"; then
+    _header "BUILDING"
+    npm run build
+fi
+
+_header "DOCKER BUILD"
+npm run build

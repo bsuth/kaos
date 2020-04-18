@@ -58,25 +58,6 @@ dist="$(pwd)/dist"
 rm -rf $dist/*
 
 
-# Update submodules
-# -----------------
-_header "UPDATE: SUBMODULES"
-
-echo -n "Updating submodules from remotes..."
-git submodule update --init --remote --merge --quiet
-echo -e "done\n\n"
-
-_subheader "Submodule Status (check hashes)"
-git submodule status
-echo -e "\n"
-
-_subheader "Submodule Summary"
-git submodule summary
-
-_confirm "Proceed w/ build?"
-echo -e "\n"
-
-
 # Build Website
 # -------------
 _header "BUILD: KAOS WEBSITE"
@@ -122,10 +103,14 @@ cd -
 # Update Server
 # -------------
 _header "UPDATE: KAOS SERVER"
-cd src/kaos-server
+
+if [[ ! -d node_modules ]]; then
+    _subheader "No node_modules/ detected. Installing dependencies."
+    [[ -f package-lock.json ]] && npm ci || npm install
+fi
 
 echo -n "Copying index.js..."
-cp -r index.js "$dist/server.js"
+cp -r src/kaos-server/index.js "$dist/server.js"
 echo "Done"
 
 echo -e "\n"

@@ -10,7 +10,10 @@
   "homepage": "https://kagi-game.app",
   "scripts": {
     "build": "./bin/build || true",
-    "serve": "node dist/server.js"
+    "stage": "./bin/stage || true",
+    "subff": "./bin/subff || true",
+    "serve": "node dist/server.js",
+    "start": "npm run build; npm run serve"
   },
   "repository": {
     "type": "git",
