@@ -24,7 +24,7 @@ const path = require('path');
 // -----------------------------------------------------------------------------
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 8081;
 const DIST = path.join(__dirname, 'public');
 
 
