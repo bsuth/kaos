@@ -11,7 +11,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 let getConfig = (data) => ({
     target: 'web',
     mode: data.mode,
-    entry: [ './src/app.js' ],
+    entry: [ './frontend/app.js' ],
 
     output: {
         path: path.resolve(__dirname, data.dist),
@@ -20,9 +20,6 @@ let getConfig = (data) => ({
 
     resolve: {
         extensions: ['.js', '.vue'],
-        alias: {
-            src: path.resolve(__dirname, 'src'),
-        },
     },
 
     module: {
@@ -47,11 +44,11 @@ let getConfig = (data) => ({
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'src/index.html'
+            template: 'frontend/index.html'
         }),
         new VueLoaderPlugin(),
         new CopyWebpackPlugin([
-            { from: 'src/static' }
+            { from: 'frontend/static' }
         ]),
     ],
 
