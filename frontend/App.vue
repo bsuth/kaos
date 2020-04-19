@@ -25,38 +25,3 @@ export default {
     },
 };
 </script>
-
-
-<style lang='scss'>
-* {
-    box-sizing: border-box;
-}
-
-html, body {
-    font-family: 'Raleway', arial;
-    font-size: 18px;
-
-    margin: 0;
-    padding: 0;
-}
-
-a {
-    text-decoration: none;
-}
-
-canvas {
-    width: 100%;
-    height: 500px;
-
-    position: absolute;
-    z-index: -1;
-
-    background: #181818;
-}
-
-.text {
-    background: #303030;
-    border-top: 10px solid black;
-    padding: 0 10% 0 10%;
-}
-</style>
