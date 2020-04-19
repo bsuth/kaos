@@ -28,7 +28,6 @@ export const canvas = document.getElementById('canvas');
 
 export const ctx = canvas.getContext('2d');
 
-
 // -----------------------------------------------------------------------------
 // GAME LOOP
 // -----------------------------------------------------------------------------
@@ -40,7 +39,7 @@ function gameloop(tFrame) {
     if (!gameMode.state.tStart)
         gameMode.state.tStart = tFrame;
     else
-        gameMode.player.state.score = parseInt((tFrame - gameMode.state.tStart) / 10);
+        gameMode.player.score = parseInt((tFrame - gameMode.state.tStart) / 10);
 
     gameMode.update();
     gameMode.draw();
@@ -54,7 +53,18 @@ function gameloop(tFrame) {
 
 export function run()
 {
-    gameMode.addListeners();
+    // -------------------------------------------------------------------------
+    // CANVAS INIT
+    // -------------------------------------------------------------------------
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    document.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
     gameMode.orbGenerator.init();
 
     gameloop();

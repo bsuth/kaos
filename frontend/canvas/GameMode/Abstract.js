@@ -15,7 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as settings from './settings';
+import { ctx } from '../game';
+import * as settings from '../settings';
 
 // -----------------------------------------------------------------------------
 // GAME ABSTRACT BASE CLASS

@@ -19,16 +19,4 @@ import * as game from './game';
 import * as player from './player';
 
 
-// -----------------------------------------------------------------------------
-// CANVAS INIT
-// -----------------------------------------------------------------------------
-
-game.canvas.width = window.innerWidth;
-game.canvas.height = window.innerHeight;
-
-document.addEventListener('resize', () => {
-    game.canvas.width = window.innerWidth;
-    game.canvas.height = window.innerHeight;
-});
-
 game.run();
