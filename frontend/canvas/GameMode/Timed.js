@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as settings from './settings';
+import * as settings from '../settings';
 import GameModeAbstract from './Abstract';
 
 // -----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ export default class Timed extends GameModeAbstract
         // Check collisions
         if (settings.DEVELOPMENT.GODMODE == 0) {
             for (let orb of this.orbGenerator.orbs) {
-                if (orb.color == this.player.state.color)
+                if (orb.color == this.player.color)
                     continue;
 
                 if (this.player.checkCollision(orb))
