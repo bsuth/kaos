@@ -16,6 +16,5 @@ export default {
 <style lang='scss' scoped>
 #about {
     color: white;
-
 }
 </style>

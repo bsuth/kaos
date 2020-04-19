@@ -53,4 +53,10 @@ canvas {
 
     background: #181818;
 }
+
+.text {
+    background: #303030;
+    border-top: 10px solid black;
+    padding: 0 10% 0 10%;
+}
 </style>
