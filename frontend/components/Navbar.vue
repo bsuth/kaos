@@ -1,11 +1,11 @@
 <template>
     <nav>
         <ul>
-            <li><img src='LogoWhite.svg'/></li>
+            <li><object data='LogoWhite.svg' height='65' width='65' type='image/svg+xml'></object></li>
             <li><router-link to='/'>HOME</router-link></li>
             <li><router-link to='/score'>SCORE</router-link></li>
             <li><router-link to='/about'>ABOUT</router-link></li>
-            <li><a href='https://github.com/kaos-game'>GITHUB</a></li>
+            <li><a class='external' href='https://github.com/kaos-game'>GITHUB</a></li>
         </ul>
     </nav>
 </template>
@@ -55,6 +55,12 @@ nav ul li a {
     &:hover::before {
         transform: scaleX(1);
         transform-origin: bottom left;
+    }
+
+    &.external {
+        &::after {
+            content: '↗';
+        }
     }
 }
 
