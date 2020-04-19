@@ -19,7 +19,7 @@ import { canvas, ctx } from './game';
 import * as settings from './settings';
 
 // -----------------------------------------------------------------------------
-// FUNCTIONS
+// HELPER FUNCTIONS
 // -----------------------------------------------------------------------------
 
 function randInt(max)
@@ -36,8 +36,11 @@ function randRange(min, max)
 // -----------------------------------------------------------------------------
 // ORB GENERATOR CLASS
 // -----------------------------------------------------------------------------
-export class OrbGenerator {
-    constructor() {
+
+export class OrbGenerator
+{
+    constructor()
+    {
         this.orbs = [];
     }
 

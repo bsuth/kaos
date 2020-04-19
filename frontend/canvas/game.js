@@ -18,6 +18,7 @@
 import * as orbGenerator from './orbGenerator';
 import * as player from './player';
 import * as settings from './settings';
+import Timed from './GameMode/Timed';
 
 // -----------------------------------------------------------------------------
 // GAME (GLOBALS)
@@ -27,106 +28,6 @@ export const canvas = document.getElementById('canvas');
 
 export const ctx = canvas.getContext('2d');
 
-// -----------------------------------------------------------------------------
-// GAME ABSTRACT BASE CLASS
-// -----------------------------------------------------------------------------
-
-class GameModeAbstract {
-    constructor(player, orbGenerator) 
-    {
-        this.player = player;
-        this.orbGenerator = orbGenerator;
-
-        this.state = {
-            gameover: false,
-        };
-    }
-
-    addListeners()
-    {
-        let { activeKeyIds, restoreKeyIds } = this.player.state;
-
-        document.addEventListener('keydown', e => {
-            if (e.key in settings.KEYMAP) {
-                e.preventDefault();
-                // register the pressed key.
-                let pressedKeyId = settings.KEYMAP[e.key];
-                activeKeyIds[pressedKeyId] = true;
-                // delete any negated keys if they're being pressed.
-                for (let id of settings.ACTIONS[pressedKeyId].negateIds) {
-                    if (activeKeyIds[id]) 
-                        restoreKeyIds[id] = true;
-                    delete activeKeyIds[id];
-                }
-            }
-        });
-
-        document.addEventListener('keyup', e => {
-            if (e.key in settings.KEYMAP) {
-                e.preventDefault();
-                let releasedKeyId = settings.KEYMAP[e.key];
-                delete restoreKeyIds[releasedKeyId];
-                for (let id of settings.ACTIONS[releasedKeyId].negateIds) {
-                    if (id in restoreKeyIds) 
-                        activeKeyIds[id] = true;
-                }
-                delete activeKeyIds[releasedKeyId];
-            }
-        });
-    }
-
-    draw()
-    {
-        throw "A game mode object must implement a draw() method";
-    }
-
-    update()
-    {
-        throw "A game mode object must implement a update() method";
-    }
-}
-
-// -----------------------------------------------------------------------------
-// TIMED GAME MODE
-// -----------------------------------------------------------------------------
-
-class Timed extends GameModeAbstract
-{
-    constructor(player, orbGenerator)
-    {
-        super(player, orbGenerator);
-    }
-
-    draw()
-    {
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw this.player and HUD.
-        this.player.draw();
-        this.player.drawHUD();
-
-        // Draw orb
-        this.orbGenerator.draw();
-    }
-
-    update()
-    {
-        this.player.update();
-        this.orbGenerator.update();
-
-        // Check collisions
-        if (settings.DEVELOPMENT.GODMODE == 0) {
-            for (let orb of this.orbGenerator.orbs) {
-                if (orb.color == this.player.state.color)
-                    continue;
-
-                if (this.player.checkCollision(orb))
-                    this.state.gameover = true;
-            }
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // GAME LOOP

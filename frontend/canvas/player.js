@@ -25,63 +25,107 @@ import * as settings from './settings';
 export class Player { 
     constructor()
     {
-        this.state = {
+        this.activeKeys = {};
+        this.restoreKeys = {};
+
+        this.color = 0;
+        this.score = 0;
+
+        this.geo = {
             x1: canvas.width / 2,
             y1: canvas.height / 2,
             x2: canvas.width / 2 + settings.PLAYER_LENGTH,
             y2: canvas.height / 2,
-
-            activeKeyIds: {}, 
-            restoreKeyIds: {},
-            color: 0,
-
-            score: 0,
         };
     
         this.cache = {
-            minX: this.state.x1,
-            maxX: this.state.x2,
-            minY: this.state.y1,
-            maxY: this.state.y2,
+            minX: this.geo.x1,
+            maxX: this.geo.x2,
+            minY: this.geo.y1,
+            maxY: this.geo.y2,
 
             slope: 0,
             intercept: 0,
         };
+
+        this.keydown = this.keydown.bind(this);
+        this.keyup = this.keyup.bind(this);
+
+        document.addEventListener('keydown', this.keydown);
+        document.addEventListener('keyup', this.keyup);
+    }
+
+    destructor()
+    {
+        document.removeEventListener('keydown', this.keydown);
+        document.removeEventListener('keyup', this.keyup);
     }
 
     // -------------------------------------------------------------------------
-    // LOOP FUNCTIONS
+    // EVENT LISTENERS
+    // -------------------------------------------------------------------------
+
+    keydown(event) {
+        if (event.key in settings.KEYMAP) {
+            event.preventDefault();
+            let pressedKeyId = settings.KEYMAP[event.key];
+
+            for (let id of settings.ACTIONS[pressedKeyId].negateIds) {
+                if (id in this.activeKeys) {
+                    this.restoreKeys[id] = { pressedKeyId: true };
+                    delete this.activeKeys[id];
+                } else if (id in this.restoreKeys) {
+                    this.restoreKeys[id][pressedKeyId] = true;
+                }
+            }
+
+            this.activeKeys[pressedKeyId] = true;
+        }
+    }
+
+    keyup(event) {
+        if (event.key in settings.KEYMAP) {
+            event.preventDefault();
+            let releasedKeyId = settings.KEYMAP[event.key];
+
+            for (let [keyId, blockingKeys] of Object.entries(this.restoreKeys)) {
+                delete blockingKeys[releasedKeyId];
+
+                if (blockingKeys.length == 0) {
+                    delete this.restoreKeys[keyId];
+                    this.activeKeys[keyId] = true;
+                }
+            }
+
+            delete (releasedKeyId in this.activeKeys) ?
+                restoreKeys[releasedKeyId] : activeKeys[releasedKeyId];
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // DRAW FUNCTIONS
     // -------------------------------------------------------------------------
 
     draw()
     {
         ctx.lineWidth = settings.PLAYER_WIDTH;
-        ctx.strokeStyle = settings.COLORS[this.state.color];
+        ctx.strokeStyle = settings.COLORS[this.color];
 
         ctx.beginPath();
-        ctx.moveTo(this.state.x1, this.state.y1);
-        ctx.lineTo(this.state.x2, this.state.y2);
+        ctx.moveTo(this.geo.x1, this.geo.y1);
+        ctx.lineTo(this.geo.x2, this.geo.y2);
         ctx.stroke();
     }
 
-    drawHUD() {
-        // Draw score
-        ctx.fillStyle = "white";
-        ctx.font = "30px Arial";
-        ctx.fillText(this.state.score, 30, 25); 
-
-        // Draw next color when spacebar is pressed.
-        ctx.beginPath();
-        ctx.rect( 5, 5, 20, 20);
-        ctx.fillStyle = settings.COLORS[(this.state.color + 1) % 4];
-        ctx.fill();
-    }
+    // -------------------------------------------------------------------------
+    // UPDATE FUNCTIONS
+    // -------------------------------------------------------------------------
 
     checkCollision(orb)
     {
         let { x, y } = orb;
         let { slope, intercept } = this.cache;
-        let { x1, y1, x2, y2 } = this.state;
+        let { x1, y1, x2, y2 } = this.geo;
 
         // Check endpoints
         if (x + settings.ORB_RADIUS < this.cache.minX)
@@ -95,12 +139,14 @@ export class Player {
 
         // Distance from center of circle to line squared.
         let d = (y - slope * x - intercept)**2 / (slope**2 + 1);
+
         if (isNaN(d)) {
             // Calculate d via the endpoints of the line.
             let dx = x2 - x1;
             let dy = y2 - y1;
             d = (dy * x - dx * y + x2 * y1 - y2 * x1)**2 / (dy**2 + dx**2);
         }
+
         return d < settings.ORB_RADIUS_SQUARE;
     }
 
@@ -110,14 +156,14 @@ export class Player {
         this.updateCache(); 
 
         // Process keys
-        for (let keyId in this.state.activeKeyIds) {
+        for (let keyId in this.activeKeys) {
             settings.ACTIONS[keyId].callback();  
         }
     }
 
     updateCache()
     {
-        let { x1, x2, y1, y2 } = this.state;
+        let { x1, x2, y1, y2 } = this.geo;
 
         // Mins + maxs
         if (x1 < x2) {
@@ -156,11 +202,11 @@ export class Player {
             Math.min(dy, canvas.height - this.cache.maxY);
 
         // Update player position
-        this.state.x1 += dx;
-        this.state.y1 += dy;
+        this.geo.x1 += dx;
+        this.geo.y1 += dy;
 
-        this.state.x2 += dx;
-        this.state.y2 += dy;
+        this.geo.x2 += dx;
+        this.geo.y2 += dy;
     }
 
     rotate(theta)
@@ -168,7 +214,7 @@ export class Player {
         let sin = Math.sin(theta);
         let cos = Math.cos(theta);
         
-        let { x1, y1, x2, y2 } = this.state;
+        let { x1, y1, x2, y2 } = this.geo;
 
         // Use center of line as origin
         let originX = (x1 + x2) / 2;
@@ -181,9 +227,9 @@ export class Player {
         y2 -= originY;
 
         // Apply rotation + translate back
-        this.state.x1 = originX + (x1 * cos - y1 * sin);
-        this.state.y1 = originY + (x1 * sin + y1 * cos);
-        this.state.x2 = originX + (x2 * cos - y2 * sin);
-        this.state.y2 = originY + (x2 * sin + y2 * cos);
+        this.geo.x1 = originX + (x1 * cos - y1 * sin);
+        this.geo.y1 = originY + (x1 * sin + y1 * cos);
+        this.geo.x2 = originX + (x2 * cos - y2 * sin);
+        this.geo.y2 = originY + (x2 * sin + y2 * cos);
     }
 };
