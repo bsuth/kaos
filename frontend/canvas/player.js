@@ -97,8 +97,9 @@ export class Player {
                 }
             }
 
-            delete (releasedKeyId in this.activeKeys) ?
-                restoreKeys[releasedKeyId] : activeKeys[releasedKeyId];
+            (releasedKeyId in this.activeKeys) ? 
+                delete this.activeKeys[releasedKeyId] :
+                delete this.restoreKeys[releasedKeyId];
         }
     }
 
