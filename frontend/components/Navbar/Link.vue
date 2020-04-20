@@ -46,8 +46,8 @@ $colors: #f55742, #7842f5, #76e635, #4bb6d6;
 }
 
 @for $i from 1 through length($colors) {
-    .navbar-link:nth-child(4n + #{$i + 1}) {
-        &::before { background: nth($colors, $i); }
+    li:nth-child(4n + #{$i + 1}) .navbar-link::before {
+        background: nth($colors, $i);
     }
 }
 </style>
