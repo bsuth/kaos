@@ -7,8 +7,8 @@
 
 
 <script>
-import GameMenu from 'components/GameMenu.vue';
-import GameModes from 'components/GameModes.vue';
+import GameMenu from 'components/GameMenu';
+import GameModes from 'components/GameModes';
 
 export default {
     components: {
@@ -26,5 +26,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    * { margin: 0 50px; }
 }
 </style>

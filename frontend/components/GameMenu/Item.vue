@@ -1,50 +1,44 @@
 <template>
     <li>
-        <button>
-            <div class='gameMenu-icon'></div>
-            <div class='gameMenu-divider'></div>
+        <UnderlineWrapper>
             <span>{{ label }}</span>
-        </button>
+        </UnderlineWrapper>
     </li>
 </template>
 
 
 <script>
-export default {
-    props: [ 'label', ],
+import UnderlineWrapper from 'components/UnderlineWrapper';
 
-    mounted() {
-        let playButton = document.getElementById('play');
-    }
+export default {
+    props: [ 'label' ],
+    components: { UnderlineWrapper },
 }
 </script>
 
 
 <style lang='scss' scoped>
-button {
+$colors: #f55742, #7842f5, #76e635, #4bb6d6;
+
+li {
     width: 200px;
-    height: 70px;
-    margin: 10px;
+    margin: 50px 0;
 
-    display: flex;
-    align-items: center;
-
-    color: black;
-    border-width: 0;
-    border-radius: 20px;
+    color: white;
+    background: none;
+    border: none;
 
     font-size: 20px;
 
-    div { height: 100%; }
+    transition: transform 0.25s ease-out;
+    transform-origin: left;
+
+    &:hover { transform: scale(1.5); }
 }
 
-.gameMenu-icon {
-    width: 25%;
-}
-
-.gameMenu-divider {
-    width: 3px;
-    margin: 0 20px 0 10px;
-    background: #101010;
+@for $i from 1 through length($colors) {
+    li:nth-child(4n + #{$i}) .underlineWrapper::before {
+        background: nth($colors, $i);
+    }
 }
 </style>

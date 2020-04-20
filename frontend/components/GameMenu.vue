@@ -6,7 +6,7 @@
 
 
 <script>
-import Item from './GameMenu/Item.vue';
+import Item from './GameMenu/Item';
 
 export default {
     components: {
