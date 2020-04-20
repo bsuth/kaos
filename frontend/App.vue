@@ -1,21 +1,23 @@
 <template>
     <div id='app'>
         <Navbar />
-        <canvas id='canvas'></canvas>
         <router-view></router-view>
+        <Footer />
     </div>
 </template>
 
 
 <script>
 import router from './router';
-import Navbar from './components/Navbar.vue';
+import Navbar from 'components/Navbar.vue';
+import Footer from 'components/Footer.vue';
 
 export default {
     router: router,
 
     components: {
         Navbar,
+        Footer,
     },
 
     mounted() {
@@ -25,3 +27,12 @@ export default {
     },
 };
 </script>
+
+
+<style lang='scss'>
+#app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+</style>

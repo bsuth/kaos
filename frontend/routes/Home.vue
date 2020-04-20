@@ -1,16 +1,19 @@
 <template>
     <div id='home'>
         <GameMenu />
+        <GameModes />
     </div>
 </template>
 
 
 <script>
 import GameMenu from 'components/GameMenu.vue';
+import GameModes from 'components/GameModes.vue';
 
 export default {
     components: {
         GameMenu,
+        GameModes,
     },
 }
 </script>
@@ -18,8 +21,10 @@ export default {
 
 <style lang='scss' scoped>
 #home {
+    height: 100%;
+
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 </style>

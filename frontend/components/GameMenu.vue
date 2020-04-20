@@ -18,6 +18,7 @@ export default {
             items: [
                 { label: 'PLAY', },
                 { label: 'SETTINGS', },
+                { label: 'HOW TO PLAY', },
             ],
         }
     },
@@ -30,14 +31,7 @@ export default {
 
 
 <style lang='scss' scoped>
-button {
-    width: 200px;
-    margin: 10px;
-    padding: 20px 0;
+ul {
 
-    color: black;
-    border-radius: 20px;
-
-    font-size: 20px;
 }
 </style>
