@@ -14,9 +14,9 @@ export default {
     data() {
         return {
             items: [
-                { label: 'PLAY', },
-                { label: 'SETTINGS', },
-                { label: 'HOW TO PLAY', },
+                { label: 'PLAY', icon: 'playWhite.png' },
+                { label: 'SETTINGS', icon: 'settingsWhite.png' },
+                { label: 'HOW TO PLAY', icon: 'bookWhite.png' },
             ],
         }
     },
