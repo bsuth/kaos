@@ -12,14 +12,8 @@ import * as game from './canvas/game';
 // CANVAS INIT
 // -----------------------------------------------------------------------------
 
-game.canvas.width = window.innerWidth;
-game.canvas.height = window.innerHeight;
-
-document.addEventListener('resize', () => {
-    game.canvas.width = window.innerWidth;
-    game.canvas.height = window.innerHeight;
+window.addEventListener('load', () => {
+    window.game = game;
 });
-
-game.run();
 
 new Vue({ el: '#app', render: h => h(App) });

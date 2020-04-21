@@ -2,9 +2,9 @@
     <div id='gameModes'>
         <div class='gif'>{{ modes[activeMode].label }} gif</div>
         <div id='switcher'>
-            <span v-on:click='cycle(-1)'><object data='Triangle.svg' type='image/svg+xml' /></span>
+            <span @click='cycle(false)'><object data='Triangle.svg' type='image/svg+xml' /></span>
             <span>{{ modes[activeMode].label }}</span>
-            <span v-on:click='cycle(1)'><object data='Triangle.svg' type='image/svg+xml' /></span>
+            <span @click='cycle()'><object data='Triangle.svg' type='image/svg+xml' /></span>
         </div>
     </div>
 </template>
@@ -24,8 +24,14 @@ export default {
     },
 
     methods: {
-        cycle: function(dir) {
-            this.activeMode = (this.activeMode + dir) % this.modes.length;
+        cycle: function(forwards = false) {
+            if (forwards) {
+                this.activeMode += 1;
+                if (this.activeMode > this.modes.length - 1) this.activeMode = 0;
+            } else {
+                this.activeMode += -1;
+                if (this.activeMode < 0) this.activeMode = this.modes.length - 1;
+            }
         },
     },
 }

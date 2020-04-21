@@ -1,4 +1,5 @@
 @import '~style/palette';
+@import '~style/canvas';
 
 * {
     box-sizing: border-box;
@@ -26,12 +27,4 @@ ul {
 
 object {
     pointer-events: none;
-}
-
-canvas {
-    width: 100%;
-    height: 500px;
-
-    position: absolute;
-    z-index: -1;
 }

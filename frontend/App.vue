@@ -15,12 +15,6 @@ import Footer from 'components/Footer';
 export default {
     router: router,
     components: { Navbar, Footer },
-
-    mounted() {
-      let canvasScript = document.createElement('script');
-      canvasScript.setAttribute('src', 'canvas.js');
-      document.head.appendChild(canvasScript);
-    },
 };
 </script>
 
@@ -31,5 +25,7 @@ export default {
 
     display: flex;
     flex-direction: column;
+
+    transition: opacity 0.5s ease-out;
 }
 </style>

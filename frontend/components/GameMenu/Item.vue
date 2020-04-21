@@ -1,5 +1,5 @@
 <template>
-    <li>
+    <li @click='action'>
         <div class='iconWrapper'>
             <span class='iconMask'>
                 <img :src='icon' />
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    props: [ 'label', 'icon' ],
+    props: [ 'label', 'icon', 'action' ],
 }
 </script>
 
