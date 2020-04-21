@@ -22,6 +22,7 @@ let getConfig = (data) => ({
         extensions: ['.js', '.vue'],
         alias: {
             components: path.resolve(__dirname, 'frontend/components'),
+            style: path.resolve(__dirname, 'frontend/style'),
         },
     },
 

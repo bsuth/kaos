@@ -1,28 +1,24 @@
 <template>
     <li>
-        <UnderlineWrapper>
-            <span>{{ label }}</span>
-        </UnderlineWrapper>
+        <span>{{ label }}</span>
     </li>
 </template>
 
 
 <script>
-import UnderlineWrapper from 'components/UnderlineWrapper';
-
 export default {
     props: [ 'label' ],
-    components: { UnderlineWrapper },
 }
 </script>
 
 
 <style lang='scss' scoped>
-$colors: #f55742, #7842f5, #76e635, #4bb6d6;
+@import '~style/palette';
+@import '~style/mixins/underline';
 
 li {
     width: 200px;
-    margin: 50px 0;
+    padding: 30px 0;
 
     color: white;
     background: none;
@@ -33,12 +29,17 @@ li {
     transition: transform 0.25s ease-out;
     transform-origin: left;
 
-    &:hover { transform: scale(1.5); }
+    span { @include underline-core; }
+
+    &:hover {
+        transform: scale(1.5);
+        span { @include underline-active; }
+    }
 }
 
-@for $i from 1 through length($colors) {
-    li:nth-child(4n + #{$i}) .underlineWrapper::before {
-        background: nth($colors, $i);
+@for $i from 1 through length($palette) {
+    li:nth-child(4n + #{$i}) span {
+        @include underline-bg(nth($palette, $i));
     }
 }
 </style>

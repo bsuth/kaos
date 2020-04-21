@@ -9,9 +9,7 @@
 import Item from './GameMenu/Item';
 
 export default {
-    components: {
-        Item,
-    },
+    components: { Item },
 
     data() {
         return {
@@ -22,16 +20,5 @@ export default {
             ],
         }
     },
-
-    mounted() {
-        let playButton = document.getElementById('play');
-    }
 }
 </script>
-
-
-<style lang='scss' scoped>
-ul {
-
-}
-</style>

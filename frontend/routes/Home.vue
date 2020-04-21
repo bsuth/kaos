@@ -11,10 +11,7 @@ import GameMenu from 'components/GameMenu';
 import GameModes from 'components/GameModes';
 
 export default {
-    components: {
-        GameMenu,
-        GameModes,
-    },
+    components: { GameMenu, GameModes },
 }
 </script>
 

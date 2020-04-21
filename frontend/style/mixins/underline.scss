@@ -1,12 +1,6 @@
-<template>
-    <span class='underlineWrapper'>
-        <slot />
-    </span>
-</template>
+@import '~style/palette';
 
-
-<style lang='scss'>
-.underlineWrapper {
+@mixin underline-core {
     position: relative;
 
     &::before {
@@ -14,20 +8,25 @@
 
         width: 100%;
         height: 3px;
-
+        
         position: absolute;
         bottom: -5px;
-
-        background: white;
 
         transform: scaleX(0);
         transform-origin: right;
         transition: transform 0.25s ease-out;
     }
+}
 
-    &:hover::before {
+@mixin underline-bg($background: $white) {
+    &::before {
+        background: $background;
+    }
+}
+
+@mixin underline-active {
+    &::before {
         transform: scaleX(1);
         transform-origin: left;
     }
 }
-</style>

@@ -33,6 +33,8 @@ export default {
 
 
 <style lang='scss' scoped>
+@import '~style/palette';
+
 #gameModes {
     display: flex;
     flex-direction: column;
@@ -57,7 +59,7 @@ export default {
     justify-content: center;
     align-items: center;
 
-    border: 2px solid #484848;    
+    border: 2px solid $grey;    
     border-radius: 8px;
 }
 </style>

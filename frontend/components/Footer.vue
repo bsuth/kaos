@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div>© copyright bitch</div>
+        <span>© copyright bitch</span>
     </footer>
 </template>
 
@@ -12,6 +12,7 @@
 <style lang='scss' scoped>
 footer {
     height: 100px;
+
     display: flex;
     justify-content: center;
     align-items: center;

@@ -13,10 +13,7 @@ import Logo from './Navbar/Logo';
 import Link from './Navbar/Link';
 
 export default {
-    components: {
-        Logo,
-        Link,
-    },
+    components: { Logo, Link },
 
     data() {
         return {
