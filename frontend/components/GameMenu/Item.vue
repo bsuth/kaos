@@ -32,6 +32,7 @@ li {
     border: none;
 
     font-size: 20px;
+    cursor: pointer;
 
     transition: transform 0.25s ease-out;
     transform-origin: left;

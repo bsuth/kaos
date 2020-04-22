@@ -1,7 +1,9 @@
 <template>
     <div id='app'>
         <Navbar />
-        <router-view></router-view>
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
         <Footer />
     </div>
 </template>
@@ -27,5 +29,7 @@ export default {
     flex-direction: column;
 
     transition: opacity 0.5s ease-out;
+
+    > *:nth-child(2) { flex-grow: 1; }
 }
 </style>
