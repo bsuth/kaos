@@ -3,7 +3,7 @@
         <div class='gif'>{{ modes[activeMode].label }} gif</div>
         <div id='switcher'>
             <span @click='cycle(false)'><object data='Triangle.svg' type='image/svg+xml' /></span>
-            <span>{{ modes[activeMode].label }}</span>
+            <p>{{ modes[activeMode].label }}</p>
             <span @click='cycle()'><object data='Triangle.svg' type='image/svg+xml' /></span>
         </div>
     </div>
@@ -54,6 +54,7 @@ export default {
     align-items: center;
 
     * { margin: 0 10px; }
+    span { cursor: pointer; }
     span:nth-child(3) object { transform: rotate(180deg); }
 }
 

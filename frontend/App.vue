@@ -28,6 +28,9 @@ export default {
     display: flex;
     flex-direction: column;
 
+    /* This is needed to prevent the canvas from blocking certain clickables! */
+    position: relative;
+
     transition: opacity 0.5s ease-out;
 
     > *:nth-child(2) { flex-grow: 1; }
