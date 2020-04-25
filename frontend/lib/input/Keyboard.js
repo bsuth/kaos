@@ -15,28 +15,55 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { 
+    getContext,
+    MENU_ACTION_EVENTS,
+    GAME_ACTION_EVENTS,
+    registerAction,
+    unregisterAction,
+} from './ActionEvents';
+
 // -----------------------------------------------------------------------------
-// DEFAULT MAPPING
+// DEFAULT MAPPINGS
 // -----------------------------------------------------------------------------
 
-export const MENU_MAPPINGS = {
-    'w': 'up',
-    's': 'down',
-    'a': 'left',
-    'd': 'right',
-    'Enter': 'accept',
+const MAPPINGS = {
+    MENU: {
+        'w': MENU_ACTION_EVENTS.MOVE_UP,
+        's': MENU_ACTION_EVENTS.MOVE_DOWN,
+        'd': MENU_ACTION_EVENTS.MOVE_RIGHT,
+        'a': MENU_ACTION_EVENTS.MOVE_LEFT,
+        'Enter': MENU_ACTION_EVENTS.ACCEPT,
+        'Backspace': MENU_ACTION_EVENTS.BACK,
+    },
+    GAME: {
+        'w': GAME_ACTION_EVENTS.MOVE_UP,
+        's': GAME_ACTION_EVENTS.MOVE_DOWN,
+        'd': GAME_ACTION_EVENTS.MOVE_RIGHT,
+        'a': GAME_ACTION_EVENTS.MOVE_LEFT,
+        'j': GAME_ACTION_EVENTS.ROTATE_CC,
+        'k': GAME_ACTION_EVENTS.ROTATE,
+        'u': GAME_ACTION_EVENTS.RED,
+        'i': GAME_ACTION_EVENTS.PURPLE,
+        'o': GAME_ACTION_EVENTS.GREEN,
+        'p': GAME_ACTION_EVENTS.CYAN,
+        'Enter': GAME_ACTION_EVENTS.PAUSE, // START
+    },
 };
 
-export const GAME_MAPPINGS = {
-    'w': 'up',
-    's': 'down',
-    'a': 'left',
-    'd': 'right',
-    'j': 'rotate-counter-clockwise',
-    'k': 'rotate-clockwise',
-    'u': 'color-red',
-    'i': 'color-purple',
-    'o': 'color-green',
-    'p': 'color-cyan',
-    ' ': 'toggle-color',
-};
+
+// -----------------------------------------------------------------------------
+// EVENT LISTENERS
+// -----------------------------------------------------------------------------
+
+window.addEventListener('keydown', event => {
+    let contextMapping = MAPPINGS[getContext()];
+    if (event.key in contextMapping)
+        registerAction(event.key, contextMapping[event.key]);
+});
+
+window.addEventListener('keyup', event => {
+    let contextMapping = MAPPINGS[getContext()];
+    if (event.key in contextMapping)
+        unregisterAction(event.key, contextMapping[event.key]);
+});
