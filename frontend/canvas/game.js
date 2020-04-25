@@ -34,7 +34,8 @@ export const ctx = canvas.getContext('2d');
 
 export let gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
 
-function gameloop(tFrame) {
+function gameloop(tFrame)
+{
     // Count the time and award points.
     if (!gameMode.state.tStart)
         gameMode.state.tStart = tFrame;
@@ -51,7 +52,8 @@ function gameloop(tFrame) {
     requestAnimationFrame(gameloop);
 }
 
-function resize() {
+function resize() 
+{
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
@@ -64,7 +66,7 @@ export function run()
     resize();
     window.onresize = resize;
 
-    gameMode.orbGenerator.init();
+    gameMode.init();
 
     gameloop();
 }

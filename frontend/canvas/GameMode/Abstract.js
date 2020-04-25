@@ -33,6 +33,12 @@ export default class GameModeAbstract
             gameover: false,
         };
     }
+    
+    init()
+    {
+        this.player.init();
+        this.orbGenerator.init();
+    }
 
     draw()
     {

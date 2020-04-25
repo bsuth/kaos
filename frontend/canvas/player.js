@@ -60,6 +60,16 @@ export class Player {
         document.removeEventListener('keydown', this.keydown);
         document.removeEventListener('keyup', this.keyup);
     }
+    
+    init()
+    {
+        this.geo = {
+            x1: canvas.width / 2,
+            y1: canvas.height / 2,
+            x2: canvas.width / 2 + settings.PLAYER_LENGTH,
+            y2: canvas.height / 2,
+        };
+    }
 
     // -------------------------------------------------------------------------
     // EVENT LISTENERS
