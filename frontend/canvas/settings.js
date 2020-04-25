@@ -35,13 +35,13 @@ export const KEYMAP = {
     'a': 1,
     's': 2,
     'd': 3,
-    ' ': 4,
-    'h': 5,
-    'i': 6,
-    'l': 7,
-    'k': 8,
-    'j': 9,
-    't': 10,
+    'k': 4,
+    'j': 5,
+    'u': 6,
+    'i': 7,
+    'o': 8,
+    'p': 9,
+    ' ': 10,
 };
 
 export const ACTIONS = {
@@ -108,7 +108,7 @@ export const ACTIONS = {
     10: {
         callback: () => { 
             game.gameMode.player.color = ++game.gameMode.player.color % 4;
-            delete game.gameMode.player.activeKeyIds[10];
+            delete game.gameMode.player.activeKeys[10];
         },
         title: 'Cycle Colors',
         description: 'Change to the next color: red, purple, green, cyan.',
