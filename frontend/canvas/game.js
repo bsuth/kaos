@@ -43,11 +43,12 @@ function gameloop(tFrame)
         gameMode.player.score = parseInt((tFrame - gameMode.state.tStart) / 10);
 
     gameMode.update();
-    gameMode.draw();
 
     if (gameMode.state.gameover) {
         return true;
     }
+
+    gameMode.draw();
 
     requestAnimationFrame(gameloop);
 }
