@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ctx } from '../game';
-import * as settings from '../settings';
+import { canvas, ctx } from '../game';
 
 // -----------------------------------------------------------------------------
 // GAME ABSTRACT BASE CLASS
@@ -54,6 +53,6 @@ export default class GameModeAbstract
 
     update()
     {
-        throw "GameModeAbstract:update is pure virtual";
+        throw 'GameModeAbstract:update is pure virtual';
     }
 }

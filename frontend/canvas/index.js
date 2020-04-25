@@ -16,7 +16,6 @@
  */
 
 import * as game from './game';
-import * as player from './player';
 
 
 game.run();

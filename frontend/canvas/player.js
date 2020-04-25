@@ -243,4 +243,4 @@ export class Player {
         this.geo.x2 = originX + (x2 * cos - y2 * sin);
         this.geo.y2 = originY + (x2 * sin + y2 * cos);
     }
-};
+}

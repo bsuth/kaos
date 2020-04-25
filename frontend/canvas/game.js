@@ -17,7 +17,6 @@
 
 import * as orbGenerator from './orbGenerator';
 import * as player from './player';
-import * as settings from './settings';
 import Timed from './GameMode/Timed';
 
 // -----------------------------------------------------------------------------

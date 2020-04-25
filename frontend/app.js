@@ -18,7 +18,6 @@
 import Vue from 'vue';
 import App from './App.vue';
 import * as game from './canvas/game';
-import * as input from 'lib/input';
 
 import './style/root.scss';
 

@@ -76,9 +76,9 @@ window.addEventListener('gamepadconnected', event => {
     window.requestAnimationFrame(inputLoop);
 });
 
-window.addEventListener("gamepaddisconnected", event => {
-    console.log("Gamepad disconnected from index %d: %s",
-    event.gamepad.index, event.gamepad.id);
+window.addEventListener('gamepaddisconnected', event => {
+    console.log('Gamepad disconnected from index %d: %s',
+        event.gamepad.index, event.gamepad.id);
 });
 
 

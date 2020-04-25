@@ -30,7 +30,7 @@ function randInt(max)
 
 function randRange(min, max)
 {
-    return min + Math.random() * (max - min)
+    return min + Math.random() * (max - min);
 }
 
 // -----------------------------------------------------------------------------
@@ -59,36 +59,36 @@ export class OrbGenerator
         orb.color = randInt(settings.COLORS.length);
 
         switch (orb.color) {
-            // Top
-            case 0:
-                orb.x = Math.random() * canvas.width;
-                orb.y = 0;
-                orb.vx = 0;
-                orb.vy = randRange(3, 4);
-                break;
+        // Top
+        case 0:
+            orb.x = Math.random() * canvas.width;
+            orb.y = 0;
+            orb.vx = 0;
+            orb.vy = randRange(3, 4);
+            break;
 
             // Right
-            case 1:
-                orb.x = canvas.width;
-                orb.y = Math.random() * canvas.height;
-                orb.vx = -randRange(3, 4);
-                orb.vy = 0;
-                break;
+        case 1:
+            orb.x = canvas.width;
+            orb.y = Math.random() * canvas.height;
+            orb.vx = -randRange(3, 4);
+            orb.vy = 0;
+            break;
 
             // Bottom
-            case 2:
-                orb.x = Math.random() * canvas.width;
-                orb.y = canvas.height;
-                orb.vx = 0;
-                orb.vy = -randRange(3, 4);
-                break;
+        case 2:
+            orb.x = Math.random() * canvas.width;
+            orb.y = canvas.height;
+            orb.vx = 0;
+            orb.vy = -randRange(3, 4);
+            break;
 
             // Left
-            default:
-                orb.x = 0;
-                orb.y = Math.random() * canvas.height;
-                orb.vx = randRange(3, 4);
-                orb.vy = 0;
+        default:
+            orb.x = 0;
+            orb.y = Math.random() * canvas.height;
+            orb.vx = randRange(3, 4);
+            orb.vy = 0;
         }
 
         return orb;
