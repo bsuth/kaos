@@ -51,19 +51,18 @@ function gameloop(tFrame) {
     requestAnimationFrame(gameloop);
 }
 
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
 export function run()
 {
     // -------------------------------------------------------------------------
     // CANVAS INIT
     // -------------------------------------------------------------------------
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    document.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+    resize();
+    window.onresize = resize;
 
     gameMode.orbGenerator.init();
 
