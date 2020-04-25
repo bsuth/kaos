@@ -16,6 +16,7 @@
  */
 
 import { 
+    getContext,
     MENU_ACTION_EVENTS,
     GAME_ACTION_EVENTS,
     registerAction,
@@ -23,56 +24,60 @@ import {
 } from './ActionEvents';
 
 // -----------------------------------------------------------------------------
-// DEFAULT MAPPING
+// DEFAULT MAPPINGS
 // -----------------------------------------------------------------------------
 
-export const MENU_BUTTON_MAPPING = {
-    0: MENU_ACTION_EVENTS.ACCEPT, // a
-    1: MENU_ACTION_EVENTS.BACK, // b
+const MAPPINGS = {
+    MENU: {
+        BUTTONS: {
+            0: MENU_ACTION_EVENTS.ACCEPT, // A
+            1: MENU_ACTION_EVENTS.BACK, // B
+        },
+        AXES: {
+            0: MENU_ACTION_EVENTS.MOVE_X, // L_STICK_X
+            1: MENU_ACTION_EVENTS.MOVE_Y, // L_STICK_Y
+            2: MENU_ACTION_EVENTS.MODE_PREV, // L_TRIGGER
+            3: MENU_ACTION_EVENTS.MOVE_X, // R_STICK_X
+            4: MENU_ACTION_EVENTS.MOVE_Y, // R_STICK_Y
+            5: MENU_ACTION_EVENTS.MODE_NEXT, // R_TRIGGER
+            6: MENU_ACTION_EVENTS.MOVE_X, // DPAD_X
+            7: MENU_ACTION_EVENTS.MOVE_Y, // DPAD_Y
+        },
+    },
+    GAME: {
+        BUTTONS: {
+            0: GAME_ACTION_EVENTS.GREEN, // A
+            1: GAME_ACTION_EVENTS.PURPLE, // B
+            2: GAME_ACTION_EVENTS.CYAN, // X
+            3: GAME_ACTION_EVENTS.RED, // Y
+            4: GAME_ACTION_EVENTS.ROTATE_CC, // LB
+            5: GAME_ACTION_EVENTS.ROTATE, // RB
+            6: null, // SELECT
+            7: GAME_ACTION_EVENTS.PAUSE, // START
+        },
+        AXES: {
+            0: GAME_ACTION_EVENTS.MOVE_X, // L_STICK_X
+            1: GAME_ACTION_EVENTS.MOVE_Y, // L_STICK_Y
+            2: GAME_ACTION_EVENTS.ROTATE_CC, // L_TRIGGER
+            3: GAME_ACTION_EVENTS.MOVE_X, // R_STICK_X
+            4: GAME_ACTION_EVENTS.MOVE_Y, // R_STICK_Y
+            5: GAME_ACTION_EVENTS.ROTATE, // R_TRIGGER
+            6: GAME_ACTION_EVENTS.MOVE_X, // DPAD_X
+            7: GAME_ACTION_EVENTS.MOVE_Y, // DPAD_Y
+        },
+    },
 };
 
-export const MENU_AXIS_MAPPING = {
-    0: MENU_ACTION_EVENTS.MOVE_X, // L_STICK_X
-    1: MENU_ACTION_EVENTS.MOVE_Y, // L_STICK_Y
-    2: MENU_ACTION_EVENTS.MODE_PREV, // L_TRIGGER
-    3: MENU_ACTION_EVENTS.MOVE_X, // R_STICK_X
-    4: MENU_ACTION_EVENTS.MOVE_Y, // R_STICK_Y
-    5: MENU_ACTION_EVENTS.MODE_NEXT, // R_TRIGGER
-    6: MENU_ACTION_EVENTS.MOVE_X, // DPAD_X
-    7: MENU_ACTION_EVENTS.MOVE_Y, // DPAD_Y
-};
-
-export const GAME_BUTTON_MAPPING = {
-    // 0: GAME_EVENTS.COLOR_GREEN, // A
-    // 1: GAME_EVENTS.COLOR_PURPLE, // B
-    // 2: GAME_EVENTS.COLOR_CYAN, // X
-    // 3: GAME_EVENTS.COLOR_RED, // Y
-    // 4: GAME_EVENTS.ROTATE_CC, // LB
-    // 5: GAME_EVENTS.ROTATE, // RB
-    // 6: null, // SELECT
-    // 7: GAME_EVENTS.PAUSE, // START
-};
-
-export const GAME_AXIS_MAPPING = {
-    // 0: 8, // L_STICK_X
-    // 1: 7, // L_STICK_Y
-    // 2: 9, // L_TRIGGER
-    // 3: 6, // R_STICK_X
-    // 4: 5, // R_STICK_Y
-    // 5: 4, // R_TRIGGER
-    // 6: null, // DPAD_X
-    // 7: null, // DPAD_Y
-};
 
 // -----------------------------------------------------------------------------
-// GAMEPAD
+// STATE
 // -----------------------------------------------------------------------------
 
-let gamepad = null;
+let _gamepad = null;
 
 window.addEventListener('gamepadconnected', event => {
-    gamepad = event.gamepad;
-    console.log('gamepad connected!', gamepad);
+    _gamepad = event.gamepad;
+    console.log('gamepad connected!', _gamepad);
     window.requestAnimationFrame(inputLoop);
 });
 
@@ -82,22 +87,35 @@ window.addEventListener("gamepaddisconnected", event => {
 });
 
 
+// -----------------------------------------------------------------------------
+// HELPERS
+// -----------------------------------------------------------------------------
+
 function inputLoop()
 {
-    if (gamepad) {
-        for (let [id, button] of Object.entries(gamepad.buttons)) {
+    if (_gamepad) {
+        let context = getContext();
+
+        for (let [id, button] of Object.entries(_gamepad.buttons)) {
+            let action = MAPPINGS[context]['BUTTONS'][id];
+
             (button.pressed) ?
-                registerAction(id, MENU_BUTTON_MAPPING[id]) :
-                unregisterAction(id, MENU_BUTTON_MAPPING[id]);
+                registerAction(id, action) :
+                unregisterAction(id, action);
         }
 
-        for (let [id, axis] of Object.entries(gamepad.axes)) {
+        for (let [id, axis] of Object.entries(_gamepad.axes)) {
+            let action = MAPPINGS[context]['AXES'][id];
+
+            // Triggers have values (unpressed=-1, pressed=1), with 0 being a
+            // half press. This isn't very useful so we transform these values
+            // to (unpressed=0, pressed=1)
             if (id == 2 || id == 5)
                 axis = (axis + 1) / 2;
 
             (Math.abs(axis) > 0.1) ?
-                registerAction(id, MENU_AXIS_MAPPING[id], { axis: axis }) :
-                unregisterAction(id, MENU_AXIS_MAPPING[id]);
+                registerAction(id, action, { axis: axis }) :
+                unregisterAction(id, action);
         }
 
         window.requestAnimationFrame(inputLoop);
