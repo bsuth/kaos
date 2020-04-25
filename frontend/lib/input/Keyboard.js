@@ -15,24 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Vue from 'vue';
-import App from './App.vue';
-import * as game from './canvas/game';
-import * as input from 'lib/input';
-
-import './style/root.scss';
-
 // -----------------------------------------------------------------------------
-// ACTIONS
+// DEFAULT MAPPING
 // -----------------------------------------------------------------------------
 
+export const MENU_MAPPINGS = {
+    'w': 'up',
+    's': 'down',
+    'a': 'left',
+    'd': 'right',
+    'Enter': 'accept',
+};
 
-// -----------------------------------------------------------------------------
-// APP
-// -----------------------------------------------------------------------------
-
-window.addEventListener('load', () => {
-    window.game = game;
-});
-
-new Vue({ el: '#app', render: h => h(App) });
+export const GAME_MAPPINGS = {
+    'w': 'up',
+    's': 'down',
+    'a': 'left',
+    'd': 'right',
+    'j': 'rotate-counter-clockwise',
+    'k': 'rotate-clockwise',
+    'u': 'color-red',
+    'i': 'color-purple',
+    'o': 'color-green',
+    'p': 'color-cyan',
+    ' ': 'toggle-color',
+};

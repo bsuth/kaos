@@ -16,9 +16,9 @@
 -->
 
 <template>
-    <li @click='action'>
-        <div class='iconWrapper'>
-            <span class='iconMask'>
+    <li @click='action' class='game-menu-item'>
+        <div class='game-menu-icon-wrapper'>
+            <span class='game-menu-icon-mask'>
                 <img :src='icon' />
             </span>
         </div>
@@ -34,11 +34,15 @@ export default {
 </script>
 
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import '~style/palette';
 @import '~style/mixins/underline';
 
-li {
+// -----------------------------------------------------------------------------
+// MENU ITEM
+// -----------------------------------------------------------------------------
+
+.game-menu-item {
     width: 200px;
     padding: 30px 0;
 
@@ -63,10 +67,26 @@ li {
     }
 }
 
+.game-menu-item-hover {
+    transform: scale(1.5);
+    span { @include underline-active; }
+    .iconWrapper .iconMask img { left: 0; }
+}
+
+@for $i from 1 through length($palette) {
+    .game-menu-item:nth-child(4n + #{$i}) span {
+        @include underline-bg(nth($palette, $i));
+    }
+}
+
+// -----------------------------------------------------------------------------
+// MENU ITEM ICON
+// -----------------------------------------------------------------------------
+
 $iconWidth: 30px;
 $leftPadding: 15px;
 
-.iconWrapper {
+.game-menu-icon-wrapper {
     width: $iconWidth + $leftPadding;
     height: $iconWidth + $leftPadding;
 
@@ -78,7 +98,7 @@ $leftPadding: 15px;
         height: $iconWidth;
     }
 
-    .iconMask {
+    .game-menu-icon-mask {
         display: block;
         overflow: hidden;
 
@@ -87,12 +107,6 @@ $leftPadding: 15px;
             left: 100%;
             transition: left 0.25s ease-out;
         }
-    }
-}
-
-@for $i from 1 through length($palette) {
-    li:nth-child(4n + #{$i}) span {
-        @include underline-bg(nth($palette, $i));
     }
 }
 </style>

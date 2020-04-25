@@ -15,24 +15,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Vue from 'vue';
-import App from './App.vue';
-import * as game from './canvas/game';
-import * as input from 'lib/input';
-
-import './style/root.scss';
-
-// -----------------------------------------------------------------------------
-// ACTIONS
-// -----------------------------------------------------------------------------
-
-
-// -----------------------------------------------------------------------------
-// APP
-// -----------------------------------------------------------------------------
-
-window.addEventListener('load', () => {
-    window.game = game;
-});
-
-new Vue({ el: '#app', render: h => h(App) });
+import * as Gamepad from './Gamepad';
+import * as Keyboard from './Keyboard';

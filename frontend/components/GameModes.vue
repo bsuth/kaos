@@ -19,9 +19,9 @@
     <div id='gameModes'>
         <div class='gif'>{{ modes[activeMode].label }} gif</div>
         <div id='switcher'>
-            <span @click='cycle(false)'><object data='Triangle.svg' type='image/svg+xml' /></span>
+            <span @click='prev()'><object data='Triangle.svg' type='image/svg+xml' /></span>
             <p>{{ modes[activeMode].label }}</p>
-            <span @click='cycle()'><object data='Triangle.svg' type='image/svg+xml' /></span>
+            <span @click='next()'><object data='Triangle.svg' type='image/svg+xml' /></span>
         </div>
     </div>
 </template>
@@ -29,6 +29,19 @@
 
 <script>
 export default {
+    methods: {
+        prev: function() {
+            (this.activeMode === 0) ?
+                this.activeMode = this.modes.length - 1 :
+                --this.activeMode;
+        },
+        next: function() {
+            (this.activeMode === this.modes.length - 1) ?
+                this.activeMode = 0 :
+                ++this.activeMode;
+        },
+    },
+
     data() {
         return {
             activeMode: 0,
@@ -40,16 +53,14 @@ export default {
         }
     },
 
-    methods: {
-        cycle: function(forwards = false) {
-            if (forwards) {
-                this.activeMode += 1;
-                if (this.activeMode > this.modes.length - 1) this.activeMode = 0;
-            } else {
-                this.activeMode += -1;
-                if (this.activeMode < 0) this.activeMode = this.modes.length - 1;
-            }
-        },
+    mounted() {
+        window.addEventListener('menu-mode-prev-start', this.prev);
+        window.addEventListener('menu-mode-next-start', this.next);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('menu-mode-prev-start', this.prev);
+        window.removeEventListener('menu-mode-prev-start', this.next);
     },
 }
 </script>

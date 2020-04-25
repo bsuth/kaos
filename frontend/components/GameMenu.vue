@@ -28,19 +28,10 @@
 
 <script>
 import Item from './GameMenu/Item';
+import { CONTEXTS } from 'lib/input/ActionEvents';
 
-let v = {
+export default {
     components: { Item },
-
-    data() {
-        return {
-            items: [
-                { label: 'PLAY', action: this.play, icon: 'playWhite.png' },
-                { label: 'SETTINGS', action: this.settings, icon: 'settingsWhite.png' },
-                { label: 'HOW TO PLAY', action: this.howtoplay, icon: 'bookWhite.png' },
-            ],
-        }
-    },
 
     methods: {
         play: () => { 
@@ -53,12 +44,46 @@ let v = {
         howtoplay: () => { 
             console.log('how to play');
         },
+        moveY: function(event) {
+            this.items[this.selected].el.classList.remove('game-menu-item-hover');
+
+            if (event.detail.axis > 0) {
+                this.selected = ++this.selected % this.items.length;
+            } else {
+                (this.selected == 0) ?
+                    this.selected = this.items.length - 1 :
+                    --this.selected;
+            }
+
+            this.items[this.selected].el.classList.add('game-menu-item-hover');
+        },
+        back: function() {
+            console.log('back!');
+        },
+        accept: function() {
+            (this.items[this.selected].action)();
+        },
     },
+
+    data() {
+        return {
+            selected: 0,
+            items: [
+                { label: 'PLAY', action: this.play, icon: 'playWhite.png' },
+                { label: 'SETTINGS', action: this.settings, icon: 'settingsWhite.png' },
+                { label: 'HOW TO PLAY', action: this.howtoplay, icon: 'bookWhite.png' },
+            ],
+        }
+    },
+
+    mounted() {
+        let itemEls = document.getElementsByClassName('game-menu-item');
+        for (let i = 0; i < this.items.length; ++i)
+            this.items[i].el = itemEls[i];
+
+        window.addEventListener('menu-back-start', this.back);
+        window.addEventListener('menu-accept-start', this.accept);
+        window.addEventListener('menu-move-y-start', this.moveY);
+    }
 }
-
-v.methods.itemClick = (index) => {
-
-}
-
-export default v;
 </script>
