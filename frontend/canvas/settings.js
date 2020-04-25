@@ -35,13 +35,13 @@ export const KEYMAP = {
     'a': 1,
     's': 2,
     'd': 3,
-    'k': 4,
-    'j': 5,
-    'u': 6,
-    'i': 7,
-    'o': 8,
-    'p': 9,
-    ' ': 10,
+    ' ': 4,
+    'h': 5,
+    'i': 6,
+    'l': 7,
+    'k': 8,
+    'j': 9,
+    't': 10,
 }
 
 export const ACTIONS = {
@@ -82,33 +82,33 @@ export const ACTIONS = {
             negateIds: [ 4 ],
     },
     6: {
-            callback: () => { game.gameMode.player.state.color = 0 },
+            callback: () => { game.gameMode.player.color = 0 },
             title: 'To Red',
             description: 'Change the color of the player to red.',
             negateIds: [],
     },
     7: {
-            callback: () => { game.gameMode.player.state.color = 1 },
+            callback: () => { game.gameMode.player.color = 1 },
             title: 'To Purple',
             description: 'Change the color of the player to purple.',
             negateIds: [],
     },
     8: {
-            callback: () => { game.gameMode.player.state.color = 2 },
+            callback: () => { game.gameMode.player.color = 2 },
             title: 'To Green',
             description: 'Change the color of the player to green.',
             negateIds: [],
     },
     9: {
-            callback: () => { game.gameMode.player.state.color = 3 },
+            callback: () => { game.gameMode.player.color = 3 },
             title: 'To Cyan',
             description: 'Change the color of the player to cyan.',
             negateIds: [],
     },
     10: {
             callback: () => { 
-                game.gameMode.player.state.color = ++game.gameMode.player.state.color % 4;
-                delete game.gameMode.player.state.activeKeyIds[10];
+                game.gameMode.player.color = ++game.gameMode.player.color % 4;
+                delete game.gameMode.player.activeKeyIds[10];
             },
             title: 'Cycle Colors',
             description: 'Change to the next color: red, purple, green, cyan.',
