@@ -44,7 +44,7 @@ function gameloop(tFrame)
     gameMode.update();
 
     if (gameMode.state.gameover) {
-        return true;
+        return;
     }
 
     gameMode.draw();
@@ -69,4 +69,14 @@ export function run()
     gameMode.init();
 
     gameloop();
+}
+
+export function restart()
+{
+    gameMode.player.activeKeys = [];
+    gameMode.player.restoreKeys = [];
+    gameMode.orbGenerator.orbs = [];
+    gameMode.state.gameover = true;
+    // delay for gameloop return.
+    setTimeout(run, 10);
 }

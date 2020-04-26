@@ -42,6 +42,7 @@ export const KEYMAP = {
     'o': 8,
     'p': 9,
     ' ': 10,
+    'r': 11,
 };
 
 export const ACTIONS = {
@@ -112,6 +113,14 @@ export const ACTIONS = {
         },
         title: 'Cycle Colors',
         description: 'Change to the next color: red, purple, green, cyan.',
+        negateIds: [],
+    },
+    11: {
+        callback: () => {
+            game.restart();
+        },
+        title: 'Restart',
+        description: 'Restart the game.',
         negateIds: [],
     },
 };

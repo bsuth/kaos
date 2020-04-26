@@ -35,6 +35,7 @@ export default class GameModeAbstract
     
     init()
     {
+        this.state.gameover = false;
         this.player.init();
         this.orbGenerator.init();
     }
