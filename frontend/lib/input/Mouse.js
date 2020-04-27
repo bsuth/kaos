@@ -27,29 +27,29 @@ import {
 // DEFAULT MAPPINGS
 // -----------------------------------------------------------------------------
 
-export const ID = 'KEYBOARD';
+export const ID = 'MOUSE';
 
 const MAPPINGS = {
     MENU: {
-        'w': MENU_ACTION_EVENTS.MOVE_UP,
-        's': MENU_ACTION_EVENTS.MOVE_DOWN,
-        'd': MENU_ACTION_EVENTS.MOVE_RIGHT,
-        'a': MENU_ACTION_EVENTS.MOVE_LEFT,
-        'Enter': MENU_ACTION_EVENTS.ACCEPT,
-        'Backspace': MENU_ACTION_EVENTS.BACK,
+        // 'w': MENU_ACTION_EVENTS.MOVE_UP,
+        // 's': MENU_ACTION_EVENTS.MOVE_DOWN,
+        // 'd': MENU_ACTION_EVENTS.MOVE_RIGHT,
+        // 'a': MENU_ACTION_EVENTS.MOVE_LEFT,
+        // 'Enter': MENU_ACTION_EVENTS.ACCEPT,
+        // 'Backspace': MENU_ACTION_EVENTS.BACK,
     },
     GAME: {
-        'w': GAME_ACTION_EVENTS.MOVE_UP,
-        's': GAME_ACTION_EVENTS.MOVE_DOWN,
-        'd': GAME_ACTION_EVENTS.MOVE_RIGHT,
-        'a': GAME_ACTION_EVENTS.MOVE_LEFT,
-        'j': GAME_ACTION_EVENTS.ROTATE_CC,
-        'k': GAME_ACTION_EVENTS.ROTATE,
-        'u': GAME_ACTION_EVENTS.RED,
-        'i': GAME_ACTION_EVENTS.PURPLE,
-        'o': GAME_ACTION_EVENTS.GREEN,
-        'p': GAME_ACTION_EVENTS.CYAN,
-        'Enter': GAME_ACTION_EVENTS.PAUSE, // START
+        // 'w': GAME_ACTION_EVENTS.MOVE_UP,
+        // 's': GAME_ACTION_EVENTS.MOVE_DOWN,
+        // 'd': GAME_ACTION_EVENTS.MOVE_RIGHT,
+        // 'a': GAME_ACTION_EVENTS.MOVE_LEFT,
+        // 'j': GAME_ACTION_EVENTS.ROTATE_CC,
+        // 'k': GAME_ACTION_EVENTS.ROTATE,
+        // 'u': GAME_ACTION_EVENTS.RED,
+        // 'i': GAME_ACTION_EVENTS.PURPLE,
+        // 'o': GAME_ACTION_EVENTS.GREEN,
+        // 'p': GAME_ACTION_EVENTS.CYAN,
+        // 'Enter': GAME_ACTION_EVENTS.PAUSE, // START
     },
 };
 
@@ -58,14 +58,3 @@ const MAPPINGS = {
 // EVENT LISTENERS
 // -----------------------------------------------------------------------------
 
-window.addEventListener('keydown', event => {
-    let contextMapping = MAPPINGS[getContext()];
-    if (event.key in contextMapping)
-        registerAction(event.key, contextMapping[event.key]);
-});
-
-window.addEventListener('keyup', event => {
-    let contextMapping = MAPPINGS[getContext()];
-    if (event.key in contextMapping)
-        unregisterAction(event.key, contextMapping[event.key]);
-});

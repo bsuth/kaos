@@ -18,17 +18,15 @@
 <template>
     <div id='home'>
         <GameMenu />
-        <GameModes />
     </div>
 </template>
 
 
 <script>
 import GameMenu from 'components/GameMenu';
-import GameModes from 'components/GameModes';
 
 export default {
-    components: { GameMenu, GameModes },
+    components: { GameMenu },
 }
 </script>
 
@@ -38,7 +36,5 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    * { margin: 0 50px; }
 }
 </style>

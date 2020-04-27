@@ -16,42 +16,39 @@
 -->
 
 <template>
-    <div id='app'>
-        <Navbar />
-        <transition name="fade" mode="out-in">
-            <router-view></router-view>
-        </transition>
-        <Input />
-        <Footer />
-    </div>
+    <ul id='gameMenu-list'>
+        <Item
+            v-for='(item, index) in items'
+            :key='index'
+            v-bind='item'
+            :active="index == activeItem"
+        />
+    </ul>
 </template>
 
 
 <script>
-import router from './router';
-import Navbar from 'components/Navbar';
-import Footer from 'components/Footer';
-import Input from 'components/Input';
+import Item from './List/Item';
 
 export default {
-    router: router,
-    components: { Navbar, Footer, Input },
-};
+    components: { Item },
+    props: [ 'items', 'activeItem' ],
+}
 </script>
 
 
 <style lang='scss'>
-#app {
-    height: 100%;
+@import '~style/root';
 
+#gameMenu-list {
+    width: 80%;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 
-    /* This is needed to prevent the canvas from blocking certain clickables! */
-    position: relative;
-
-    transition: opacity 0.5s ease-out;
-
-    > *:nth-child(2) { flex-grow: 1; }
+    @media only screen and (min-width: $tablet) {
+        width: auto;
+        margin-right: 60px;
+    }
 }
 </style>

@@ -16,7 +16,7 @@
 -->
 
 <template>
-    <div id='gameModes'>
+    <div id='gameMenu-preview-modes'>
         <div class='gif'>{{ modes[activeMode].label }} gif</div>
         <div id='switcher'>
             <span @click='prev()'><object data='Triangle.svg' type='image/svg+xml' /></span>
@@ -69,7 +69,7 @@ export default {
 <style lang='scss' scoped>
 @import '~style/palette';
 
-#gameModes {
+#gameMenu-preview-modes {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,12 +82,12 @@ export default {
     align-items: center;
 
     * { margin: 0 10px; }
-    span { cursor: pointer; }
+    span { width: 50px; cursor: pointer; }
     span:nth-child(3) object { transform: rotate(180deg); }
 }
 
 .gif {
-    width: 425px;
+    width: 100%;
     height: 300px;    
 
     display: flex;

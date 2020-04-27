@@ -17,3 +17,31 @@
 
 import * as Gamepad from './Gamepad';
 import * as Keyboard from './Keyboard';
+import * as Mouse from './Mouse';
+
+// -----------------------------------------------------------------------------
+// STATE
+// -----------------------------------------------------------------------------
+
+export const state = {
+    method: Gamepad.ID,
+};
+
+
+// -----------------------------------------------------------------------------
+// EVENT LISTENERS
+// -----------------------------------------------------------------------------
+
+window.addEventListener('keydown', event => {
+    if (state.method == Keyboard.ID)
+        return;
+
+    state.method = Keyboard.ID;
+});
+
+window.addEventListener('mousemove', event => {
+    if (state.method == Mouse.ID)
+        return;
+
+    state.method = Mouse.ID;
+});
