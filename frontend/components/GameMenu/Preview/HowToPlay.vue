@@ -16,42 +16,18 @@
 -->
 
 <template>
-    <div id='app'>
-        <Navbar />
-        <transition name="fade" mode="out-in">
-            <router-view></router-view>
-        </transition>
-        <Input />
-        <Footer />
+    <div id='gameMenu-preview-howToPlay'>
+        how to play!
     </div>
 </template>
 
 
 <script>
-import router from './router';
-import Navbar from 'components/Navbar';
-import Footer from 'components/Footer';
-import Input from 'components/Input';
-
-export default {
-    router: router,
-    components: { Navbar, Footer, Input },
-};
 </script>
 
 
-<style lang='scss'>
-#app {
-    height: 100%;
+<style lang='scss' scoped>
+#gameMenu-preview-howToPlay {
 
-    display: flex;
-    flex-direction: column;
-
-    /* This is needed to prevent the canvas from blocking certain clickables! */
-    position: relative;
-
-    transition: opacity 0.5s ease-out;
-
-    > *:nth-child(2) { flex-grow: 1; }
 }
 </style>

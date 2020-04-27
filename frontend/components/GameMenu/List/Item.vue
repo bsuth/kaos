@@ -16,65 +16,60 @@
 -->
 
 <template>
-    <li @click='action' class='game-menu-item'>
-        <div class='game-menu-icon-wrapper'>
-            <span class='game-menu-icon-mask'>
+    <li @click='action' class='gameMenu-list-item'
+        v-bind:class="{ 'gameMenu-list-item-active': active }"
+    >
+        <span class='gameMenu-list-item-icon-wrapper'>
+            <span class='gameMenu-list-item-icon-mask'>
                 <img :src='icon' />
             </span>
-        </div>
-        <span>{{ label }}</span>
+        </span>
+        <span class='gameMenu-list-item-label'>{{ label }}</span>
     </li>
 </template>
 
 
 <script>
 export default {
-    props: [ 'label', 'icon', 'action' ],
+    props: [ 'label', 'icon', 'action', 'active' ],
 }
 </script>
 
 
 <style lang='scss'>
+@import '~style/root';
 @import '~style/palette';
 @import '~style/mixins/underline';
+
+$iconWidth: 30px;
+$iconLeftPadding: 10px;
 
 // -----------------------------------------------------------------------------
 // MENU ITEM
 // -----------------------------------------------------------------------------
 
-.game-menu-item {
-    width: 200px;
-    padding: 30px 0;
+@mixin gameMenu-list-item-active {
+    transform: scale(1.5);
+    & > .gameMenu-list-item-label { @include underline-active; }
+    .gameMenu-list-item-icon-mask img { left: 0; }
+}
 
+.gameMenu-list-item {
+    margin: 20px 0 20px ($iconWidth + $iconLeftPadding);
     position: relative;
-
-    color: white;
-    background: none;
-    border: none;
-
     font-size: 20px;
     cursor: pointer;
-
-    transition: transform 0.25s ease-out;
     transform-origin: left;
+    transition: transform 0.25s ease-out;
 
-    span { @include underline-core; }
-
-    &:hover {
-        transform: scale(1.5);
-        span { @include underline-active; }
-        .iconWrapper .iconMask img { left: 0; }
-    }
+    & > .gameMenu-list-item-label { @include underline-core; }
+    /* &:hover { @include gameMenu-list-item-active } */
 }
 
-.game-menu-item-hover {
-    transform: scale(1.5);
-    span { @include underline-active; }
-    .iconWrapper .iconMask img { left: 0; }
-}
+.gameMenu-list-item-active { @include gameMenu-list-item-active }
 
 @for $i from 1 through length($palette) {
-    .game-menu-item:nth-child(4n + #{$i}) span {
+    .gameMenu-list-item:nth-child(4n + #{$i}) .gameMenu-list-item-label {
         @include underline-bg(nth($palette, $i));
     }
 }
@@ -83,30 +78,25 @@ export default {
 // MENU ITEM ICON
 // -----------------------------------------------------------------------------
 
-$iconWidth: 30px;
-$leftPadding: 15px;
-
-.game-menu-icon-wrapper {
-    width: $iconWidth + $leftPadding;
-    height: $iconWidth + $leftPadding;
-
+.gameMenu-list-item-icon-wrapper {
+    width: $iconWidth + $iconLeftPadding;
+    height: $iconWidth + $iconLeftPadding;
     position: absolute;
-    left: -($iconWidth + $leftPadding);
+    left: -($iconWidth + $iconLeftPadding);
+    overflow: hidden;
+}
 
-    * {
+.gameMenu-list-item-icon-mask {
+    &, * {
         width: $iconWidth;
         height: $iconWidth;
     }
+    display: inline-block;
 
-    .game-menu-icon-mask {
-        display: block;
-        overflow: hidden;
-
-        img {
-            position: absolute;
-            left: 100%;
-            transition: left 0.25s ease-out;
-        }
+    img {
+        position: absolute;
+        left: 100%;
+        transition: left 0.25s ease-out;
     }
 }
 </style>

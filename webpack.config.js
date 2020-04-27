@@ -35,7 +35,7 @@ let getConfig = (data) => ({
             },
             {
                 // This is required for <style> blocks in .vue files
-                test: /\.scss$/,
+                test: /\.(s?)css$/,
                 use: [
                     'vue-style-loader',
                     'css-loader',

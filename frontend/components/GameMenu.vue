@@ -16,74 +16,106 @@
 -->
 
 <template>
-    <ul id='gameMenu'>
-        <Item 
-            v-for='(item, index) in items'
-            :key='index'
-            v-bind='item' 
-        />
-    </ul>
+    <div id='gameMenu'>
+        <List :items='items' :activeItem='activeItem' />
+        <Preview :items='items' :activeItem='activeItem' />
+    </div>
 </template>
 
 
 <script>
-import Item from './GameMenu/Item';
-import { CONTEXTS } from 'lib/input/ActionEvents';
+import List from './GameMenu/List';
+import Preview from './GameMenu/Preview';
 
 export default {
-    components: { Item },
+    components: { List, Preview },
 
     methods: {
-        play: () => { 
+        play: function() { 
             document.getElementById('app').style.opacity = 0;
             setTimeout(() => window.game.run(), 500);
         },
-        settings: () => { 
+        settings: function() { 
             console.log('settings');
         },
-        howtoplay: () => { 
+        howtoplay: function() { 
             console.log('how to play');
         },
         moveY: function(event) {
-            this.items[this.selected].el.classList.remove('game-menu-item-hover');
-
             if (event.detail.axis > 0) {
-                this.selected = ++this.selected % this.items.length;
+                (this.activeItem === this.items.length - 1) ?
+                    this.activeItem = 0 :
+                    ++this.activeItem;
             } else {
-                (this.selected == 0) ?
-                    this.selected = this.items.length - 1 :
-                    --this.selected;
+                (this.activeItem == 0) ?
+                    this.activeItem = this.items.length - 1 :
+                    --this.activeItem;
             }
-
-            this.items[this.selected].el.classList.add('game-menu-item-hover');
         },
         back: function() {
             console.log('back!');
         },
         accept: function() {
-            (this.items[this.selected].action)();
+            (this.items[this.activeItem].action)();
         },
     },
 
     data() {
         return {
-            selected: 0,
+            activeItem: 0,
             items: [
-                { label: 'PLAY', action: this.play, icon: 'playWhite.png' },
-                { label: 'SETTINGS', action: this.settings, icon: 'settingsWhite.png' },
-                { label: 'HOW TO PLAY', action: this.howtoplay, icon: 'bookWhite.png' },
+                {
+                    label: 'PLAY',
+                    action: this.play,
+                    icon: 'playWhite.png',
+                },
+                {
+                    label: 'SETTINGS',
+                    action: this.settings,
+                    icon: 'settingsWhite.png',
+                },
+                {
+                    label: 'HOW TO',
+                    action: this.howtoplay,
+                    icon: 'bookWhite.png',
+                },
             ],
         }
     },
 
     mounted() {
-        let itemEls = document.getElementsByClassName('game-menu-item');
-        for (let i = 0; i < this.items.length; ++i)
-            this.items[i].el = itemEls[i];
+        let listItemDomElements = document.getElementsByClassName('gameMenu-list-item');
+        for (let [index, el] of Object.entries(listItemDomElements)) {
+            this.items[index].el = el;
+            el.addEventListener('mouseover', () => {
+                this.activeItem = index;
+            });
+        }
 
-        window.addEventListener('menu-back-start', this.back);
-        window.addEventListener('menu-accept-start', this.accept);
         window.addEventListener('menu-move-y-start', this.moveY);
-    }
+        window.addEventListener('menu-accept-start', this.accept);
+        window.addEventListener('menu-back-start', this.back);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('menu-move-y-start', this.moveY);
+        window.removeEventListener('menu-accept-start', this.accept);
+        window.removeEventListener('menu-back-start', this.back);
+    },
 }
 </script>
+
+
+<style lang='scss' scoped>
+@import 'style/root.scss';
+
+#gameMenu {
+    width: 100%;
+    max-width: 650px;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>

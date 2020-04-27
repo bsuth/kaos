@@ -27,7 +27,9 @@ import {
 // DEFAULT MAPPINGS
 // -----------------------------------------------------------------------------
 
-const MAPPINGS = {
+export const ID = 'GAMEPAD';
+
+export const MAPPINGS = {
     MENU: {
         BUTTONS: {
             0: MENU_ACTION_EVENTS.ACCEPT, // A
