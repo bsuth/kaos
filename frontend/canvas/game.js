@@ -93,4 +93,6 @@ function resize()
 {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    gameMode.orbGenerator.pTopBottom = canvas.width / (canvas.width + canvas.height);
+    gameMode.orbGenerator.pLeftRight = canvas.height / (canvas.width + canvas.height);
 }

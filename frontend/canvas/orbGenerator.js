@@ -42,6 +42,8 @@ export class OrbGenerator
     constructor()
     {
         this.orbs = [];
+        this.pTopBottom = canvas.width / (canvas.width + canvas.height);
+        this.pLeftRight = canvas.height / (canvas.width + canvas.height);
     }
 
     // -------------------------------------------------------------------------
@@ -57,31 +59,30 @@ export class OrbGenerator
     initOrb(orb = {})
     {
         let random = Math.random();
-        let pTopBottom = canvas.width / (canvas.width + canvas.height);
-        let pLeftRight = canvas.height / (canvas.width + canvas.height);
 
-        if ( random < pTopBottom / 2 ) {
-            console.log('red');
+        if ( random < this.pTopBottom / 2 ) {
+            // Red Top
             orb.color = 0;
             orb.x = Math.random() * canvas.width;
             orb.y = 0;
             orb.vx = 0;
             orb.vy = randRange(3, 4);
-        } else if ( pTopBottom / 2 < random && random < pTopBottom ) {
-            console.log('green');
+        } else if ( this.pTopBottom / 2 < random && random < this.pTopBottom ) {
+            // Green Bottom
             orb.color = 2;
             orb.x = Math.random() * canvas.width;
             orb.y = canvas.height;
             orb.vx = 0;
             orb.vy = -randRange(3, 4);
-        } else if ( pTopBottom < random && random < pTopBottom + pLeftRight / 2) {
-            console.log('cyan');
+        } else if ( this.pTopBottom < random && random < this.pTopBottom + this.pLeftRight / 2) {
+            // Cyan Left
             orb.color = 3;
             orb.x = 0;
             orb.y = Math.random() * canvas.height;
             orb.vx = randRange(3, 4);
             orb.vy = 0;
         } else {
+            // Purple Right
             orb.color = 1;
             orb.x = canvas.width;
             orb.y = Math.random() * canvas.height;
