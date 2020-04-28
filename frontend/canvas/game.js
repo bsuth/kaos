@@ -17,6 +17,7 @@
 
 import * as orbGenerator from './orbGenerator';
 import * as player from './player';
+import * as settings from './settings';
 import Timed from './GameMode/Timed';
 
 // -----------------------------------------------------------------------------
@@ -44,6 +45,7 @@ function gameloop(tFrame)
     gameMode.update();
 
     if (gameMode.state.gameover) {
+        document.addEventListener('keydown', keydown);
         return;
     }
 
@@ -52,10 +54,16 @@ function gameloop(tFrame)
     requestAnimationFrame(gameloop);
 }
 
-function resize() 
+export function restart(event)
 {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    document.removeEventListener('keydown', keydown);
+    gameMode.player.activeKeys = [];
+    gameMode.player.restoreKeys = [];
+    gameMode.player.color = 0;
+    gameMode.orbGenerator.orbs = [];
+    gameMode.state.gameover = true;
+    // delay for gameloop return.
+    setTimeout(run, 20);
 }
 
 export function run()
@@ -71,12 +79,20 @@ export function run()
     gameloop();
 }
 
-export function restart()
+// -----------------------------------------------------------------------------
+// UTILS
+// -----------------------------------------------------------------------------
+
+function keydown(e) 
 {
-    gameMode.player.activeKeys = [];
-    gameMode.player.restoreKeys = [];
-    gameMode.orbGenerator.orbs = [];
-    gameMode.state.gameover = true;
-    // delay for gameloop return.
-    setTimeout(run, 10);
+    if (e.key in settings.KEYMAP)
+        settings.ACTIONS[settings.KEYMAP[e.key]].callback();
+}
+
+function resize() 
+{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    gameMode.orbGenerator.pTopBottom = canvas.width / (canvas.width + canvas.height);
+    gameMode.orbGenerator.pLeftRight = canvas.height / (canvas.width + canvas.height);
 }
