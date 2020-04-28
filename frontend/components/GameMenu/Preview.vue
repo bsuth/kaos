@@ -51,13 +51,18 @@ export default {
 @import '~style/root';
 
 #gameMenu-preview {
-    display: none;
+    width: 80%;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    transition: left 0.25s ease-out;
 
     @media only screen and (min-width: $tablet) {
-        width: 70%;
-        height: 400px; 
+        width: 50%;
         position: relative;
+        left: 0;
         display: block;
+        transition: none;
 
         .gameMenu-preview-transition > * {
             width: 100%;

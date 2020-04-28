@@ -33,6 +33,8 @@ export default {
 
 <style lang='scss' scoped>
 #home {
+    width: 100%;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;

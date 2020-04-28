@@ -42,13 +42,23 @@ export default {
 
 #gameMenu-list {
     width: 80%;
+    position: absolute;
+    left: 20%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    transition: left 0.25s ease-out;
 
     @media only screen and (min-width: $tablet) {
         width: auto;
-        margin-right: 60px;
+        position: relative;
+        left: 0;
+        margin-right: 80px;
+        transition: none;
+    }
+
+    @media only screen and (min-width: $desktop) {
+        margin-right: 120px;
     }
 }
 </style>

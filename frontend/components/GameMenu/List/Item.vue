@@ -71,6 +71,16 @@ $iconLeftPadding: 10px;
     }
 }
 
+.gameMenu-list-item:nth-child(2) {
+    display: none;
+}
+
+@media only screen and (min-width: $tablet) {
+    .gameMenu-list-item:nth-child(2) {
+        display: block;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // MENU ITEM ICON
 // -----------------------------------------------------------------------------

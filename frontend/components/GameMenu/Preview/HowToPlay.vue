@@ -19,7 +19,7 @@
     <div id='gameMenu-preview-howToPlay'>
         <h2>General</h2>
         <p>
-            Dodge orbs of colors different than your own.<br />
+            Dodge orbs of colors different than your own.<br /><br />
             Move, rotate, and change your color to survive.
         </p>
         <h2>Game Modes</h2>
@@ -37,11 +37,23 @@
 
 
 <style lang='scss' scoped>
+@import 'style/root';
+
 #gameMenu-preview-howToPlay {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-size: 12px;
 
+    ul li { margin: 10px 0; }
     ul li span { font-weight: bold; }
+
+    @media only screen and (min-width: $tablet) {
+        font-size: 2vw;
+    }
+
+    @media only screen and (min-width: $desktop) {
+        font-size: 16px;
+    }
 }
 </style>

@@ -35,25 +35,67 @@ export default {
             document.getElementById('app').style.opacity = 0;
             setTimeout(() => window.game.run(), 500);
         },
-        controls: function() { 
-            console.log('settings');
-        },
         prev: function() {
-            (this.activeItem == 0) ?
-                this.activeItem = this.items.length - 1 :
-                --this.activeItem;
+            if (window.innerWidth < 600) {
+                this.activeItem = (this.activeItem == 0) ?
+                    this.items.length - 1 : 0;
+            } else {
+                (this.activeItem === 0) ?
+                    this.activeItem = this.items.length - 1 :
+                    --this.activeItem;
+            }
         },
         next: function(event) {
-            (this.activeItem === this.items.length - 1) ?
-                this.activeItem = 0 :
-                ++this.activeItem;
+            if (window.innerWidth < 600) {
+                this.activeItem = (this.activeItem == 0) ?
+                    this.items.length - 1 : 0;
+            } else {
+                (this.activeItem === this.items.length - 1) ?
+                    this.activeItem = 0 :
+                    ++this.activeItem;
+            }
         },
-        back: function() { console.log('back!'); },
-        accept: function() { (this.items[this.activeitem].action)(); },
+        resize: function() {
+            if (window.innerWidth < 600) {
+                if (this.activeItem == 1)
+                    this.activeItem = 0;
+                this.restored = false;
+            } else if (!this.restored) {
+                let list = document.getElementById('gameMenu-list');
+                let preview = document.getElementById('gameMenu-preview');
+
+                preview.style.left = '';
+                list.style.left = '';
+                this.restored = true;
+            }
+        },
+        enter: function() { 
+            if (window.innerWidth < 600 && !this.subMenu) {
+                let list = document.getElementById('gameMenu-list');
+                let preview = document.getElementById('gameMenu-preview');
+
+                preview.style.left = '10%';
+                list.style.left = '-100%';
+                this.subMenu = true;
+            }
+        },
+        back: function() {
+            if (window.innerWidth < 600 && this.subMenu) {
+                let list = document.getElementById('gameMenu-list');
+                let preview = document.getElementById('gameMenu-preview');
+
+                preview.style.left = '100%';
+                list.style.left = '20%';
+                this.subMenu = false;
+            }
+        },
+        accept: function() { (this.items[this.activeItem].action)(); },
     },
 
     data() {
         return {
+            restored: false,
+            subMenu: false,
             activeItem: 0,
             items: [
                 {
@@ -63,12 +105,12 @@ export default {
                 },
                 {
                     label: 'CONTROLS',
-                    action: this.controls,
+                    action: () => {},
                     icon: 'settingsWhite.png',
                 },
                 {
                     label: 'HOW TO',
-                    action: () => {},
+                    action: this.enter,
                     icon: 'bookWhite.png',
                 },
             ],
@@ -88,6 +130,7 @@ export default {
         window.addEventListener('move-up-start', this.prev);
         window.addEventListener('menu-accept-start', this.accept);
         window.addEventListener('menu-back-start', this.back);
+        window.addEventListener('resize', this.resize);
     },
 
     beforeDestroy() {
@@ -95,6 +138,7 @@ export default {
         window.removeEventListener('move-up-start', this.prev);
         window.removeEventListener('menu-accept-start', this.accept);
         window.removeEventListener('menu-back-start', this.back);
+        window.removeEventListener('resize', this.resize);
     },
 }
 </script>
@@ -105,13 +149,17 @@ export default {
 
 #gameMenu {
     width: 100%;
+    height: 200px; 
     max-width: 650px;
     position: relative;
+    overflow: hidden;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    > * { margin: 0 50px; }
+ 
+    @media only screen and (min-width: $tablet) {
+        height: 400px;
+    }
 }
 </style>

@@ -70,6 +70,7 @@ export default {
 @import '~style/palette';
 
 #gameMenu-preview-modes {
+    min-width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -82,8 +83,20 @@ export default {
     display: flex;
     align-items: center;
 
-    * { margin: 0 10px; }
-    span { width: 50px; cursor: pointer; }
+    span { 
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+
+        object { width: 100%; }
+    }
+
+    p {
+        width: 80px;
+        margin: 0 15px;
+        text-align: center;
+    }
+
     span:nth-child(3) object { transform: rotate(180deg); }
 }
 

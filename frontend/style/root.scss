@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@import '~style/palette';
-@import '~style/canvas';
-@import '~style/transitions';
+@import 'style/palette';
+@import 'style/canvas';
+@import 'style/transitions';
 
+$desktop: 800px;
 $tablet: 600px;
-$mobile: 400px;
 
 * {
     box-sizing: border-box;
