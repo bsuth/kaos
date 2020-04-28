@@ -52,6 +52,7 @@ export class OrbGenerator
 
     init()
     {
+        this.orbs = [];
         for (let i = 0 ; i < settings.NUM_ORBS; ++i)
             this.orbs.push(this.initOrb());
     }

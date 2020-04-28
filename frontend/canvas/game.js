@@ -53,10 +53,6 @@ function gameloop(tFrame)
 export function restart(event)
 {
     document.removeEventListener('keydown', keydown);
-    gameMode.player.activeKeys = [];
-    gameMode.player.restoreKeys = [];
-    gameMode.player.color = 0;
-    gameMode.orbGenerator.orbs = [];
     gameMode.state.gameover = true;
     // delay for gameloop return.
     setTimeout(run, 20);
