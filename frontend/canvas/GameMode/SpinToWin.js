@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as settings from './settings';
+import * as settings from '../settings';
 import GameModeAbstract from './Abstract';
 
 // -----------------------------------------------------------------------------
-// TIMED GAME MODE
+// SPIN TO WIN GAME MODE
 // -----------------------------------------------------------------------------
 
 export default class SpinToWin extends GameModeAbstract
@@ -27,6 +27,22 @@ export default class SpinToWin extends GameModeAbstract
     constructor(player, orbGenerator)
     {
         super(player, orbGenerator);
+    }
+
+    init()
+    {
+        super.init();
+    }
+
+    checkSpin()
+    {
+        if (this.player.geo.theta > 2 * Math.PI) {
+            this.player.geo.theta = this.player.geo.theta - 2 * Math.PI;
+            this.state.score++;
+        } else if (this.player.geo.theta < -2 * Math.PI) {
+            this.player.geo.theta = this.player.geo.theta + 2 * Math.PI;    
+            this.state.score++;
+        }
     }
 
     update()
@@ -37,12 +53,15 @@ export default class SpinToWin extends GameModeAbstract
         // Check collisions
         if (settings.DEVELOPMENT.GODMODE == 0) {
             for (let orb of this.orbGenerator.orbs) {
-                if (orb.color == this.player.state.color)
+                if (orb.color == this.player.color)
                     continue;
 
                 if (this.player.checkCollision(orb))
                     this.state.gameover = true;
             }
         }
+
+        // Check spin
+        this.checkSpin();
     }
 }

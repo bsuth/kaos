@@ -36,6 +36,8 @@ export class Player {
             y1: canvas.height / 2,
             x2: canvas.width / 2 + settings.PLAYER_LENGTH,
             y2: canvas.height / 2,
+
+            theta: 0,
         };
     
         this.cache = {
@@ -71,6 +73,8 @@ export class Player {
             y1: canvas.height / 2,
             x2: canvas.width / 2 + settings.PLAYER_LENGTH,
             y2: canvas.height / 2,
+
+            theta: 0,
         };
     }
 
@@ -245,5 +249,8 @@ export class Player {
         this.geo.y1 = originY + (x1 * sin + y1 * cos);
         this.geo.x2 = originX + (x2 * cos - y2 * sin);
         this.geo.y2 = originY + (x2 * sin + y2 * cos);
+
+        // Record the total rotation
+        this.geo.theta += theta;
     }
 }
