@@ -16,49 +16,47 @@
 -->
 
 <template>
-    <ul id='gameMenu-list'>
-        <Item
-            v-for='(item, index) in items'
-            :key='index'
-            v-bind='item'
-            :active="index == activeItem"
-        />
-    </ul>
+    <div>
+        <h2>General</h2>
+        <ul>
+            <li>Dodge orbs of colors different than your own.</li>
+            <li>Move, rotate, and change your color to survive.</li>
+        </ul>
+
+        <h2>Game Modes</h2>
+        <ul>
+            <li><span>Timed</span>: Survive as long as you can.</li>
+            <li><span>Spin2Win</span>: Gain points by completing full rotations.</li>
+            <li><span>Collector</span>: Collect orbs of the same color as your own.</li>
+        </ul>
+    </div>
 </template>
 
 
 <script>
-import Item from './List/Item';
-
-export default {
-    components: { Item },
-    props: [ 'items', 'activeItem' ],
-}
 </script>
 
 
-<style lang='scss'>
-@import '~style/root';
+<style lang='scss' scoped>
+@import 'style/root';
 
-#gameMenu-list {
-    width: 80%;
-    position: absolute;
-    left: 20%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    transition: left 0.25s ease-out;
+div {
+    /* core */
+    ul { padding: 0; }
+    ul li { margin: 10px 0; }
+    ul li span { font-weight: bold; }
 
+    /* mobile */
+    font-size: 12px;
+
+    /* tablet */
     @media only screen and (min-width: $tablet) {
-        width: auto;
-        position: relative;
-        left: 0;
-        margin-right: 80px;
-        transition: none;
+        font-size: 2vw;
     }
 
+    /* desktop */
     @media only screen and (min-width: $desktop) {
-        margin-right: 120px;
+        font-size: 16px;
     }
 }
 </style>

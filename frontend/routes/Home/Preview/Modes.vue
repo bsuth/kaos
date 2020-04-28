@@ -1,0 +1,68 @@
+<!--
+ Kaos
+ Copyright (C) 2020 Brian Sutherland (bsuth)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<template>
+    <Carousel
+        :items='items'
+        :activeItem='activeItem'
+        :isActive='isActive'
+        @update-active-item='activeItem = $event'
+    >
+        <div class='gif'
+            v-for='(item, index) in items'
+            v-show='index == activeItem'
+            :key='item.label'
+        >{{ items[activeItem].label }} gif</div>
+    </Carousel>
+</template>
+
+
+<script>
+import Carousel from './Carousel.vue';
+
+export default {
+    components: { Carousel },
+    props: [ 'isActive' ],
+
+    data() {
+        return {
+            activeItem: 0,
+            items: [
+                { label: 'Timed', },
+                { label: 'Spin2Win', },
+                { label: 'Collector', },
+            ],
+        }
+    },
+}
+</script>
+
+
+<style lang='scss' scoped>
+@import 'style/palette';
+
+.gif {
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid $grey;    
+    border-radius: 8px;
+}
+</style>
