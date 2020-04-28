@@ -63,6 +63,9 @@ export class Player {
     
     init()
     {
+        this.activeKeys = [];
+        this.restoreKeys = [];
+        this.color = 0;
         this.geo = {
             x1: canvas.width / 2,
             y1: canvas.height / 2,
