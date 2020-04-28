@@ -29,8 +29,20 @@ export default class Timed extends GameModeAbstract
         super(player, orbGenerator);
     }
 
-    update()
+    init()
     {
+        super.init();
+        this.state.tStart = false;
+    }
+
+    update(tFrame)
+    {
+        // calculate score
+        if (!this.state.tStart)
+            this.state.tStart = tFrame;
+        else
+            this.state.score = parseInt((tFrame - this.state.tStart) / 10);
+
         this.player.update();
         this.orbGenerator.update();
 

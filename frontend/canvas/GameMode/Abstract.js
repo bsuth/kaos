@@ -30,12 +30,14 @@ export default class GameModeAbstract
 
         this.state = {
             gameover: false,
+            score: 0,
         };
     }
     
     init()
     {
         this.state.gameover = false;
+        this.state.score = 0;
         this.player.init();
         this.orbGenerator.init();
     }

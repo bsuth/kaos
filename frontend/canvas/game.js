@@ -37,15 +37,11 @@ export let gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator
 function gameloop(tFrame)
 {
     // Count the time and award points.
-    if (!gameMode.state.tStart)
-        gameMode.state.tStart = tFrame;
-    else
-        gameMode.player.score = parseInt((tFrame - gameMode.state.tStart) / 10);
-
-    gameMode.update();
+    gameMode.update(tFrame);
 
     if (gameMode.state.gameover) {
         document.addEventListener('keydown', keydown);
+        console.log('score:', gameMode.state.score);
         return;
     }
 
