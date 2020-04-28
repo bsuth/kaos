@@ -17,7 +17,7 @@
 
 <template>
     <div id='gameMenu-preview'>
-        <transition-group name="fade" mode="out-in">
+        <transition-group name="fade" mode="out-in" class='gameMenu-preview-transition'>
             <component 
                 v-for='(item, index) in items'
                 :key='item.label'
@@ -31,16 +31,16 @@
 
 <script>
 import Modes from './Preview/Modes';
-import Settings from './Preview/Settings';
+import Controls from './Preview/Controls';
 import HowToPlay from './Preview/HowToPlay';
 
 export default {
-    components: { Modes, Settings, HowToPlay },
+    components: { Modes, Controls, HowToPlay },
     props: [ 'items', 'activeItem' ],
 
     data() {
         return {
-            previews: [ Modes, Settings, HowToPlay ],
+            previews: [ Modes, Controls, HowToPlay ],
         };
     },
 }
@@ -55,11 +55,11 @@ export default {
 
     @media only screen and (min-width: $tablet) {
         width: 70%;
-        height: 300px;
+        height: 400px; 
         position: relative;
         display: block;
 
-        * {
+        .gameMenu-preview-transition > * {
             width: 100%;
             height: 100%;
             position: absolute;

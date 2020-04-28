@@ -16,22 +16,13 @@
 -->
 
 <template>
-    <div id='about'>
-        This is the about page.
+    <div id='about' class='page'>
+        Welcome to Kaos, 
     </div>
 </template>
 
 
-<script>
-export default {
-    mounted() {
-    }
-}
-</script>
-
-
 <style lang='scss' scoped>
 #about {
-    color: white;
 }
 </style>

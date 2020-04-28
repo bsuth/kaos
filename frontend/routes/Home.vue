@@ -16,7 +16,7 @@
 -->
 
 <template>
-    <div id='home'>
+    <div id='home' class='page'>
         <GameMenu />
     </div>
 </template>

@@ -21,7 +21,6 @@
         <transition name="fade" mode="out-in">
             <router-view></router-view>
         </transition>
-        <Input />
         <Footer />
     </div>
 </template>
@@ -31,11 +30,10 @@
 import router from './router';
 import Navbar from 'components/Navbar';
 import Footer from 'components/Footer';
-import Input from 'components/Input';
 
 export default {
     router: router,
-    components: { Navbar, Footer, Input },
+    components: { Navbar, Footer },
 };
 </script>
 

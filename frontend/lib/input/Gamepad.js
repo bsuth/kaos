@@ -15,77 +15,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { 
-    getContext,
-    MENU_ACTION_EVENTS,
-    GAME_ACTION_EVENTS,
-    registerAction,
-    unregisterAction,
-} from './ActionEvents';
+import { getContext } from './State';
+import { CORE_ACTION_EVENTS, registerAction, unregisterAction } from './ActionEvents';
+import * as Xbox from './Gamepad/Xbox';
 
 // -----------------------------------------------------------------------------
-// DEFAULT MAPPINGS
+// STATE / CONSTANTS
 // -----------------------------------------------------------------------------
 
 export const ID = 'GAMEPAD';
 
-export const MAPPINGS = {
-    MENU: {
-        BUTTONS: {
-            0: MENU_ACTION_EVENTS.ACCEPT, // A
-            1: MENU_ACTION_EVENTS.BACK, // B
-        },
-        AXES: {
-            0: MENU_ACTION_EVENTS.MOVE_X, // L_STICK_X
-            1: MENU_ACTION_EVENTS.MOVE_Y, // L_STICK_Y
-            2: MENU_ACTION_EVENTS.MODE_PREV, // L_TRIGGER
-            3: MENU_ACTION_EVENTS.MOVE_X, // R_STICK_X
-            4: MENU_ACTION_EVENTS.MOVE_Y, // R_STICK_Y
-            5: MENU_ACTION_EVENTS.MODE_NEXT, // R_TRIGGER
-            6: MENU_ACTION_EVENTS.MOVE_X, // DPAD_X
-            7: MENU_ACTION_EVENTS.MOVE_Y, // DPAD_Y
-        },
-    },
-    GAME: {
-        BUTTONS: {
-            0: GAME_ACTION_EVENTS.GREEN, // A
-            1: GAME_ACTION_EVENTS.PURPLE, // B
-            2: GAME_ACTION_EVENTS.CYAN, // X
-            3: GAME_ACTION_EVENTS.RED, // Y
-            4: GAME_ACTION_EVENTS.ROTATE_CC, // LB
-            5: GAME_ACTION_EVENTS.ROTATE, // RB
-            6: null, // SELECT
-            7: GAME_ACTION_EVENTS.PAUSE, // START
-        },
-        AXES: {
-            0: GAME_ACTION_EVENTS.MOVE_X, // L_STICK_X
-            1: GAME_ACTION_EVENTS.MOVE_Y, // L_STICK_Y
-            2: GAME_ACTION_EVENTS.ROTATE_CC, // L_TRIGGER
-            3: GAME_ACTION_EVENTS.MOVE_X, // R_STICK_X
-            4: GAME_ACTION_EVENTS.MOVE_Y, // R_STICK_Y
-            5: GAME_ACTION_EVENTS.ROTATE, // R_TRIGGER
-            6: GAME_ACTION_EVENTS.MOVE_X, // DPAD_X
-            7: GAME_ACTION_EVENTS.MOVE_Y, // DPAD_Y
-        },
-    },
-};
-
-
-// -----------------------------------------------------------------------------
-// STATE
-// -----------------------------------------------------------------------------
-
 let _gamepad = null;
+let _buttonMap = Xbox.BUTTONS;
+let _triggerMap = Xbox.TRIGGERS;
+let _axisGroups = Xbox.AXES;
+
+
+// -----------------------------------------------------------------------------
+// EVENT LISTENERS
+// -----------------------------------------------------------------------------
 
 window.addEventListener('gamepadconnected', event => {
     _gamepad = event.gamepad;
+
+    if (Xbox.REGEX.test(_gamepad.id)) {
+        _buttonMap = Xbox.BUTTONS;
+        _triggerMap = Xbox.TRIGGERS;
+        _axisGroups = Xbox.AXES;
+    }
+
     console.log('gamepad connected!', _gamepad);
     window.requestAnimationFrame(inputLoop);
 });
 
-window.addEventListener('gamepaddisconnected', event => {
-    console.log('Gamepad disconnected from index %d: %s',
-        event.gamepad.index, event.gamepad.id);
+window.addEventListener('gamepaddisconnected', _ => {
+    console.log('Gamepad disconnected');
+    _gamepad = null;
 });
 
 
@@ -98,26 +63,48 @@ function inputLoop()
     if (_gamepad) {
         let context = getContext();
 
-        for (let [id, button] of Object.entries(_gamepad.buttons)) {
-            let action = MAPPINGS[context]['BUTTONS'][id];
-
-            (button.pressed) ?
+        // Register button events
+        for (let [id, action] of Object.entries(_buttonMap[context])) {
+            (_gamepad.buttons[id].pressed) ?
                 registerAction(id, action) :
                 unregisterAction(id, action);
         }
 
-        for (let [id, axis] of Object.entries(_gamepad.axes)) {
-            let action = MAPPINGS[context]['AXES'][id];
-
+        // Register trigger events
+        for (let [id, action] of Object.entries(_triggerMap[context])) {
             // Triggers have values (unpressed=-1, pressed=1), with 0 being a
             // half press. This isn't very useful so we transform these values
             // to (unpressed=0, pressed=1)
-            if (id == 2 || id == 5)
-                axis = (axis + 1) / 2;
+            let axis = (_gamepad.axes[id] + 1) / 2;
 
-            (Math.abs(axis) > 0.1) ?
-                registerAction(id, action, { axis: axis }) :
+            // Trigger must be pressed a certain amount before event fires
+            (axis > 0.1) ?
+                registerAction(id, action) :
                 unregisterAction(id, action);
+        }
+
+        // Register discrete axis events
+        for (let [id, {X_AXIS_ID, Y_AXIS_ID}] of Object.entries(_axisGroups)) {
+            let x = _gamepad.axes[X_AXIS_ID];
+            let y = _gamepad.axes[Y_AXIS_ID];
+
+            if (Math.abs(x) > 0.1) {
+                (x < 0) ? 
+                    registerAction(id, CORE_ACTION_EVENTS.MOVE_LEFT) :
+                    registerAction(id, CORE_ACTION_EVENTS.MOVE_RIGHT);
+            } else {
+                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_LEFT);
+                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_RIGHT);
+            }
+
+            if (Math.abs(y) > 0.1) {
+                (y < 0) ? 
+                    registerAction(id, CORE_ACTION_EVENTS.MOVE_UP) :
+                    registerAction(id, CORE_ACTION_EVENTS.MOVE_DOWN);
+            } else {
+                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_UP);
+                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_DOWN);
+            }
         }
 
         window.requestAnimationFrame(inputLoop);

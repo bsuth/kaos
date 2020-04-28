@@ -35,29 +35,21 @@ export default {
             document.getElementById('app').style.opacity = 0;
             setTimeout(() => window.game.run(), 500);
         },
-        settings: function() { 
+        controls: function() { 
             console.log('settings');
         },
-        howtoplay: function() { 
-            console.log('how to play');
+        prev: function() {
+            (this.activeItem == 0) ?
+                this.activeItem = this.items.length - 1 :
+                --this.activeItem;
         },
-        moveY: function(event) {
-            if (event.detail.axis > 0) {
-                (this.activeItem === this.items.length - 1) ?
-                    this.activeItem = 0 :
-                    ++this.activeItem;
-            } else {
-                (this.activeItem == 0) ?
-                    this.activeItem = this.items.length - 1 :
-                    --this.activeItem;
-            }
+        next: function(event) {
+            (this.activeItem === this.items.length - 1) ?
+                this.activeItem = 0 :
+                ++this.activeItem;
         },
-        back: function() {
-            console.log('back!');
-        },
-        accept: function() {
-            (this.items[this.activeItem].action)();
-        },
+        back: function() { console.log('back!'); },
+        accept: function() { (this.items[this.activeitem].action)(); },
     },
 
     data() {
@@ -70,13 +62,13 @@ export default {
                     icon: 'playWhite.png',
                 },
                 {
-                    label: 'SETTINGS',
-                    action: this.settings,
+                    label: 'CONTROLS',
+                    action: this.controls,
                     icon: 'settingsWhite.png',
                 },
                 {
                     label: 'HOW TO',
-                    action: this.howtoplay,
+                    action: () => {},
                     icon: 'bookWhite.png',
                 },
             ],
@@ -92,13 +84,15 @@ export default {
             });
         }
 
-        window.addEventListener('menu-move-y-start', this.moveY);
+        window.addEventListener('move-down-start', this.next);
+        window.addEventListener('move-up-start', this.prev);
         window.addEventListener('menu-accept-start', this.accept);
         window.addEventListener('menu-back-start', this.back);
     },
 
     beforeDestroy() {
-        window.removeEventListener('menu-move-y-start', this.moveY);
+        window.removeEventListener('move-down-start', this.next);
+        window.removeEventListener('move-up-start', this.prev);
         window.removeEventListener('menu-accept-start', this.accept);
         window.removeEventListener('menu-back-start', this.back);
     },
@@ -117,5 +111,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    > * { margin: 0 50px; }
 }
 </style>
