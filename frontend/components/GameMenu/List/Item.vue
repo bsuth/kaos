@@ -48,12 +48,6 @@ $iconLeftPadding: 10px;
 // MENU ITEM
 // -----------------------------------------------------------------------------
 
-@mixin gameMenu-list-item-active {
-    transform: scale(1.5);
-    & > .gameMenu-list-item-label { @include underline-active; }
-    .gameMenu-list-item-icon-mask img { left: 0; }
-}
-
 .gameMenu-list-item {
     margin: 20px 0 20px ($iconWidth + $iconLeftPadding);
     position: relative;
@@ -63,10 +57,13 @@ $iconLeftPadding: 10px;
     transition: transform 0.25s ease-out;
 
     & > .gameMenu-list-item-label { @include underline-core; }
-    /* &:hover { @include gameMenu-list-item-active } */
 }
 
-.gameMenu-list-item-active { @include gameMenu-list-item-active }
+.gameMenu-list-item-active {
+    transform: scale(1.5);
+    & > .gameMenu-list-item-label { @include underline-active; }
+    .gameMenu-list-item-icon-mask img { left: 0; }
+}
 
 @for $i from 1 through length($palette) {
     .gameMenu-list-item:nth-child(4n + #{$i}) .gameMenu-list-item-label {

@@ -72,6 +72,7 @@ export default {
 #gameMenu-preview-modes {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
     > * { margin: 10px 0; }
@@ -88,7 +89,7 @@ export default {
 
 .gif {
     width: 100%;
-    height: 300px;    
+    height: 200px;
 
     display: flex;
     justify-content: center;

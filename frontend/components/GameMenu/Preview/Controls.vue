@@ -16,8 +16,12 @@
 -->
 
 <template>
-    <div id='gameMenu-preview-settings'>
-        settings!
+    <div id='gameMenu-preview-controls'>
+        <h2>Keyboard</h2>
+        <object data="KeyboardControls.svg" type="image/svg+xml" />
+
+        <h2>Xbox</h2>
+        <object data="XboxControls.svg" type="image/svg+xml" />
     </div>
 </template>
 
@@ -27,8 +31,11 @@
 
 
 <style lang='scss' scoped>
-@import '~style/palette';
+#gameMenu-preview-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-#gameMenu-preview-settings {
+    ul li span { font-weight: bold; }
 }
 </style>

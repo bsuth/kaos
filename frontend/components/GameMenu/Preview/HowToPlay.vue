@@ -17,7 +17,17 @@
 
 <template>
     <div id='gameMenu-preview-howToPlay'>
-        how to play!
+        <h2>General</h2>
+        <p>
+            Dodge orbs of colors different than your own.<br />
+            Move, rotate, and change your color to survive.
+        </p>
+        <h2>Game Modes</h2>
+        <ul>
+            <li><span>Timed</span>: Survive as long as you can.</li>
+            <li><span>Spin2Win</span>: Gain points by completing full rotations.</li>
+            <li><span>Collector</span>: Collect orbs of the same color as your own.</li>
+        </ul>
     </div>
 </template>
 
@@ -28,6 +38,10 @@
 
 <style lang='scss' scoped>
 #gameMenu-preview-howToPlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
+    ul li span { font-weight: bold; }
 }
 </style>

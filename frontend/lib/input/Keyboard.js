@@ -16,12 +16,13 @@
  */
 
 import { 
-    getContext,
+    CORE_ACTION_EVENTS,
     MENU_ACTION_EVENTS,
     GAME_ACTION_EVENTS,
     registerAction,
     unregisterAction,
 } from './ActionEvents';
+import { CONTEXTS, getContext } from './State';
 
 // -----------------------------------------------------------------------------
 // DEFAULT MAPPINGS
@@ -30,15 +31,15 @@ import {
 export const ID = 'KEYBOARD';
 
 const MAPPINGS = {
-    MENU: {
-        'w': MENU_ACTION_EVENTS.MOVE_UP,
-        's': MENU_ACTION_EVENTS.MOVE_DOWN,
-        'd': MENU_ACTION_EVENTS.MOVE_RIGHT,
-        'a': MENU_ACTION_EVENTS.MOVE_LEFT,
+    [CONTEXTS.MENU]: {
+        'w': CORE_ACTION_EVENTS.MOVE_UP,
+        's': CORE_ACTION_EVENTS.MOVE_DOWN,
+        'd': CORE_ACTION_EVENTS.MOVE_RIGHT,
+        'a': CORE_ACTION_EVENTS.MOVE_LEFT,
         'Enter': MENU_ACTION_EVENTS.ACCEPT,
         'Backspace': MENU_ACTION_EVENTS.BACK,
     },
-    GAME: {
+    [CONTEXTS.GAME]: {
         'w': GAME_ACTION_EVENTS.MOVE_UP,
         's': GAME_ACTION_EVENTS.MOVE_DOWN,
         'd': GAME_ACTION_EVENTS.MOVE_RIGHT,
