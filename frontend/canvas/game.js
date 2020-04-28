@@ -19,6 +19,7 @@ import * as orbGenerator from './orbGenerator';
 import * as player from './player';
 import * as settings from './settings';
 import Timed from './GameMode/Timed';
+import Collector from './GameMode/Collector';
 
 // -----------------------------------------------------------------------------
 // GAME (GLOBALS)
@@ -32,7 +33,7 @@ export const ctx = canvas.getContext('2d');
 // GAME LOOP
 // -----------------------------------------------------------------------------
 
-export let gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
+export let gameMode = new Collector(new player.Player, new orbGenerator.OrbGenerator);
 
 function gameloop(tFrame)
 {

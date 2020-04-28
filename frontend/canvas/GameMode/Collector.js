@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as settings from './settings';
+import * as settings from '../settings';
 import GameModeAbstract from './Abstract';
 
 // -----------------------------------------------------------------------------
-// TIMED GAME MODE
+// COLLECTOR GAME MODE
 // -----------------------------------------------------------------------------
 
 export default class Collector extends GameModeAbstract
@@ -27,6 +27,13 @@ export default class Collector extends GameModeAbstract
     constructor(player, orbGenerator)
     {
         super(player, orbGenerator);
+        this.collected = {};
+    }
+
+    init()
+    {
+        super.init();
+        this.collected = {};
     }
 
     update()
@@ -35,14 +42,24 @@ export default class Collector extends GameModeAbstract
         this.orbGenerator.update();
 
         // Check collisions
-        if (settings.DEVELOPMENT.GODMODE == 0) {
-            for (let orb of this.orbGenerator.orbs) {
-                if (orb.color == this.player.state.color)
-                    continue;
-
-                if (this.player.checkCollision(orb))
+        let counter = 0;
+        for (let orb of this.orbGenerator.orbs) {
+            if (this.player.checkCollision(orb)) {
+                if (orb.color == this.player.color) {
+                    this.collected[counter] = true;
+                } else if ( settings.DEVELOPMENT.GODMODE == 0 ) {
                     this.state.gameover = true;
-            }
+                }
+            }   
+            counter++;
         }
+
+        // Add points, remove collected orbs, spawn new orbs.
+        for (const index in this.collected) {
+            this.state.score++;
+            this.orbGenerator.orbs.splice(index, 1);
+            this.orbGenerator.orbs.push(this.orbGenerator.initOrb());
+        }
+        this.collected = {};
     }
 }
