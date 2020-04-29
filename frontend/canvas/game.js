@@ -47,6 +47,10 @@ function gameloop(tFrame)
         return;
     }
 
+    if (gameMode.state.paused) {
+        return;
+    }
+
     gameMode.draw();
 
     requestAnimationFrame(gameloop);
@@ -92,7 +96,12 @@ export function leave() {
 }
 
 export function pause() {
-    // pause the game
+    if (gameMode.state.paused) {
+        gameMode.state.paused = false;
+        gameloop();
+    } else {
+        gameMode.state.paused = true;
+    }
 }
 
 export function restart(event)

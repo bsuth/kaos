@@ -30,6 +30,7 @@ export default class GameModeAbstract
 
         this.state = {
             gameover: false,
+            paused: false,
             score: 0,
         };
     }
@@ -42,6 +43,7 @@ export default class GameModeAbstract
     init()
     {
         this.state.gameover = false;
+        this.state.paused = false;
         this.state.score = 0;
         this.player.init();
         this.orbGenerator.init();
