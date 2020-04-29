@@ -16,12 +16,14 @@
 -->
 
 <template>
-    <table id='score'>
-        <tr v-for='(scores, category) in categoryScores' :key='category'>
-            <th>{{ category }}</th>
-            <td v-for='(score, index) in scores' :key='index'>{{ score }}</td>
-        </tr>
-    </table>
+    <div id='score'>
+        <Leaderboard 
+            v-for='(scores, category) in $data'
+            :key='category'
+            :category='category'
+            :scores='scores'
+        />
+    </div>
 </template>
 
 
@@ -32,22 +34,20 @@ export default {
     components: { Leaderboard },
 
     data() {
-        let categoryScores = JSON.parse(localStorage.getItem('category_scores'));
+        let scoreData = JSON.parse(localStorage.getItem('score_data'));
 
         // Init scores
-        if (!categoryScores) {
-            categoryScores = {
-                'Timed': [1, 2, 3],
-                'Spin2Win': [4, 5, 6],
-                'Collector': [7, 8, 9],
+        if (!scoreData) {
+            scoreData = {
+                'Timed': [],
+                'Spin2Win': [],
+                'Collector': [],
             };
 
-            localStorage.setItem('category_scores', JSON.stringify(categoryScores));
+            localStorage.setItem('score_data', JSON.stringify(scoreData));
         }
 
-        return {
-            categoryScores: categoryScores,
-        };
+        return scoreData;
     },
 }
 </script>
@@ -55,9 +55,7 @@ export default {
 
 <style lang='scss' scoped>
 #score {
-    margin: 50px auto 0;
-
-    /* needed for route-view flex-grow */
-    display: block;
+    width: 100%;
+    margin: 20px auto 0;
 }
 </style>

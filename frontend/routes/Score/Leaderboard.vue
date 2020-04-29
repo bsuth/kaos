@@ -16,18 +16,21 @@
 -->
 
 <template>
-    <div class='leaderboard'>
-        <h3>{{ $vnode.key }}</h3>
-        <ul>
-            <li v-for='(score, index) in scores' :key='index'>{{ score }}</li>
-        </ul>
-        <table>
-            <tr>
-                <th>{{ $vnode.key }}</th>
-                <td>2</td>
-            </tr>
-        </table>
-    </div>
+    <table>
+        <tr>
+            <th><h2>{{ category }}</h2></th>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>Date</td>
+            <td>Score</td>
+        </tr>
+        <tr v-for='(data, index) in scores' :key='index'>
+            <td>{{ data.name }}</td>
+            <td>{{ data.date }}</td>
+            <td>{{ data.score }}</td>
+        </tr>
+    </table>
 </template>
 
 
@@ -39,10 +42,28 @@ export default {
 
 
 <style lang='scss' scoped>
-.leaderboard {
-    display: flex;
-    flex-direction: row;
+@import 'style/root';
 
-    ul { display: flex; }
+table {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid $grey;
+    border-radius: 10px;
+
+    tr {
+        display: flex;
+        justify-content: center;
+    }
+
+    td {
+        width: 30%;
+        height: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center; 
+        vertical-align: middle;
+    }
 }
 </style>
