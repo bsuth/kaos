@@ -92,6 +92,7 @@ export function enter(gameName)
 }
 
 export function leave() {
+    gameMode.state.gameover = true;
     gameMode.destructor();
     window.removeEventListener('resize', resize);
 }
@@ -108,7 +109,7 @@ export function pause() {
 export function restart(event)
 {
     document.removeEventListener('keydown', keydown);
-    gameMode.state.gameover = true;
+    leave();
     // delay for gameloop return.
     setTimeout(enter, 20);
 }
