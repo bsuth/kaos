@@ -18,8 +18,8 @@
 <template>
     <transition-group 
         id='preview'
-        name="fade"
-        mode="out-in"
+        name='fade'
+        mode='out-in'
         v-bind:class="{ 'slide-in': isSubMenu }"
     >
         <component 

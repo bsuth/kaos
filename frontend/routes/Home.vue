@@ -75,12 +75,15 @@ export default {
         },
         enterSubMenu: function() {
             this.isSubMenu = true;
+            window.removeEventListener('move-down-start', this.next);
+            window.removeEventListener('move-up-start', this.prev);
         },
 
         // EVENT LISTENER FUNCTIONS
         resize: function() {
-            if (window.innerWidth > TABLET)
-                this.isSubMenu = false;
+            if (window.innerWidth > TABLET && this.isSubMenu) {
+                this.back();
+            }
         },
         accept: function() {
             let item = this.items[this.activeItem];
@@ -95,6 +98,8 @@ export default {
         },
         back: function() {
             this.isSubMenu = false;
+            window.addEventListener('move-down-start', this.next);
+            window.addEventListener('move-up-start', this.prev);
         },
         prev: function() {
             (this.activeItem === 0) ?

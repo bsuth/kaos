@@ -26,7 +26,7 @@
             v-for='(item, index) in items'
             v-show='index == activeItem'
             :key='item.label'
-        >{{ items[activeItem].label }} gif</div>
+        >{{ item.label }} gif</div>
     </Carousel>
 </template>
 
@@ -56,12 +56,6 @@ export default {
 @import 'style/palette';
 
 .gif {
-    width: 100%;
-    max-width: 350px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border: 2px solid $grey;    
     border-radius: 8px;
 }

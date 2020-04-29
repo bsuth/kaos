@@ -26,7 +26,7 @@
             v-for='(item, index) in items'
             v-show='index == activeItem'
             :key='item.label'
-            :data='items[activeItem].data'
+            :data='item.data'
             type='image/svg+xml'
         />
     </Carousel>
@@ -59,7 +59,3 @@ export default {
     },
 }
 </script>
-
-
-<style lang='scss' scoped>
-</style>

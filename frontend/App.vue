@@ -18,8 +18,10 @@
 <template>
     <div id='app'>
         <Navbar />
-        <transition name="fade" mode="out-in">
-            <router-view></router-view>
+        <transition name='fade' mode='out-in'>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </transition>
         <Footer />
     </div>
@@ -47,8 +49,6 @@ export default {
 
     /* This is needed to prevent the canvas from blocking certain clickables! */
     position: relative;
-
-    transition: opacity 0.5s ease-out;
 
     > *:nth-child(2) { flex-grow: 1; }
 }

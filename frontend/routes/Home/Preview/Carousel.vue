@@ -17,7 +17,7 @@
 
 <template>
     <div class='carousel'>
-        <transition-group name="fade" mode="out-in">
+        <transition-group name='fade' mode='out-in' class='carousel-transition'>
             <slot />
         </transition-group>
         <div class='switcher'>
@@ -67,9 +67,10 @@ export default {
 </script>
 
 
-<style lang='scss' scoped>
+<style lang='scss'>
 .carousel {
     min-width: 200px;
+    poisiton: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,6 +79,19 @@ export default {
     > * {
         max-width: 100%;
         margin: 10px 0;
+    }
+}
+
+.carousel-transition {
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+    position: relative;
+
+    & > * { 
+        width: 100%;
+        height: 100%;
+        position: absolute;
     }
 }
 
