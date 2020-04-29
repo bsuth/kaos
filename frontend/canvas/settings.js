@@ -148,7 +148,7 @@ export const PLAYER_LENGTH = 100;
 // -----------------------------------------------------------------------------
 
 // Number of orbs per 1000 pixels of canvas perimeter.
-export const ORB_DENSITY = 50;
+export const ORB_DENSITY = 10;
 
 export const ORB_RADIUS = 10;
 export const ORB_RADIUS_SQUARE = ORB_RADIUS**2;

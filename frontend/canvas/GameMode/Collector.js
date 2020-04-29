@@ -27,7 +27,6 @@ export default class Collector extends GameModeAbstract
     constructor(player, orbGenerator)
     {
         super(player, orbGenerator);
-        this.collected = {};
     }
 
     init()
