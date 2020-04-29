@@ -82,7 +82,7 @@ export function enter(gameName)
     // CANVAS INIT
     // -------------------------------------------------------------------------
     resize();
-    window.onresize = resize;
+    window.addEventListener('resize', resize);
 
     // -------------------------------------------------------------------------
     // START GAME
@@ -93,6 +93,7 @@ export function enter(gameName)
 
 export function leave() {
     gameMode.destructor();
+    window.removeEventListener('resize', resize);
 }
 
 export function pause() {
@@ -132,7 +133,4 @@ function resize()
 {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    gameMode.orbGenerator.pTopBottom = canvas.width / (canvas.width + canvas.height);
-    gameMode.orbGenerator.pLeftRight = canvas.height / (canvas.width + canvas.height);
-    gameMode.orbGenerator.canvasPerimeter = 2 * ( canvas.width + canvas.height );
 }

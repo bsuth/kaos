@@ -46,6 +46,28 @@ export class OrbGenerator
         this.pLeftRight = canvas.height / (canvas.width + canvas.height);
         this.canvasPerimeter = 2 * (canvas.width + canvas.height);
         this.numOrbs = Math.round((this.canvasPerimeter / 1000) * settings.ORB_DENSITY); 
+
+        window.addEventListener('resize', this.resize);
+    }
+
+    destructor()
+    {
+        window.removeEventListener('resize', this.resize);
+    }
+
+    resize()
+    {
+        this.pTopBottom = canvas.width / (canvas.width + canvas.height);
+        this.pLeftRight = canvas.height / (canvas.width + canvas.height);
+        this.canvasPerimeter = 2 * ( canvas.width + canvas.height );
+        this.numOrbs = Math.round((this.canvasPerimeter / 1000) * settings.ORB_DENSITY); 
+        if (this.numOrbs > this.orbs.length) {
+            for (let i = 0 ; i < this.numOrbs - this.orbs.length; ++i)
+                this.orbs.push(this.initOrb());
+        } else if (this.numOrbs < this.orbs.length) {
+            this.orbs.length = this.numOrbs;
+        }
+        console.log('orbs', this.orbs);
     }
 
     // -------------------------------------------------------------------------
