@@ -16,13 +16,55 @@
 -->
 
 <template>
-    <div id='about' class='page'>
-        Welcome to Kaos, 
+    <div>
+        <p>
+            Kaos is a browser based game written by two brothers who wanted to
+            try their hand at game development. The core game is written using the
+            <a href='https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API'>
+                Canvas API
+            </a>
+            while the frontend is written in <a href='https://vuejs.org/'>VueJS</a>.
+        </p>
+        <p>
+            Kaos values simplicity at its core and is in its current state a
+            complete game. That being said, there are still a couple of features
+            we wish to implement in the future:
+            <ul>
+                <li>Global Scoreboards</li>
+                <li>Customizable Settings</li>
+                <li>Multiplayer Game Modes?</li>
+            </ul>
+            For any questions or concerns, please feel free to 
+            <a href='https://github.com/kaos-game/kaos/issues'>
+                create an issue
+            </a>
+            on Github and we'll try to respond at our earliest convenience (please
+            check for already existing issue).
+        </p>
+        <p>
+            We had a ton of fun with this project and hope that you can enjoy it
+            as much as we have. With such dire times in the world, its easy to
+            realize how quickly things fall into chaos, but important to try our
+            best nonetheless.
+        </p>
+        <br />
+        <p>Best regards,</p>
+        <p>the developers</p>
     </div>
 </template>
 
 
 <style lang='scss' scoped>
-#about {
+@import 'style/root';
+
+div {
+    width: 80%;
+    margin: 50px auto;
+}
+
+a {
+    color: $cyan;
+
+    &:hover { color: $purple }
 }
 </style>
