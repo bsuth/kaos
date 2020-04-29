@@ -22,7 +22,7 @@ import GameModeAbstract from './Abstract';
 // SPIN TO WIN GAME MODE
 // -----------------------------------------------------------------------------
 
-export default class SpinToWin extends GameModeAbstract
+export default class Spin2Win extends GameModeAbstract
 {
     constructor(player, orbGenerator)
     {
