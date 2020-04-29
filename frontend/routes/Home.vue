@@ -71,7 +71,7 @@ export default {
         play: function() {
             this.leave();
             document.getElementById('app').style.opacity = 0;
-            setTimeout(() => window.game.run(), 500);
+            setTimeout(() => window.game.enter(), 500);
         },
         enterSubMenu: function() {
             this.isSubMenu = true;

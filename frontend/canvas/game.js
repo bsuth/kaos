@@ -20,7 +20,7 @@ import * as player from './player';
 import * as settings from './settings';
 import Timed from './GameMode/Timed';
 import Collector from './GameMode/Collector';
-import SpinToWin from './GameMode/SpinToWin';
+import Spin2Win from './GameMode/Spin2Win';
 
 // -----------------------------------------------------------------------------
 // GAME (GLOBALS)
@@ -34,7 +34,7 @@ export const ctx = canvas.getContext('2d');
 // GAME LOOP
 // -----------------------------------------------------------------------------
 
-export let gameMode = new SpinToWin(new player.Player, new orbGenerator.OrbGenerator);
+export let gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
 
 function gameloop(tFrame)
 {
@@ -57,21 +57,39 @@ export function restart(event)
     document.removeEventListener('keydown', keydown);
     gameMode.state.gameover = true;
     // delay for gameloop return.
-    setTimeout(run, 20);
+    setTimeout(enter, 20);
 }
 
-export function run()
-{
+export function enter(gameName)
+{ 
+    // -------------------------------------------------------------------------
+    // SET GAME MODE
+    // -------------------------------------------------------------------------
+    switch (gameName) {
+    case 'Timed':
+        gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
+        break;
+    case 'Collector':
+        gameMode = new Collector(new player.Player, new orbGenerator.OrbGenerator);
+        break;
+    case 'Spin2Win':
+        gameMode = new Spin2Win(new player.Player, new orbGenerator.OrbGenerator);
+        break;
+    }
+
     // -------------------------------------------------------------------------
     // CANVAS INIT
     // -------------------------------------------------------------------------
     resize();
     window.onresize = resize;
 
+    // -------------------------------------------------------------------------
+    // START GAME
+    // -------------------------------------------------------------------------
     gameMode.init();
-
     gameloop();
 }
+
 
 // -----------------------------------------------------------------------------
 // UTILS
