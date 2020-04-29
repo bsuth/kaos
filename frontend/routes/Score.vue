@@ -16,22 +16,48 @@
 -->
 
 <template>
-    <div id='score'>
-        this is the score page.
-    </div>
+    <table id='score'>
+        <tr v-for='(scores, category) in categoryScores' :key='category'>
+            <th>{{ category }}</th>
+            <td v-for='(score, index) in scores' :key='index'>{{ score }}</td>
+        </tr>
+    </table>
 </template>
 
 
 <script>
+import Leaderboard from './Score/Leaderboard.vue';
+
 export default {
-    mounted() {
-    }
+    components: { Leaderboard },
+
+    data() {
+        let categoryScores = JSON.parse(localStorage.getItem('category_scores'));
+
+        // Init scores
+        if (!categoryScores) {
+            categoryScores = {
+                'Timed': [1, 2, 3],
+                'Spin2Win': [4, 5, 6],
+                'Collector': [7, 8, 9],
+            };
+
+            localStorage.setItem('category_scores', JSON.stringify(categoryScores));
+        }
+
+        return {
+            categoryScores: categoryScores,
+        };
+    },
 }
 </script>
 
 
 <style lang='scss' scoped>
 #score {
-    color: white;
+    margin: 50px auto 0;
+
+    /* needed for route-view flex-grow */
+    display: block;
 }
 </style>
