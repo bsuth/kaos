@@ -134,4 +134,5 @@ function resize()
     canvas.height = window.innerHeight;
     gameMode.orbGenerator.pTopBottom = canvas.width / (canvas.width + canvas.height);
     gameMode.orbGenerator.pLeftRight = canvas.height / (canvas.width + canvas.height);
+    gameMode.orbGenerator.canvasPerimeter = 2 * ( canvas.width + canvas.height );
 }
