@@ -41,13 +41,17 @@ export class OrbGenerator
 {
     constructor()
     {
-        this.resize = this.resize.bind(this); 
-        window.addEventListener('resize', this.resize);
+        this.resize = this.resize.bind(this);
+        this.resizeHandler =  function () {
+            clearTimeout(this.resizeTimeoutID);
+            this.resizeTimeoutID = setTimeout(this.resize, 1000);
+        }.bind(this);
+        window.addEventListener('resize', this.resizeHandler);
     }
 
     destructor()
     {
-        window.removeEventListener('resize', this.resize);
+        window.removeEventListener('resize', this.resizeHandler);
     }
 
     resize()
