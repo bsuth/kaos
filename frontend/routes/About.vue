@@ -19,7 +19,9 @@
     <div>
         <p>
             Kaos is a browser based game written by two brothers who wanted to
-            try their hand at game development. The core game is written using the
+            try their hand at game development. The concept and prototype were
+            first conceived over a long weekend while being stuck inside during
+            quarantine. The core game is written using the
             <a href='https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API'>
                 Canvas API
             </a>
@@ -39,13 +41,11 @@
                 create an issue
             </a>
             on Github and we'll try to respond at our earliest convenience (please
-            check for already existing issue).
+            check for duplicate issues).
         </p>
         <p>
             We had a ton of fun with this project and hope that you can enjoy it
-            as much as we have. With such dire times in the world, its easy to
-            realize how quickly things fall into chaos, but important to try our
-            best nonetheless.
+            as much as we have.
         </p>
         <br />
         <p>Best regards,</p>
