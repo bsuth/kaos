@@ -33,6 +33,11 @@ export default class GameModeAbstract
             score: 0,
         };
     }
+
+    destructor()
+    {
+        this.player.destructor();
+    }
     
     init()
     {

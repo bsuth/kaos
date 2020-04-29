@@ -52,13 +52,10 @@ function gameloop(tFrame)
     requestAnimationFrame(gameloop);
 }
 
-export function restart(event)
-{
-    document.removeEventListener('keydown', keydown);
-    gameMode.state.gameover = true;
-    // delay for gameloop return.
-    setTimeout(enter, 20);
-}
+
+// -----------------------------------------------------------------------------
+// GAME API
+// -----------------------------------------------------------------------------
 
 export function enter(gameName)
 { 
@@ -88,6 +85,27 @@ export function enter(gameName)
     // -------------------------------------------------------------------------
     gameMode.init();
     gameloop();
+}
+
+export function leave() {
+    gameMode.destructor();
+}
+
+export function pause() {
+    // pause the game
+}
+
+export function restart(event)
+{
+    document.removeEventListener('keydown', keydown);
+    gameMode.state.gameover = true;
+    // delay for gameloop return.
+    setTimeout(enter, 20);
+}
+
+export function getScore()
+{
+    return gameMode.state.score;
 }
 
 
