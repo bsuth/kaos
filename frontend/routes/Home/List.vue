@@ -16,44 +16,53 @@
 -->
 
 <template>
-    <div id='gameMenu-preview-howToPlay'>
-        <h2>General</h2>
-        <p>
-            Dodge orbs of colors different than your own.<br /><br />
-            Move, rotate, and change your color to survive.
-        </p>
-        <h2>Game Modes</h2>
-        <ul>
-            <li><span>Timed</span>: Survive as long as you can.</li>
-            <li><span>Spin2Win</span>: Gain points by completing full rotations.</li>
-            <li><span>Collector</span>: Collect orbs of the same color as your own.</li>
-        </ul>
-    </div>
+    <ul v-bind:class="{ 'slide-out': isSubMenu }">
+        <Item
+            v-for='(item, index) in items'
+            :key='index'
+            v-bind='item'
+            :isActive='index == activeItem'
+        />
+    </ul>
 </template>
 
 
 <script>
+import Item from './List/Item';
+
+export default {
+    components: { Item },
+    props: [ 'items', 'activeItem', 'isSubMenu' ],
+}
 </script>
 
 
 <style lang='scss' scoped>
-@import 'style/root';
+@import '~style/root';
 
-#gameMenu-preview-howToPlay {
+ul {
+    /* core */
+    padding-left: 10%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    font-size: 12px;
+    align-items: flex-start;
 
-    ul li { margin: 10px 0; }
-    ul li span { font-weight: bold; }
+    /* mobile */
+    width: 100%;
+    position: absolute;
+    left: 0;
+    transition: left 0.25s ease-out;
 
+    &.slide-out { left: -100%; }
+
+    /* tablet / desktop */
     @media only screen and (min-width: $tablet) {
-        font-size: 2vw;
-    }
+        width: auto;
+        position: relative;
+        transition: none;
 
-    @media only screen and (min-width: $desktop) {
-        font-size: 16px;
+        /* needs to also account for scale factor */
+        margin-right: 80px;
     }
 }
 </style>

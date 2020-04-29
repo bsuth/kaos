@@ -16,27 +16,157 @@
 -->
 
 <template>
-    <div id='home' class='page'>
-        <GameMenu />
+    <div id='home' @item-hover='itemHover' @item-click='itemClick'>
+        <List :items='items' :activeItem='activeItem' :isSubMenu='isSubMenu' />
+        <Preview :items='items' :activeItem='activeItem' :isSubMenu='isSubMenu' />
     </div>
 </template>
 
 
 <script>
-import GameMenu from 'components/GameMenu';
+import { TABLET, DESKTOP, IS_TOUCH_DEVICE } from 'globals';
+
+import List from './Home/List.vue';
+import Preview from './Home/Preview.vue';
+
+import Modes from './Home/Preview/Modes.vue';
+import Controls from './Home/Preview/Controls.vue';
+import HowTo from './Home/Preview/HowTo.vue';
 
 export default {
-    components: { GameMenu },
+    components: { List, Preview },
+
+    methods: {
+        // STATE BASED FUNCTIONS
+        enter: function() {
+            if (!this.initialized) {
+                window.addEventListener('resize', this.resize);
+                window.addEventListener('move-down-start', this.next);
+                window.addEventListener('move-up-start', this.prev);
+                window.addEventListener('menu-accept-start', this.accept);
+                window.addEventListener('menu-back-start', this.back);
+                window.dispatchEvent(new Event('menu-enter'));
+            }
+        },
+        leave: function() {
+            window.removeEventListener('resize', this.resize);
+            window.removeEventListener('move-down-start', this.next);
+            window.removeEventListener('move-up-start', this.prev);
+            window.removeEventListener('menu-accept-start', this.accept);
+            window.removeEventListener('menu-back-start', this.back);
+            window.dispatchEvent(new Event('menu-leave'));
+        },
+
+        // ITEM PROPAGATION FUNCTIONS
+        itemHover: function(event) {
+            this.activeItem = event.detail.index;
+            event.stopPropagation();
+        },
+        itemClick: function(event) {
+            this.activeItem = event.detail.index;
+            this.accept();
+        },
+
+        // ITEM ACTIONS
+        play: function() {
+            this.leave();
+            document.getElementById('app').style.opacity = 0;
+            setTimeout(() => window.game.run(), 500);
+        },
+        enterSubMenu: function() {
+            this.isSubMenu = true;
+            window.removeEventListener('move-down-start', this.next);
+            window.removeEventListener('move-up-start', this.prev);
+        },
+
+        // EVENT LISTENER FUNCTIONS
+        resize: function() {
+            if (window.innerWidth > TABLET && this.isSubMenu) {
+                this.back();
+            }
+        },
+        accept: function() {
+            let item = this.items[this.activeItem];
+            let { action } = item;
+
+            if (window.innerWidth < TABLET) {
+                action = (this.isSubMenu) ? 
+                    item.mobileSubAction : item.mobileAction;
+            }
+
+            if (action) (action)();
+        },
+        back: function() {
+            this.isSubMenu = false;
+            window.addEventListener('move-down-start', this.next);
+            window.addEventListener('move-up-start', this.prev);
+        },
+        prev: function() {
+            (this.activeItem === 0) ?
+                this.activeItem = this.items.length - 1 :
+                --this.activeItem;
+        },
+        next: function(event) {
+            (this.activeItem === this.items.length - 1) ?
+                this.activeItem = 0 :
+                ++this.activeItem;
+        },
+    },
+
+    data() {
+        return {
+            initialized: false,
+            isSubMenu: false,
+            activeItem: 0,
+
+            items: [
+                {
+                    label: 'PLAY',
+                    icon: 'playWhite.png',
+                    action: this.play,
+                    mobileAction: this.enterSubMenu,
+                    mobileSubAction: this.play,
+                    preview: Modes,
+                },
+                {
+                    label: 'CONTROLS',
+                    icon: 'settingsWhite.png',
+                    mobileAction: this.enterSubMenu,
+                    preview: Controls,
+                },
+                {
+                    label: 'HOW TO',
+                    icon: 'bookWhite.png',
+                    mobileAction: this.enterSubMenu,
+                    preview: HowTo,
+                },
+            ],
+        }
+    },
+
+    mounted() {
+        this.enter();
+    },
 }
 </script>
 
 
 <style lang='scss' scoped>
+@import 'style/root.scss';
+
 #home {
-    width: 100%;
-    margin: 0;
+    /* core */
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+
+    /* tablet */
+    @media only screen and (min-width: $tablet) {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+    }
 }
 </style>

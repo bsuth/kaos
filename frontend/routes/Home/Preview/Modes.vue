@@ -16,49 +16,47 @@
 -->
 
 <template>
-    <ul id='gameMenu-list'>
-        <Item
+    <Carousel
+        :items='items'
+        :activeItem='activeItem'
+        :isActive='isActive'
+        @update-active-item='activeItem = $event'
+    >
+        <div class='gif'
             v-for='(item, index) in items'
-            :key='index'
-            v-bind='item'
-            :active="index == activeItem"
-        />
-    </ul>
+            v-show='index == activeItem'
+            :key='item.label'
+        >{{ item.label }} gif</div>
+    </Carousel>
 </template>
 
 
 <script>
-import Item from './List/Item';
+import Carousel from './Carousel.vue';
 
 export default {
-    components: { Item },
-    props: [ 'items', 'activeItem' ],
+    components: { Carousel },
+    props: [ 'isActive' ],
+
+    data() {
+        return {
+            activeItem: 0,
+            items: [
+                { label: 'Timed', },
+                { label: 'Spin2Win', },
+                { label: 'Collector', },
+            ],
+        }
+    },
 }
 </script>
 
 
-<style lang='scss'>
-@import '~style/root';
+<style lang='scss' scoped>
+@import 'style/palette';
 
-#gameMenu-list {
-    width: 80%;
-    position: absolute;
-    left: 20%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    transition: left 0.25s ease-out;
-
-    @media only screen and (min-width: $tablet) {
-        width: auto;
-        position: relative;
-        left: 0;
-        margin-right: 80px;
-        transition: none;
-    }
-
-    @media only screen and (min-width: $desktop) {
-        margin-right: 120px;
-    }
+.gif {
+    border: 2px solid $grey;    
+    border-radius: 8px;
 }
 </style>

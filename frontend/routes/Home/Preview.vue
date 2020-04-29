@@ -16,58 +16,58 @@
 -->
 
 <template>
-    <div id='gameMenu-preview'>
-        <transition-group name="fade" mode="out-in" class='gameMenu-preview-transition'>
-            <component 
-                v-for='(item, index) in items'
-                :key='item.label'
-                :is='previews[index]'
-                v-show='index == activeItem'
-            />
-        </transition-group>
-    </div>
+    <transition-group 
+        id='preview'
+        name='fade'
+        mode='out-in'
+        v-bind:class="{ 'slide-in': isSubMenu }"
+    >
+        <component 
+            v-for='(item, index) in items'
+            v-show='index == activeItem'
+            :key='item.label'
+            :is='item.preview'
+            :isActive='index == activeItem'
+        />
+    </transition-group>
 </template>
 
 
 <script>
-import Modes from './Preview/Modes';
-import Controls from './Preview/Controls';
-import HowToPlay from './Preview/HowToPlay';
-
 export default {
-    components: { Modes, Controls, HowToPlay },
-    props: [ 'items', 'activeItem' ],
-
-    data() {
-        return {
-            previews: [ Modes, Controls, HowToPlay ],
-        };
-    },
+    props: [ 'items', 'activeItem', 'isSubMenu' ],
 }
 </script>
 
 
-<style lang='scss'>
+<style lang='scss' scoped>
 @import '~style/root';
 
-#gameMenu-preview {
-    width: 80%;
-    height: 100%;
+#preview {
+    /* mobile */
+    width: 100%;
+    padding: 0 10%;
     position: absolute;
     left: 100%;
     transition: left 0.25s ease-out;
 
+    &.slide-in { left: 0; }
+
+    /* tablet */
     @media only screen and (min-width: $tablet) {
-        width: 50%;
+        padding: 0;
         position: relative;
         left: 0;
-        display: block;
         transition: none;
 
-        .gameMenu-preview-transition > * {
+        /* transitioning elements should overlap, but be centered */
+        & > * {
             width: 100%;
-            height: 100%;
+            padding: 0 5%;
             position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 }

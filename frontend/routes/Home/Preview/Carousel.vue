@@ -16,11 +16,13 @@
 -->
 
 <template>
-    <div id='gameMenu-preview-modes'>
-        <div class='gif'>{{ modes[activeMode].label }} gif</div>
-        <div id='switcher'>
+    <div class='carousel'>
+        <transition-group name='fade' mode='out-in' class='carousel-transition'>
+            <slot />
+        </transition-group>
+        <div class='switcher'>
             <span @click='prev()'><object data='Triangle.svg' type='image/svg+xml' /></span>
-            <p>{{ modes[activeMode].label }}</p>
+            <p>{{ items[activeItem].label }}</p>
             <span @click='next()'><object data='Triangle.svg' type='image/svg+xml' /></span>
         </div>
     </div>
@@ -29,57 +31,71 @@
 
 <script>
 export default {
+    props: [ 'items', 'activeItem', 'isActive' ],
+
     methods: {
+        enter: function() {
+            window.addEventListener('menu-mode-prev-start', this.prev);
+            window.addEventListener('menu-mode-next-start', this.next);
+        },
+        leave: function() {
+            window.removeEventListener('menu-mode-prev-start', this.prev);
+            window.removeEventListener('menu-mode-next-start', this.next);
+        },
         prev: function() {
-            (this.activeMode === 0) ?
-                this.activeMode = this.modes.length - 1 :
-                --this.activeMode;
+            let newActiveItem = (this.activeItem === 0) ?
+                this.items.length - 1 : this.activeItem - 1;
+            this.$emit('update-active-item', newActiveItem);
         },
         next: function() {
-            (this.activeMode === this.modes.length - 1) ?
-                this.activeMode = 0 :
-                ++this.activeMode;
+            let newActiveItem = (this.activeItem === this.items.length - 1) ?
+                0 : this.activeItem + 1;
+            this.$emit('update-active-item', newActiveItem);
         },
     },
 
-    data() {
-        return {
-            activeMode: 0,
-            modes: [
-                { label: 'Timed', },
-                { label: 'Spin2Win', },
-                { label: 'Collector', },
-            ],
-        }
+    watch: {
+        isActive: function (value) {
+            (value) ? this.enter() : this.leave();
+        },
     },
 
     mounted() {
-        window.addEventListener('menu-mode-prev-start', this.prev);
-        window.addEventListener('menu-mode-next-start', this.next);
-    },
-
-    beforeDestroy() {
-        window.removeEventListener('menu-mode-prev-start', this.prev);
-        window.removeEventListener('menu-mode-prev-start', this.next);
+        window.addEventListener('menu-leave', this.leave);
     },
 }
 </script>
 
 
-<style lang='scss' scoped>
-@import '~style/palette';
-
-#gameMenu-preview-modes {
+<style lang='scss'>
+.carousel {
     min-width: 200px;
+    poisiton: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    > * { margin: 10px 0; }
+    > * {
+        max-width: 100%;
+        margin: 10px 0;
+    }
 }
 
-#switcher {
+.carousel-transition {
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+    position: relative;
+
+    & > * { 
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+}
+
+.switcher {
     display: flex;
     align-items: center;
 
@@ -98,17 +114,5 @@ export default {
     }
 
     span:nth-child(3) object { transform: rotate(180deg); }
-}
-
-.gif {
-    width: 100%;
-    height: 200px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border: 2px solid $grey;    
-    border-radius: 8px;
 }
 </style>
