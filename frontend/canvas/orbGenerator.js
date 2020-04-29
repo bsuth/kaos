@@ -58,12 +58,13 @@ export class OrbGenerator
         this.numOrbs = Math.round((this.canvasPerimeter / 1000) * settings.ORB_DENSITY); 
 
         // Adjust the number of orbs.
-        if (this.numOrbs > this.orbs.length) {
-            let numNewOrbs = this.numOrbs - this.orbs.length;
+        let numNewOrbs = this.numOrbs - this.orbs.length;
+        if (numNewOrbs > 0) {
             for (let i = 0 ; i < numNewOrbs; ++i)
                 this.orbs.push(this.initOrb());
-        } else if (this.numOrbs < this.orbs.length) {
-            this.orbs.length = this.numOrbs;
+        } else if (numNewOrbs < 0) {
+            for (let i = 0 ; i < -numNewOrbs; ++i)
+                this.orbs.pop();
         }
     }
 
