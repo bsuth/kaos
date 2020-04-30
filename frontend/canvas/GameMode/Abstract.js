@@ -37,7 +37,6 @@ export default class GameModeAbstract
 
     destructor()
     {
-        this.player.destructor();
         this.orbGenerator.destructor();
     }
     

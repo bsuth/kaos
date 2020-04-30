@@ -25,9 +25,6 @@ import * as settings from './settings';
 export class Player { 
     constructor()
     {
-        this.activeKeys = {};
-        this.restoreKeys = {};
-
         this.color = 0;
         this.score = 0;
 
@@ -49,24 +46,10 @@ export class Player {
             slope: 0,
             intercept: 0,
         };
-
-        this.keydown = this.keydown.bind(this);
-        this.keyup = this.keyup.bind(this);
-
-        document.addEventListener('keydown', this.keydown);
-        document.addEventListener('keyup', this.keyup);
     }
 
-    destructor()
-    {
-        document.removeEventListener('keydown', this.keydown);
-        document.removeEventListener('keyup', this.keyup);
-    }
-    
     init()
     {
-        this.activeKeys = [];
-        this.restoreKeys = [];
         this.color = 0;
         this.geo = {
             x1: canvas.width / 2,
@@ -76,48 +59,6 @@ export class Player {
 
             theta: 0,
         };
-    }
-
-    // -------------------------------------------------------------------------
-    // EVENT LISTENERS
-    // -------------------------------------------------------------------------
-
-    keydown(event) {
-        if (event.key in settings.KEYMAP) {
-            event.preventDefault();
-            let pressedKeyId = settings.KEYMAP[event.key];
-
-            for (let id of settings.ACTIONS[pressedKeyId].negateIds) {
-                if (id in this.activeKeys) {
-                    this.restoreKeys[id] = { pressedKeyId: true };
-                    delete this.activeKeys[id];
-                } else if (id in this.restoreKeys) {
-                    this.restoreKeys[id][pressedKeyId] = true;
-                }
-            }
-
-            this.activeKeys[pressedKeyId] = true;
-        }
-    }
-
-    keyup(event) {
-        if (event.key in settings.KEYMAP) {
-            event.preventDefault();
-            let releasedKeyId = settings.KEYMAP[event.key];
-
-            for (let [keyId, blockingKeys] of Object.entries(this.restoreKeys)) {
-                delete blockingKeys[releasedKeyId];
-
-                if (blockingKeys.length == 0) {
-                    delete this.restoreKeys[keyId];
-                    this.activeKeys[keyId] = true;
-                }
-            }
-
-            (releasedKeyId in this.activeKeys) ? 
-                delete this.activeKeys[releasedKeyId] :
-                delete this.restoreKeys[releasedKeyId];
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -172,11 +113,6 @@ export class Player {
     {
         // Update cache
         this.updateCache(); 
-
-        // Process keys
-        for (let keyId in this.activeKeys) {
-            settings.ACTIONS[keyId].callback();  
-        }
     }
 
     updateCache()
