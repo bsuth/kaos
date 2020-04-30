@@ -91,11 +91,10 @@ const ACTIONS = {
         negateActions: []
     },
     'game-pause': {
-        callback: pause,
-        negateActions: [],
-    },
-    'game-restart': {
-        callback: restart,
+        callback: () => {
+            pause();
+            delete activeActions['game-pause'];
+        },
         negateActions: [],
     },
 };
@@ -142,7 +141,6 @@ export function enter(gameName)
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
     resize();
-    window.addEventListener('resize', resize);
 
     // -------------------------------------------------------------------------
     // SET GAME MODE
@@ -199,6 +197,8 @@ export function enter(gameName)
         window.addEventListener(`${action}-start`, actionStartHandlers[action]);
         window.addEventListener(`${action}-end`, actionEndHandlers[action]);
     }
+    window.addEventListener('game-resume', resume);
+    window.addEventListener('resize', resize);
 
     // -------------------------------------------------------------------------
     // START GAME
@@ -218,22 +218,23 @@ export function start() {
 export function leave() {
     gameMode.state.gameover = true;
     gameMode.destructor();
-    window.removeEventListener('resize', resize);
 
-    // Clean up even listeners.
+    // Clean up event listeners.
     for ( let action in ACTIONS ) {
         window.removeEventListener(`${action}-start`, actionStartHandlers[action]);
         window.removeEventListener(`${action}-end`, actionEndHandlers[action]);
     }
+    window.addEventListener('game-resume', resume);
+    window.removeEventListener('resize', resize);
 }
 
 export function pause() {
-    if (gameMode.state.paused) {
-        gameMode.state.paused = false;
-        gameloop();
-    } else {
-        gameMode.state.paused = true;
-    }
+    gameMode.state.paused = true;
+}
+
+export function resume() {
+    gameMode.state.paused = false;
+    gameloop();
 }
 
 export function restart(event)
