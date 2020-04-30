@@ -27,6 +27,7 @@ export default class Collector extends GameModeAbstract
     constructor(player, orbGenerator)
     {
         super(player, orbGenerator);
+        this.title = 'Collector';
     }
 
     init()
@@ -48,6 +49,7 @@ export default class Collector extends GameModeAbstract
                     this.collected[counter] = true;
                 } else if ( settings.DEVELOPMENT.GODMODE == 0 ) {
                     this.state.gameover = true;
+                    window.dispatchEvent(new Event('game-over'));
                 }
             }   
             counter++;

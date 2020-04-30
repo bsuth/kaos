@@ -16,21 +16,24 @@
 -->
 
 <template>
-    <ul class='dialog'>
-        <li
-            v-for='(item, index) in items'
-            :key='item.label'
-            v-bind='item'
-            v-bind:class="{ 'activeItem': (index == activeItem) }"
-            @mouseover='activeItem = index'
-            @click='accept'
-        >{{ item.label }}</li>
-    </ul>
+    <div class='dialog'>
+        <slot />
+        <ul class='dialog-list'>
+            <li
+                v-for='(item, index) in items'
+                :key='item.label'
+                v-bind='item'
+                v-bind:class="{ 'activeItem': (index == activeItem) }"
+                @mouseover='activeItem = index'
+                @click='accept'
+            >{{ item.label }}</li>
+        </ul>
+    </div>
 </template>
 
 
 <script>
-import { getContext, setContext, CONTEXTS } from 'lib/input/State'
+import { setContext, CONTEXTS } from 'lib/input/State'
 
 export default {
     props: [ 'items' ],
@@ -42,16 +45,16 @@ export default {
             this.$el.style.display = 'flex';
             window.addEventListener('move-down-start', this.next);
             window.addEventListener('move-up-start', this.prev);
-            window.addEventListener('menu-back-start', this.leave);
-            window.addEventListener('menu-accept-start', this.accept);
+            window.addEventListener('menu-back-end', this.leave);
+            window.addEventListener('menu-accept-end', this.accept);
         },
         leave: function() {
             this.$el.style.display = 'none';
             this.activeItem = 0;
             window.removeEventListener('move-down-start', this.next);
             window.removeEventListener('move-up-start', this.prev);
-            window.removeEventListener('menu-back-start', this.leave);
-            window.removeEventListener('menu-accept-start', this.accept);
+            window.removeEventListener('menu-back-end', this.leave);
+            window.removeEventListener('menu-accept-end', this.accept);
             setContext(CONTEXTS.GAME);
         },
 
@@ -85,7 +88,6 @@ export default {
 .dialog {
     width: 300px;
     height: 180px;
-    padding: 0;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -97,6 +99,15 @@ export default {
     background: $black;
     border: 2px solid $grey;
     border-radius: 10px;
+}
+
+.dialog-list {
+    margin-top: 5px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     li {
         margin: 10px;

@@ -236,7 +236,7 @@ export function resume() {
     gameloop();
 }
 
-export function restart(event)
+export function restart()
 {
     console.log('restart');
 }

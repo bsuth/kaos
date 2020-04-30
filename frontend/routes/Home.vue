@@ -44,8 +44,8 @@ export default {
             window.addEventListener('resize', this.resize);
             window.addEventListener('move-down-start', this.next);
             window.addEventListener('move-up-start', this.prev);
-            window.addEventListener('menu-accept-start', this.accept);
-            window.addEventListener('menu-back-start', this.back);
+            window.addEventListener('menu-accept-end', this.accept);
+            window.addEventListener('menu-back-end', this.back);
             window.addEventListener('mode-change', this.updateMode);
             window.dispatchEvent(new Event('menu-enter'));
         },
@@ -53,8 +53,8 @@ export default {
             window.removeEventListener('resize', this.resize);
             window.removeEventListener('move-down-start', this.next);
             window.removeEventListener('move-up-start', this.prev);
-            window.removeEventListener('menu-accept-start', this.accept);
-            window.removeEventListener('menu-back-start', this.back);
+            window.removeEventListener('menu-accept-end', this.accept);
+            window.removeEventListener('menu-back-end', this.back);
             window.removeEventListener('mode-change', this.updateMode);
             window.dispatchEvent(new Event('menu-leave'));
         },

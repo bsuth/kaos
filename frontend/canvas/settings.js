@@ -23,7 +23,7 @@ import * as game from './game';
 
 export const DEVELOPMENT = {
     // Make the player invincible.
-    'GODMODE': 1,
+    'GODMODE': 0,
 };
 
 // -----------------------------------------------------------------------------

@@ -18,36 +18,26 @@
 <template>
     <div id='score'>
         <Leaderboard 
-            v-for='(scores, category) in $data'
+            v-for='(categoryScores, category) in scores'
             :key='category'
             :category='category'
-            :scores='scores'
+            :scores='categoryScores'
         />
     </div>
 </template>
 
 
 <script>
+import { SCORES } from 'globals';
 import Leaderboard from './Score/Leaderboard.vue';
 
 export default {
     components: { Leaderboard },
 
     data() {
-        let scoreData = JSON.parse(localStorage.getItem('score_data'));
-
-        // Init scores
-        if (!scoreData) {
-            scoreData = {
-                'Timed': [],
-                'Spin2Win': [],
-                'Collector': [],
-            };
-
-            localStorage.setItem('score_data', JSON.stringify(scoreData));
-        }
-
-        return scoreData;
+        return {
+            scores: SCORES,
+        };
     },
 }
 </script>

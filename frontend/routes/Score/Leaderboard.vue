@@ -21,12 +21,10 @@
             <th><h2>{{ category }}</h2></th>
         </tr>
         <tr>
-            <td>Name</td>
             <td>Date</td>
             <td>Score</td>
         </tr>
         <tr v-for='(data, index) in scores' :key='index'>
-            <td>{{ data.name }}</td>
             <td>{{ data.date }}</td>
             <td>{{ data.score }}</td>
         </tr>

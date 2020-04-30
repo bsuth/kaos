@@ -62,3 +62,18 @@ if ('maxTouchPoints' in navigator) {
 }
 
 export const IS_TOUCH_DEVICE = _isTouchDevice;
+
+
+// -----------------------------------------------------------------------------
+// LOCAL STORAGE SCORES
+// -----------------------------------------------------------------------------
+
+export let SCORES = JSON.parse(localStorage.getItem('score_data'));
+
+if (!SCORES) {
+    SCORES = {
+        'Timed': [],
+        'Spin2Win': [],
+        'Collector': [],
+    };
+}

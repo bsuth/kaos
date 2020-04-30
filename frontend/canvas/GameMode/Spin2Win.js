@@ -27,6 +27,7 @@ export default class Spin2Win extends GameModeAbstract
     constructor(player, orbGenerator)
     {
         super(player, orbGenerator);
+        this.title = 'Spin2Win';
     }
 
     init()
@@ -56,8 +57,10 @@ export default class Spin2Win extends GameModeAbstract
                 if (orb.color == this.player.color)
                     continue;
 
-                if (this.player.checkCollision(orb))
+                if (this.player.checkCollision(orb)) {
                     this.state.gameover = true;
+                    window.dispatchEvent(new Event('game-over'));
+                }
             }
         }
 

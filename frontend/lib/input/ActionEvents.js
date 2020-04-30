@@ -29,6 +29,9 @@ export const CORE_ACTION_EVENTS = Object.freeze({
 });
 
 export const MENU_ACTION_EVENTS = Object.freeze({
+    // README: You should use the '-end' events for the accept/back buttons,
+    // since if either callback changes the context, the action will not be
+    // removed from _activeActions, as the context actions have changed.
     ACCEPT: 'menu-accept',
     BACK: 'menu-back',
     PREV: 'menu-prev',

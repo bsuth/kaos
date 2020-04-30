@@ -21,7 +21,6 @@
 
 
 <script>
-import { setContext, CONTEXTS } from 'lib/input/State'
 import Dialog from './Dialog.vue';
 import * as game from 'canvas/game';
 

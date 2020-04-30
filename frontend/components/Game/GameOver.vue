@@ -16,12 +16,17 @@
 -->
 
 <template>
-    <Dialog ref='dialog' :items='items' />
+    <Dialog ref='dialog' :items='items'>
+        <span>
+            Game Over!<br />
+            Score: {{ score }}
+        </span>
+    </Dialog>
 </template>
 
 
 <script>
-import { setContext, CONTEXTS } from 'lib/input/State'
+import { SCORES } from 'globals';
 import Dialog from './Dialog.vue';
 
 export default {
@@ -29,20 +34,59 @@ export default {
 
     methods: {
         // LIFECYCLE FUNCTIONS
-        enter: function() { this.$refs.dialog.enter(); },
+        enter: function() {
+            this.$refs.dialog.enter();
+            this.score = window.gameMode.state.score;
+
+            let categoryScores = SCORES[window.gameMode.title];
+
+            let gameScore = {
+                score: this.score,
+                date: this.getDate(),
+            };
+
+            let saved = false;
+            for (let [index, scoreData] of Object.entries(categoryScores)) {
+                if (gameScore.score > scoreData.score) {
+                    categoryScores.splice(index, 0, gameScore);
+                    saved = true;
+                    break;
+                }
+            }
+
+            if (categoryScores.length > 10)
+                categoryScores.pop();
+            else if (!saved && categoryScores.length < 10)
+                categoryScores.push(gameScore);
+
+            localStorage.setItem('score_data', JSON.stringify(SCORES));
+        },
         leave: function() { this.$refs.dialog.leave(); },
 
         // ACTION FUNCTIONS
         restart: function() {
-            console.log('restart game');
+            this.leave();
+            window.game.restart();
         },
         quit: function() {
-            console.log('quit game');
+            game.leave();
+            this.leave();
+            window.dispatchEvent(new Event('main-enter'));
+        },
+
+        // HELPER FUNCTIONS
+        getDate: function() {
+            let dateObj = new Date();
+            let date = dateObj.getDate(); 
+            let month = dateObj.getMonth(); 
+            let year = dateObj.getFullYear(); 
+            return `${date}/${month}/${year}`;
         },
     },
 
     data() {
         return {
+            score: 0,
             items: [
                 { label: 'Restart', action: this.restart },
                 { label: 'Quit', action: this.quit },
@@ -58,4 +102,7 @@ export default {
 
 
 <style lang='scss' scoped>
+span {
+    text-align: center;
+}
 </style>
