@@ -44,12 +44,10 @@ window.addEventListener('gamepadconnected', event => {
         _axisGroups = Xbox.AXES;
     }
 
-    console.log('gamepad connected!', _gamepad);
     window.requestAnimationFrame(inputLoop);
 });
 
 window.addEventListener('gamepaddisconnected', _ => {
-    console.log('Gamepad disconnected');
     _gamepad = null;
 });
 

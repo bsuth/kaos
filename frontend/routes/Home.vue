@@ -25,6 +25,7 @@
 
 <script>
 import { TABLET, DESKTOP, IS_TOUCH_DEVICE } from 'globals';
+import { setContext, CONTEXTS } from 'lib/input/State'
 
 import List from './Home/List.vue';
 import Preview from './Home/Preview.vue';
@@ -39,14 +40,13 @@ export default {
     methods: {
         // STATE BASED FUNCTIONS
         enter: function() {
-            if (!this.initialized) {
-                window.addEventListener('resize', this.resize);
-                window.addEventListener('move-down-start', this.next);
-                window.addEventListener('move-up-start', this.prev);
-                window.addEventListener('menu-accept-start', this.accept);
-                window.addEventListener('menu-back-start', this.back);
-                window.dispatchEvent(new Event('menu-enter'));
-            }
+            setContext(CONTEXTS.MENU);
+            window.addEventListener('resize', this.resize);
+            window.addEventListener('move-down-start', this.next);
+            window.addEventListener('move-up-start', this.prev);
+            window.addEventListener('menu-accept-start', this.accept);
+            window.addEventListener('menu-back-start', this.back);
+            window.dispatchEvent(new Event('menu-enter'));
         },
         leave: function() {
             window.removeEventListener('resize', this.resize);
@@ -70,6 +70,7 @@ export default {
         // ITEM ACTIONS
         play: function() {
             this.leave();
+            setContext(CONTEXTS.GAME);
             document.getElementById('app').style.opacity = 0;
             setTimeout(() => window.game.enter(), 500);
         },
