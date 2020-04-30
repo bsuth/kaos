@@ -50,6 +50,7 @@ const MAPPINGS = {
         'i': GAME_ACTION_EVENTS.PURPLE,
         'o': GAME_ACTION_EVENTS.GREEN,
         'p': GAME_ACTION_EVENTS.CYAN,
+        ' ': GAME_ACTION_EVENTS.CYCLE_COLOR,
         'Enter': GAME_ACTION_EVENTS.PAUSE,
         'r': GAME_ACTION_EVENTS.RESTART,
     },
