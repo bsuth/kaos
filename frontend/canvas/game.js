@@ -30,10 +30,6 @@ export const canvas = document.getElementById('canvas');
 
 export const ctx = canvas.getContext('2d');
 
-// Temporary
-let activeKeys = {};
-let restoreKeys = {};
-
 let activeActions = {};
 let restoreActions = {};
 let actionStartHandlers = {};
@@ -119,7 +115,6 @@ function gameloop(tFrame)
     gameMode.update(tFrame);
 
     if (gameMode.state.gameover) {
-        document.addEventListener('keydown', keydown);
         console.log('score:', gameMode.state.score);
         return;
     }
@@ -170,12 +165,25 @@ export function enter(gameName)
     // Build actionHandlers
     for ( let action in ACTIONS ) {
         actionStartHandlers[action] = () => {
+            for (let negateAction of ACTIONS[action].negateActions) {
+                if (negateAction in activeActions) {
+                    restoreActions[negateAction] = true;
+                    delete activeActions[negateAction];
+                }
+            }
             activeActions[action] = true;
-            console.log(`${action}-start`);
         };
+
         actionEndHandlers[action] = () => {
             delete activeActions[action];
-            console.log(`${action}-end`);
+            delete restoreActions[action];
+
+            for (let negateAction of ACTIONS[action].negateActions) {
+                if (negateAction in restoreActions) {
+                    activeActions[negateAction] = true;
+                    delete restoreActions[negateAction];
+                }
+            }
         };
     }
     
@@ -235,46 +243,3 @@ function resize()
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-
-// -------------------------------------------------------------------------
-// EVENT LISTENERS
-// -------------------------------------------------------------------------
-
-function keydown(event) {
-    if (event.key in settings.KEYMAP) {
-        event.preventDefault();
-        let pressedKeyId = settings.KEYMAP[event.key];
-
-        for (let id of settings.ACTIONS[pressedKeyId].negateIds) {
-            if (id in activeKeys) {
-                restoreKeys[id] = { pressedKeyId: true };
-                delete activeKeys[id];
-            } else if (id in restoreKeys) {
-                restoreKeys[id][pressedKeyId] = true;
-            }
-        }
-
-        activeKeys[pressedKeyId] = true;
-    }
-}
-
-function keyup(event) {
-    if (event.key in settings.KEYMAP) {
-        event.preventDefault();
-        let releasedKeyId = settings.KEYMAP[event.key];
-
-        for (let [keyId, blockingKeys] of Object.entries(restoreKeys)) {
-            delete blockingKeys[releasedKeyId];
-
-            if (blockingKeys.length == 0) {
-                delete restoreKeys[keyId];
-                activeKeys[keyId] = true;
-            }
-        }
-
-        (releasedKeyId in activeKeys) ? 
-            delete activeKeys[releasedKeyId] :
-            delete restoreKeys[releasedKeyId];
-    }
-}
-
