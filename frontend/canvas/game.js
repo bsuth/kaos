@@ -112,7 +112,6 @@ function gameloop(tFrame)
     gameMode.update(tFrame);
 
     if (gameMode.state.gameover) {
-        console.log('score:', gameMode.state.score);
         return;
     }
 
@@ -239,9 +238,7 @@ export function resume() {
 
 export function restart(event)
 {
-    leave();
-    // delay for gameloop return.
-    setTimeout(enter, 20);
+    console.log('restart');
 }
 
 
