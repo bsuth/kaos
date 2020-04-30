@@ -52,6 +52,12 @@ export default {
     },
 
     watch: {
+        activeItem: function() {
+            let event = new CustomEvent('mode-change', {
+                detail: this.items[this.activeItem].label,
+            });
+            window.dispatchEvent(event);
+        },
         isActive: function(value) {
             if (value) {
                 window.addEventListener('menu-next-start', this.next);

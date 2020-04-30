@@ -46,6 +46,7 @@ export default {
             window.addEventListener('move-up-start', this.prev);
             window.addEventListener('menu-accept-start', this.accept);
             window.addEventListener('menu-back-start', this.back);
+            window.addEventListener('mode-change', this.updateMode);
             window.dispatchEvent(new Event('menu-enter'));
         },
         leave: function() {
@@ -54,6 +55,7 @@ export default {
             window.removeEventListener('move-up-start', this.prev);
             window.removeEventListener('menu-accept-start', this.accept);
             window.removeEventListener('menu-back-start', this.back);
+            window.removeEventListener('mode-change', this.updateMode);
             window.dispatchEvent(new Event('menu-leave'));
         },
 
@@ -70,7 +72,7 @@ export default {
         // ITEM ACTIONS
         play: function() {
             this.leave();
-            window.game.enter();
+            window.game.enter(this.selectedMode);
             // Wait for transition to end
             setTimeout(() => window.game.start(), 500);
         },
@@ -112,12 +114,16 @@ export default {
                 this.activeItem = 0 :
                 ++this.activeItem;
         },
+        updateMode: function(event) {
+            this.selectedMode = event.detail;
+        },
     },
 
     data() {
         return {
             isSubMenu: false,
             activeItem: 0,
+            selectedMode: 'Timed',
 
             items: [
                 {

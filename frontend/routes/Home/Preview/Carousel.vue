@@ -35,12 +35,12 @@ export default {
 
     methods: {
         enter: function() {
-            window.addEventListener('menu-mode-prev-start', this.prev);
-            window.addEventListener('menu-mode-next-start', this.next);
+            window.addEventListener('menu-prev-start', this.prev);
+            window.addEventListener('menu-next-start', this.next);
         },
         leave: function() {
-            window.removeEventListener('menu-mode-prev-start', this.prev);
-            window.removeEventListener('menu-mode-next-start', this.next);
+            window.removeEventListener('menu-prev-start', this.prev);
+            window.removeEventListener('menu-next-start', this.next);
         },
         prev: function() {
             let newActiveItem = (this.activeItem === 0) ?
