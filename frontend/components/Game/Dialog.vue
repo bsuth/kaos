@@ -47,6 +47,7 @@ export default {
         },
         leave: function() {
             this.$el.style.display = 'none';
+            this.activeItem = 0;
             window.removeEventListener('move-down-start', this.next);
             window.removeEventListener('move-up-start', this.prev);
             window.removeEventListener('menu-back-start', this.leave);

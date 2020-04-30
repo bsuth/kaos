@@ -23,6 +23,7 @@
 <script>
 import { setContext, CONTEXTS } from 'lib/input/State'
 import Dialog from './Dialog.vue';
+import * as game from 'canvas/game';
 
 export default {
     components: { Dialog },
@@ -38,7 +39,9 @@ export default {
             window.dispatchEvent(new Event('game-resume'));
         },
         quit: function() {
-            console.log('quit game');
+            game.leave();
+            this.leave();
+            window.dispatchEvent(new Event('main-enter'));
         },
     },
 

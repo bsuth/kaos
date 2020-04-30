@@ -19,7 +19,7 @@
     <div id='hud'>
         <div class='player-color' v-bind:class='nextColorClass' />
         <span class='score'>
-            {{ Math.floor(gameState.score / 100) }}
+            {{ gameState.score }}
         </span>
     </div>
 </template>

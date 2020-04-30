@@ -70,6 +70,7 @@ export default {
         // ITEM ACTIONS
         play: function() {
             this.leave();
+            window.dispatchEvent(new Event('game-enter'));
             // Wait for transition to end
             setTimeout(() => window.game.enter(), 500);
         },
@@ -145,6 +146,7 @@ export default {
 
     mounted() {
         this.enter();
+        window.addEventListener('main-enter', this.enter);
     },
 }
 </script>

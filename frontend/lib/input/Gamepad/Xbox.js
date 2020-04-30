@@ -61,7 +61,7 @@ export const TRIGGERS = {
     },
     [CONTEXTS.GAME]: {
         2: GAME_ACTION_EVENTS.ROTATE_CC, // L_TRIGGER
-        5: GAME_ACTION_EVENTS.ROTATE_CC, // R_TRIGGER
+        5: GAME_ACTION_EVENTS.ROTATE, // R_TRIGGER
     },
 };
 

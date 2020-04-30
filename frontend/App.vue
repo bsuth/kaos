@@ -52,8 +52,8 @@ export default {
     },
 
     mounted() {
-        window.addEventListener('menu-enter', this.enterMain);
-        window.addEventListener('menu-leave', this.enterGame);
+        window.addEventListener('main-enter', this.enterMain);
+        window.addEventListener('game-enter', this.enterGame);
     },
 };
 </script>
