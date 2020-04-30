@@ -68,6 +68,8 @@ export const IS_TOUCH_DEVICE = _isTouchDevice;
 // LOCAL STORAGE SCORES
 // -----------------------------------------------------------------------------
 
+export const NUM_SCORES = 5;
+
 export let SCORES = JSON.parse(localStorage.getItem('score_data'));
 
 if (!SCORES) {

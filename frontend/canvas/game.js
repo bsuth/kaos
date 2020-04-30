@@ -238,7 +238,9 @@ export function resume() {
 
 export function restart()
 {
-    console.log('restart');
+    setContext(CONTEXTS.GAME);
+    enter(gameMode.title);
+    start();
 }
 
 

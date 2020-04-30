@@ -26,7 +26,7 @@
 
 
 <script>
-import { SCORES } from 'globals';
+import { NUM_SCORES, SCORES } from 'globals';
 import Dialog from './Dialog.vue';
 
 export default {
@@ -54,9 +54,9 @@ export default {
                 }
             }
 
-            if (categoryScores.length > 10)
+            if (categoryScores.length > NUM_SCORES)
                 categoryScores.pop();
-            else if (!saved && categoryScores.length < 10)
+            else if (!saved && categoryScores.length < NUM_SCORES)
                 categoryScores.push(gameScore);
 
             localStorage.setItem('score_data', JSON.stringify(SCORES));
