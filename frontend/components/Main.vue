@@ -16,54 +16,41 @@
 -->
 
 <template>
-    <div id='app'>
-        <transition-group name='fade' mode='out-in'>
-            <component 
-                v-for='(item, index) in items'
-                :key='item.label'
-                :is='item.component'
-                v-show='index == activeItem'
-            />
-        </transition-group>
+    <div id='main'>
+        <Navbar />
+        <transition name='fade' mode='out-in'>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
+        </transition>
+        <Footer />
     </div>
 </template>
 
 
 <script>
-import Main from 'components/Main';
-import Game from 'components/Game';
+import router from '../router';
+import Navbar from './Main/Navbar.vue';
+import Footer from './Main/Footer.vue';
 
 export default {
-    components: { Main, Game },
-
-    methods: {
-        enterMain() { this.activeItem = 0; },
-        enterGame() { this.activeItem = 1; },
-    },
-
-    data() {
-        return {
-            activeItem: 0,
-            items: [
-                { label: 'main', component: Main },
-                { label: 'game', component: Game },
-            ],
-        };
-    },
-
-    mounted() {
-        window.addEventListener('menu-enter', this.enterMain);
-        window.addEventListener('menu-leave', this.enterGame);
-    },
+    router: router,
+    components: { Navbar, Footer },
 };
 </script>
 
 
 <style lang='scss'>
-#app {
+#main {
     height: 100%;
+
+    display: flex;
+    flex-direction: column;
 
     /* This is needed to prevent the canvas from blocking certain clickables! */
     position: relative;
+    transition: opacity .5s ease-out;
+
+    > *:nth-child(2) { flex-grow: 1; }
 }
 </style>

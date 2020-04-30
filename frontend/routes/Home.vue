@@ -70,8 +70,7 @@ export default {
         // ITEM ACTIONS
         play: function() {
             this.leave();
-            setContext(CONTEXTS.GAME);
-            document.getElementById('app').style.opacity = 0;
+            // Wait for transition to end
             setTimeout(() => window.game.enter(), 500);
         },
         enterSubMenu: function() {
@@ -116,7 +115,6 @@ export default {
 
     data() {
         return {
-            initialized: false,
             isSubMenu: false,
             activeItem: 0,
 

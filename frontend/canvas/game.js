@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { setContext, CONTEXTS } from 'lib/input/State';
 import * as orbGenerator from './orbGenerator';
 import * as player from './player';
 import * as settings from './settings';
@@ -87,6 +88,7 @@ export function enter(gameName)
     // -------------------------------------------------------------------------
     // START GAME
     // -------------------------------------------------------------------------
+    setContext(CONTEXTS.GAME);
     gameMode.init();
     gameloop();
 }
