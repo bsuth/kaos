@@ -27,9 +27,11 @@ import Spin2Win from './GameMode/Spin2Win';
 // GAME (GLOBALS)
 // -----------------------------------------------------------------------------
 
-export const canvas = document.getElementById('canvas');
+export let canvas = null;
 
-export const ctx = canvas.getContext('2d');
+export let ctx = null;
+
+export let gameMode = null;
 
 let activeActions = {};
 let restoreActions = {};
@@ -37,14 +39,9 @@ let actionStartHandlers = {};
 let actionEndHandlers = {};
 
 // -----------------------------------------------------------------------------
-// GAME LOOP
-// -----------------------------------------------------------------------------
-
-export let gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
-
-// -----------------------------------------------------------------------------
 // GAME ACTIONS
 // -----------------------------------------------------------------------------
+
 const ACTIONS = {
     'move-up': {
         callback: () => gameMode.player.moveRel(0, -5),
@@ -137,25 +134,34 @@ function gameloop(tFrame)
 export function enter(gameName)
 { 
     // -------------------------------------------------------------------------
+    // CANVAS INIT
+    // -----------
+    // This must be first! Canvas needs to be initialized before other functions
+    // can run.
+    // -------------------------------------------------------------------------
+    canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
+    resize();
+    window.addEventListener('resize', resize);
+
+    // -------------------------------------------------------------------------
     // SET GAME MODE
     // -------------------------------------------------------------------------
     switch (gameName) {
-    case 'Timed':
-        gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
-        break;
     case 'Collector':
         gameMode = new Collector(new player.Player, new orbGenerator.OrbGenerator);
         break;
     case 'Spin2Win':
         gameMode = new Spin2Win(new player.Player, new orbGenerator.OrbGenerator);
         break;
+    default:
+        gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
+        break;
     }
 
-    // -------------------------------------------------------------------------
-    // CANVAS INIT
-    // -------------------------------------------------------------------------
-    resize();
-    window.addEventListener('resize', resize);
+    // Since gameMode object gets recreated everytime, we make this global so
+    // that anything else referencing this object can get an updated version.
+    window.gameMode = gameMode;
 
     // -------------------------------------------------------------------------
     // Event Listeners
@@ -199,6 +205,13 @@ export function enter(gameName)
     // -------------------------------------------------------------------------
     setContext(CONTEXTS.GAME);
     gameMode.init();
+
+    // Let everybody else know the game has been initialized (needed to update
+    // references such as the HUD's reference to the gameMode);
+    window.dispatchEvent(new Event('game-enter'));
+}
+
+export function start() {
     gameloop();
 }
 
@@ -228,11 +241,6 @@ export function restart(event)
     leave();
     // delay for gameloop return.
     setTimeout(enter, 20);
-}
-
-export function getScore()
-{
-    return gameMode.state.score;
 }
 
 

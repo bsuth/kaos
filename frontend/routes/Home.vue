@@ -70,9 +70,9 @@ export default {
         // ITEM ACTIONS
         play: function() {
             this.leave();
-            window.dispatchEvent(new Event('game-enter'));
+            window.game.enter();
             // Wait for transition to end
-            setTimeout(() => window.game.enter(), 500);
+            setTimeout(() => window.game.start(), 500);
         },
         enterSubMenu: function() {
             this.isSubMenu = true;

@@ -19,19 +19,23 @@
     <div id='hud'>
         <div class='player-color' v-bind:class='nextColorClass' />
         <span class='score'>
-            {{ gameState.score }}
+            {{ gameMode.state.score }}
         </span>
     </div>
 </template>
 
 
 <script>
-import { gameMode } from 'canvas/game';
-
 export default {
+    methods: {
+        init: function() {
+            this.gameMode = window.gameMode;
+        },
+    },
+
     computed: {
         nextColorClass: function() {
-            switch(this.gamePlayer.color) {
+            switch(this.gameMode.player.color) {
             case 0:
                 return 'purple';
             case 1:
@@ -46,9 +50,16 @@ export default {
 
     data() {
         return {
-            gameState: gameMode.state,
-            gamePlayer: gameMode.player,
+            // Dummy values before the gameMode is initialized
+            gameMode: {
+                state: {},
+                player: {},
+            },
         };
+    },
+
+    mounted() {
+        window.addEventListener('game-enter', this.init);
     },
 };
 </script>

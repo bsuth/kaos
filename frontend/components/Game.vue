@@ -17,6 +17,7 @@
 
 <template>
     <div id='game'>
+        <canvas id='canvas' />
         <Hud />
         <Pause />
         <GameOver />
