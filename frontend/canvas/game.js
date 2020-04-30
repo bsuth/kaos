@@ -34,18 +34,85 @@ export const ctx = canvas.getContext('2d');
 let activeKeys = {};
 let restoreKeys = {};
 
+let activeActions = {};
+let restoreActions = {};
+let actionStartHandlers = {};
+let actionEndHandlers = {};
+
 // -----------------------------------------------------------------------------
 // GAME LOOP
 // -----------------------------------------------------------------------------
 
 export let gameMode = new Timed(new player.Player, new orbGenerator.OrbGenerator);
 
+// -----------------------------------------------------------------------------
+// GAME ACTIONS
+// -----------------------------------------------------------------------------
+const ACTIONS = {
+    'move-up': {
+        callback: () => gameMode.player.moveRel(0, -5),
+        negateActions: [ 'move-down' ],
+    },
+    'move-down': {
+        callback: () => gameMode.player.moveRel(0, 5),
+        negateActions: [ 'move-up' ],
+    },
+    'move-left': {
+        callback: () => gameMode.player.moveRel(-5, 0),
+        negateActions: [ 'move-right' ],
+    },
+    'move-right': {
+        callback: () => gameMode.player.moveRel(5, 0),
+        negateActions: [ 'move-left' ],
+    },
+    'game-rotate': {
+        callback: () => gameMode.player.rotate(Math.PI / 40),
+        negateActions: [ 'game-rotate-cc' ],
+    },
+    'game-rotate-cc': {
+        callback: () => gameMode.player.rotate(-Math.PI / 40),
+        negateActions: [ 'game-rotate' ],
+    },
+    'game-red': {
+        callback: () => gameMode.player.color = 0,
+        negateActions: [ 'game-rotate' ],
+    },
+    'game-purple': {
+        callback: () => gameMode.player.color = 1,
+        negateActions: [ 'game-red' ],
+    },
+    'game-green': {
+        callback: () => gameMode.player.color = 2,
+        negateActions: [ 'game-green' ],
+    },
+    'game-cyan': {
+        callback: () => gameMode.player.color = 3,
+        negateActions: [ 'game-cyan' ],
+    },
+    'game-cycle-color': {
+        callback: () => { 
+            gameMode.player.color = ++gameMode.player.color % 4;
+            delete activeActions['game-cycle-color'];
+        },
+        negateActions: []
+    },
+    'game-pause': {
+        callback: pause,
+        negateActions: [],
+    },
+    'game-restart': {
+        callback: restart,
+        negateActions: [],
+    },
+};
+
+
 function gameloop(tFrame)
 {
 
     // Process keys
-    for (let keyId in activeKeys) {
-        settings.ACTIONS[keyId].callback();  
+    for (let action in activeActions) {
+        ACTIONS[action].callback();  
     }
 
     // Count the time and award points.
@@ -88,67 +155,6 @@ export function enter(gameName)
         break;
     }
 
-    // -----------------------------------------------------------------------------
-    // GAME ACTIONS
-    // -----------------------------------------------------------------------------
-    const ACTIONS_CALLBACKS = {
-        'move-up': {
-            callback: () => gameMode.player.moveRel(0, -5),
-            negateActions: [ 'move-down' ],
-        },
-        'move-down': {
-            callback: () => gameMode.player.moveRel(-5, 0),
-            negateActions: [ 'move-up' ],
-        },
-        'move-left': {
-            callback: () => gameMode.player.moveRel(0, 5),
-            negateActions: [ 'move-right' ],
-        },
-        'move-right': {
-            callback: () => gameMode.player.moveRel(5, 0),
-            negateActions: [ 'move-left' ],
-        },
-        'game-rotate': {
-            callback: () => gameMode.player.rotate(Math.PI / 40),
-            negateActions: [ 'game-rotate-cc' ],
-        },
-        'game-rotate-cc': {
-            callback: () => gameMode.player.rotate(-Math.PI / 40),
-            negateActions: [ 'game-rotate' ],
-        },
-        'game-red': {
-            callback: () => gameMode.player.color = 0,
-            negateActions: [ 'game-rotate' ],
-        },
-        'game-purple': {
-            callback: () => gameMode.player.color = 1,
-            negateActions: [ 'game-red' ],
-        },
-        'game-green': {
-            callback: () => gameMode.player.color = 2,
-            negateActions: [ 'game-green' ],
-        },
-        'game-cyan': {
-            callback: () => gameMode.player.color = 3,
-            negateActions: [ 'game-cyan' ],
-        },
-        'game-cycle-color': {
-            callback: () => { 
-                gameMode.player.color = ++gameMode.player.color % 4;
-                delete gameMode.player.activeKeys[10];
-            },
-            negateActions: [ 'game-cycle-color' ]
-        },
-        'game-pause': {
-            callback: pause,
-            negateActions: [],
-        },
-        'game-restart': {
-            callback: restart,
-            negateActions: [],
-        },
-    };
-
     // -------------------------------------------------------------------------
     // CANVAS INIT
     // -------------------------------------------------------------------------
@@ -158,12 +164,26 @@ export function enter(gameName)
     // -------------------------------------------------------------------------
     // Event Listeners
     // -------------------------------------------------------------------------
-    activeKeys = {};
-    restoreKeys = {};
-    window.addEventListener('game-rotate-start', () => console.log('game-rotate-start'));
-    window.addEventListener('game-rotate-end', () => console.log('game-rotate-end'));
-    window.addEventListener('keydown', keydown);
-    window.addEventListener('keyup', keyup);
+    activeActions = {};
+    restoreActions = {};
+
+    // Build actionHandlers
+    for ( let action in ACTIONS ) {
+        actionStartHandlers[action] = () => {
+            activeActions[action] = true;
+            console.log(`${action}-start`);
+        };
+        actionEndHandlers[action] = () => {
+            delete activeActions[action];
+            console.log(`${action}-end`);
+        };
+    }
+    
+    // Start event listeners.
+    for ( let action in ACTIONS ) {
+        window.addEventListener(`${action}-start`, actionStartHandlers[action]);
+        window.addEventListener(`${action}-end`, actionEndHandlers[action]);
+    }
 
     // -------------------------------------------------------------------------
     // START GAME
@@ -176,8 +196,12 @@ export function leave() {
     gameMode.state.gameover = true;
     gameMode.destructor();
     window.removeEventListener('resize', resize);
-    window.removeEventListener('keydown', keydown);
-    window.removeEventListener('keyup', keyup);
+
+    // Clean up even listeners.
+    for ( let action in ACTIONS ) {
+        window.removeEventListener(`${action}-start`, actionStartHandlers[action]);
+        window.removeEventListener(`${action}-end`, actionEndHandlers[action]);
+    }
 }
 
 export function pause() {
