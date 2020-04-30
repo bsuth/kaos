@@ -38,6 +38,32 @@ export default {
     components: { Carousel },
     props: [ 'isActive' ],
 
+    methods: {
+        prev: function() {
+            (this.activeItem === 0) ?
+                this.activeItem = this.items.length - 1 :
+                --this.activeItem;
+        },
+        next: function(event) {
+            (this.activeItem === this.items.length - 1) ?
+                this.activeItem = 0 :
+                ++this.activeItem;
+        },
+    },
+
+    watch: {
+        isActive: function(value) {
+            if (value) {
+                window.addEventListener('menu-next-start', this.next);
+                window.addEventListener('menu-prev-start', this.prev);
+            } else {
+                window.removeEventListener('menu-next-start', this.next);
+                window.removeEventListener('menu-prev-start', this.prev);
+            }
+        },
+
+    },
+
     data() {
         return {
             activeItem: 0,

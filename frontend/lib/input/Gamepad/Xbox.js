@@ -15,7 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { MENU_ACTION_EVENTS, GAME_ACTION_EVENTS, } from '../ActionEvents';
+import {
+    MENU_ACTION_EVENTS,
+    GAME_ACTION_EVENTS,
+} from '../ActionEvents';
 import { CONTEXTS } from '../State';
 
 // -----------------------------------------------------------------------------
@@ -53,8 +56,8 @@ export const BUTTONS = {
 
 export const TRIGGERS = {
     [CONTEXTS.MENU]: {
-        2: MENU_ACTION_EVENTS.MODE_PREV, // L_TRIGGER
-        5: MENU_ACTION_EVENTS.MODE_NEXT, // R_TRIGGER
+        2: MENU_ACTION_EVENTS.PREV, // L_TRIGGER
+        5: MENU_ACTION_EVENTS.NEXT, // R_TRIGGER
     },
     [CONTEXTS.GAME]: {
         2: GAME_ACTION_EVENTS.ROTATE_CC, // L_TRIGGER

@@ -21,9 +21,12 @@
 
 // DO NOT CHANGE THESE. If you absolutely must change these, you'll probably
 // want to change the corresponding scss variables in style/root.scss.
+//
+// Units: px
 
 export const TABLET = 600;
 export const DESKTOP = 800;
+export const HUD_HEIGHT = 50;
 
 
 // -----------------------------------------------------------------------------

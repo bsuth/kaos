@@ -31,8 +31,8 @@ export const CORE_ACTION_EVENTS = Object.freeze({
 export const MENU_ACTION_EVENTS = Object.freeze({
     ACCEPT: 'menu-accept',
     BACK: 'menu-back',
-    MODE_PREV: 'menu-mode-prev',
-    MODE_NEXT: 'menu-mode-next',
+    PREV: 'menu-prev',
+    NEXT: 'menu-next',
 });
 
 export const GAME_ACTION_EVENTS = Object.freeze({

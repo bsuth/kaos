@@ -25,6 +25,7 @@ let getConfig = (data) => ({
             style: path.resolve(__dirname, 'frontend/style'),
             lib: path.resolve(__dirname, 'frontend/lib'),
             globals: path.resolve(__dirname, 'frontend/globals'),
+            canvas: path.resolve(__dirname, 'frontend/canvas'),
         },
     },
 

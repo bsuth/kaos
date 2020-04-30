@@ -34,8 +34,8 @@ const MAPPINGS = {
     [CONTEXTS.MENU]: {
         'w': CORE_ACTION_EVENTS.MOVE_UP,
         's': CORE_ACTION_EVENTS.MOVE_DOWN,
-        'd': CORE_ACTION_EVENTS.MOVE_RIGHT,
-        'a': CORE_ACTION_EVENTS.MOVE_LEFT,
+        'd': MENU_ACTION_EVENTS.NEXT,
+        'a': MENU_ACTION_EVENTS.PREV,
         'Enter': MENU_ACTION_EVENTS.ACCEPT,
         'Backspace': MENU_ACTION_EVENTS.BACK,
     },
