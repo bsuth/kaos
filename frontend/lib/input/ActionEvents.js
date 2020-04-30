@@ -44,7 +44,6 @@ export const GAME_ACTION_EVENTS = Object.freeze({
     CYAN: 'game-cyan',
     CYCLE_COLOR: 'game-cycle-color',
     PAUSE: 'game-pause',
-    RESTART: 'game-restart',
 });
 
 

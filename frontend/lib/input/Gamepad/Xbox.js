@@ -44,7 +44,6 @@ export const BUTTONS = {
         3: GAME_ACTION_EVENTS.RED,       // Y
         4: GAME_ACTION_EVENTS.ROTATE_CC, // LB
         5: GAME_ACTION_EVENTS.ROTATE,    // RB
-        6: GAME_ACTION_EVENTS.RESTART,   // SELECT
         7: GAME_ACTION_EVENTS.PAUSE,     // START
     },
 };

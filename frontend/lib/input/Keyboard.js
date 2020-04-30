@@ -52,7 +52,6 @@ const MAPPINGS = {
         'p': GAME_ACTION_EVENTS.CYAN,
         ' ': GAME_ACTION_EVENTS.CYCLE_COLOR,
         'Enter': GAME_ACTION_EVENTS.PAUSE,
-        'r': GAME_ACTION_EVENTS.RESTART,
     },
 };
 
