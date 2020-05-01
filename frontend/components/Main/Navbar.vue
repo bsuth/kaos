@@ -50,6 +50,7 @@ export default {
 nav ul {
     height: 70px;
     margin: 0;
+    padding: 0;
 
     display: flex;
     justify-content: center;
