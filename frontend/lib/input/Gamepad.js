@@ -18,6 +18,7 @@
 import { getContext } from './State';
 import { CORE_ACTION_EVENTS, registerAction, unregisterAction } from './ActionEvents';
 import * as Xbox from './Gamepad/Xbox';
+import * as PS4 from './Gamepad/PS4';
 
 // -----------------------------------------------------------------------------
 // STATE / CONSTANTS
@@ -42,6 +43,12 @@ window.addEventListener('gamepadconnected', event => {
         _buttonMap = Xbox.BUTTONS;
         _triggerMap = Xbox.TRIGGERS;
         _axisGroups = Xbox.AXES;
+    }
+
+    if (PS4.REGEX.test(_gamepad.id)) {
+        _buttonMap = PS4.BUTTONS;
+        _triggerMap = PS4.TRIGGERS;
+        _axisGroups = PS4.AXES;
     }
 
     window.requestAnimationFrame(inputLoop);
