@@ -103,6 +103,7 @@ export default {
         width: 40px;
         height: 40px;
         cursor: pointer;
+        user-select: none;
 
         object { width: 100%; }
     }

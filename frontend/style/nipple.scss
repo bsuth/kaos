@@ -15,7 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as Gamepad from './Gamepad';
-import * as Keyboard from './Keyboard';
-import * as Touch from './Touch';
-export { MENU_ACTION_EVENTS, GAME_ACTION_EVENTS } from './ActionEvents';
+$nippleRadius: 50px;
+
+#nipple {
+    width: 100%;
+    height: $nippleRadius * 2;
+    display: none;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+    background: red;
+}
+
+#zone_joystick {
+    height: 100%;
+}

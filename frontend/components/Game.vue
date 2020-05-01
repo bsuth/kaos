@@ -21,6 +21,9 @@
         <Hud />
         <Pause />
         <GameOver />
+        <div id='nipple'>
+            <div id='zone_joystick' />
+        </div>
     </div>
 </template>
 

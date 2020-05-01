@@ -33,6 +33,10 @@ export const HUD_HEIGHT = 50;
 // DEVICE TYPE
 // -----------------------------------------------------------------------------
 
+// DO NOT CHANGE THIS. If you absolutely must change this, you'll probably
+// want to change the corresponding scss variables in style/nipple.scss.
+export const NIPPLE_RADIUS = 50;
+
 let _isTouchDevice = false;
 
 /*

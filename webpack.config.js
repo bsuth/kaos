@@ -42,6 +42,7 @@ let getConfig = (data) => ({
                     'vue-style-loader',
                     'css-loader',
                     'sass-loader',
+                    'postcss-loader',
                 ]
             }
         ]

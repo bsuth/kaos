@@ -22,6 +22,9 @@
         mode='out-in'
         v-bind:class="{ 'slide-in': isSubMenu }"
     >
+        <div v-if='isSubMenu' :key='0' class='back' @click='back'>
+            <object data='Back.svg' type='image/svg+xml' />
+        </div>
         <component 
             v-for='(item, index) in items'
             v-show='index == activeItem'
@@ -36,6 +39,12 @@
 <script>
 export default {
     props: [ 'items', 'activeItem', 'isSubMenu' ],
+
+    methods: {
+        back: function() {
+            this.$parent.back();
+        },
+    },
 }
 </script>
 
@@ -70,5 +79,15 @@ export default {
             transform: translate(-50%, -50%);
         }
     }
+}
+
+.back { 
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    cursor: pointer;
+    user-select: none;
+
+    object { width: 100%; height: 100%; }
 }
 </style>
