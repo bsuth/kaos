@@ -31,17 +31,24 @@ export default {
 
 
 <style lang='scss' scoped>
-@import '~style/palette';
-@import '~style/mixins/underline';
+@import 'style/root';
+@import 'style/palette';
+@import 'style/mixins/underline';
 
 a {
-    @include underline-core;
-
-    font-size: 16px;
+    /* core */
     font-weight: bold;
-
+    @include underline-core;
     &:hover { @include underline-active; }
     &.external::after { content: '↗'; }
+
+    /* mobile */
+    font-size: 3.5vw;
+
+    /* tablet */
+    @media only screen and (min-width: 450px) {
+        font-size: 16px;
+    }
 }
 
 @for $i from 1 through length($palette) {

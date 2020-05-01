@@ -58,8 +58,8 @@ export default {
 
 <style lang='scss'>
 #logo {
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
 
     display: block;
     position: relative;
@@ -75,6 +75,11 @@ export default {
         animation-duration: 0.25s;
         animation-fill-mode: forwards;
         animation-timing-function: ease-out;
+    }
+
+    @media only screen and (min-width: 350px) {
+        width: 65px;
+        height: 65px;
     }
 }
 
