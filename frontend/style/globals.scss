@@ -15,14 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@import 'style/globals.scss';
-
-canvas {
-    width: 100%;
-    height: 100%;
-    padding-top: $HUD_HEIGHT;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+$DESKTOP: 800px;
+$TABLET: 600px;
+$HUD_HEIGHT: 50px;

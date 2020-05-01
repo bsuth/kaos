@@ -66,12 +66,12 @@ export default {
 
 
 <style lang='scss' scoped>
-@import 'style/root';
+@import 'style/globals';
 @import 'style/palette';
 
 #hud {
     width: 100%;
-    height: $hudHeight;
+    height: $HUD_HEIGHT;
     position: fixed;
     display: flex;
     justify-content: center;

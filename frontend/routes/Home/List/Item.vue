@@ -63,7 +63,7 @@ export default {
 
 
 <style lang='scss' scoped>
-@import 'style/root';
+@import 'style/globals';
 @import 'style/palette';
 @import 'style/mixins/underline';
 
@@ -95,7 +95,7 @@ li {
     font-size: 20px;
 
     /* tablet */
-    @media only screen and (min-width: $tablet) and (max-width: $desktop) {
+    @media only screen and (min-width: $TABLET) and (max-width: $DESKTOP) {
         font-size: 3vw;
     }
 }

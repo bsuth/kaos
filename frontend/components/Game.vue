@@ -37,7 +37,3 @@ export default {
     components: { Hud, Pause, GameOver },
 };
 </script>
-
-
-<style lang='scss'>
-</style>

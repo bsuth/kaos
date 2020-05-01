@@ -40,7 +40,7 @@ export default {
 
 
 <style lang='scss' scoped>
-@import 'style/root';
+@import 'style/palette';
 
 table {
     width: 80%;

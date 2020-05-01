@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { NIPPLE_RADIUS, IS_TOUCH_DEVICE, HUD_HEIGHT } from 'globals';
 import { setContext, CONTEXTS } from 'lib/input/State';
 import * as orbGenerator from './orbGenerator';
-import * as player from './player';
 import * as settings from './settings';
+import * as player from './player';
 import Timed from './GameMode/Timed';
 import Collector from './GameMode/Collector';
 import Spin2Win from './GameMode/Spin2Win';
@@ -251,5 +252,10 @@ export function restart()
 function resize() 
 {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight - HUD_HEIGHT;
+    
+    if (IS_TOUCH_DEVICE) {
+        canvas.height -= NIPPLE_RADIUS * 2;
+        canvas.style.paddingBottom = NIPPLE_RADIUS * 2 + 'px';
+    }
 }

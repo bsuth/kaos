@@ -38,7 +38,7 @@
 
 
 <style lang='scss' scoped>
-@import 'style/root';
+@import 'style/globals';
 
 div {
     /* core */
@@ -50,12 +50,12 @@ div {
     font-size: 12px;
 
     /* tablet */
-    @media only screen and (min-width: $tablet) {
+    @media only screen and (min-width: $TABLET) {
         font-size: 2vw;
     }
 
     /* desktop */
-    @media only screen and (min-width: $desktop) {
+    @media only screen and (min-width: $DESKTOP) {
         font-size: 16px;
     }
 }

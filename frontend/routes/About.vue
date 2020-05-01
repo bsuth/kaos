@@ -28,9 +28,10 @@
             while the frontend is written in <a href='https://vuejs.org/'>VueJS</a>.
         </p>
         <p>
-            Kaos values simplicity at its core and is in its current state a
-            complete game. That being said, there are still a couple of features
-            we wish to implement in the future:
+            Kaos is in its current state a complete game. That being said, it is
+            still far from perfect and there is a lot of work to be done before
+            we can say that we're satisfied with the project. And once we hit that
+            point, there are several features we wish to implement:
             <ul>
                 <li>Global Scoreboards</li>
                 <li>Customizable Settings</li>
@@ -55,7 +56,7 @@
 
 
 <style lang='scss' scoped>
-@import 'style/root';
+@import 'style/palette';
 
 div {
     width: 80%;

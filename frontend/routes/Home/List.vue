@@ -38,7 +38,7 @@ export default {
 
 
 <style lang='scss' scoped>
-@import '~style/root';
+@import 'style/globals';
 
 ul {
     /* core */
@@ -56,7 +56,7 @@ ul {
     &.slide-out { left: -100%; }
 
     /* tablet / desktop */
-    @media only screen and (min-width: $tablet) {
+    @media only screen and (min-width: $TABLET) {
         width: auto;
         position: relative;
         transition: none;

@@ -31,7 +31,6 @@ export default {
 
 
 <style lang='scss' scoped>
-@import 'style/root';
 @import 'style/palette';
 @import 'style/mixins/underline';
 

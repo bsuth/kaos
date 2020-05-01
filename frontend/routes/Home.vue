@@ -159,7 +159,7 @@ export default {
 
 
 <style lang='scss' scoped>
-@import 'style/root.scss';
+@import 'style/globals';
 
 #home {
     /* core */
@@ -170,7 +170,7 @@ export default {
     overflow: hidden;
 
     /* tablet */
-    @media only screen and (min-width: $tablet) {
+    @media only screen and (min-width: $TABLET) {
         width: 100%;
         max-width: 700px;
         margin: 0 auto;

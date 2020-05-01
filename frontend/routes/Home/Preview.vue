@@ -22,8 +22,13 @@
         mode='out-in'
         v-bind:class="{ 'slide-in': isSubMenu }"
     >
-        <div v-if='isSubMenu' :key='0' class='back' @click='back'>
-            <object data='Back.svg' type='image/svg+xml' />
+        <div v-show='isSubMenu' :key='0' class='arrow-wrapper'>
+            <div class='arrow' @click='back'>
+                <object data='Arrow.svg' type='image/svg+xml' />
+            </div>
+            <div v-show='$parent.activeItem == 0' class='arrow accept' @click='accept'>
+                <object data='Arrow.svg' type='image/svg+xml' />
+            </div>
         </div>
         <component 
             v-for='(item, index) in items'
@@ -41,16 +46,15 @@ export default {
     props: [ 'items', 'activeItem', 'isSubMenu' ],
 
     methods: {
-        back: function() {
-            this.$parent.back();
-        },
+        back: function() { this.$parent.back(); },
+        accept: function() { this.$parent.accept(); },
     },
 }
 </script>
 
 
 <style lang='scss' scoped>
-@import '~style/root';
+@import 'style/globals';
 
 #preview {
     /* mobile */
@@ -63,7 +67,7 @@ export default {
     &.slide-in { left: 0; }
 
     /* tablet */
-    @media only screen and (min-width: $tablet) {
+    @media only screen and (min-width: $TABLET) {
         padding: 0;
         position: relative;
         left: 0;
@@ -81,7 +85,12 @@ export default {
     }
 }
 
-.back { 
+.arrow-wrapper { 
+    width: 100%;
+    display: flex;
+}
+
+.arrow { 
     width: 50px;
     height: 50px;
     margin: 0 auto;
@@ -90,4 +99,6 @@ export default {
 
     object { width: 100%; height: 100%; }
 }
+
+.accept { transform: rotate(180deg); }
 </style>

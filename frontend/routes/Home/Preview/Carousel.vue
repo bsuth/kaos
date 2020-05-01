@@ -70,7 +70,6 @@ export default {
 <style lang='scss'>
 .carousel {
     min-width: 200px;
-    poisiton: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
