@@ -22,7 +22,7 @@
 
 <script>
 import Dialog from './Dialog.vue';
-import * as game from 'canvas/game';
+import * as game from 'game/core';
 
 export default {
     components: { Dialog },

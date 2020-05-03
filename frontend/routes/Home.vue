@@ -26,6 +26,7 @@
 <script>
 import { TABLET, DESKTOP, IS_TOUCH_DEVICE } from 'globals';
 import { setContext, CONTEXTS } from 'lib/input/State'
+import * as game from 'game/core'
 
 import List from './Home/List.vue';
 import Preview from './Home/Preview.vue';
@@ -72,9 +73,10 @@ export default {
         // ITEM ACTIONS
         play: function() {
             this.leave();
-            window.game.enter(this.selectedMode);
+            game.setMode(this.selectedMode);
+            game.enter();
             // Wait for transition to end
-            setTimeout(() => window.game.start(), 500);
+            setTimeout(() => game.start(), 500);
         },
         enterSubMenu: function() {
             this.isSubMenu = true;

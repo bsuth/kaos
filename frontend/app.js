@@ -17,18 +17,11 @@
 
 import Vue from 'vue';
 import App from './App.vue';
-import * as game from './canvas/game';
-import * as input from 'lib/input';
-
+import 'lib/input';
 import './style/root.scss';
-
 
 // -----------------------------------------------------------------------------
 // APP
 // -----------------------------------------------------------------------------
-
-window.addEventListener('load', () => {
-    window.game = game;
-});
 
 new Vue({ el: '#app', render: h => h(App) });

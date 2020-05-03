@@ -16,25 +16,43 @@
  */
 
 // -----------------------------------------------------------------------------
+// GENERAL
+// -----------------------------------------------------------------------------
+
+/*
+ * The color theme of Kaos.
+ */
+export const COLORS = Object.freeze([
+    '#f55742', // red
+    '#7842f5', // purple
+    '#76e635', // green
+    '#4bb6d6', // cyan
+]);
+
+// -----------------------------------------------------------------------------
 // MEDIA QUERIES
 // -----------------------------------------------------------------------------
 
-// DO NOT CHANGE THESE. If you absolutely must change these, you'll probably
-// want to change the corresponding scss variables in style/root.scss.
-//
-// Units: px
-
+/*
+ * DO NOT CHANGE THESE. If you absolutely must change these, you'll probably
+ * want to change the corresponding scss variables in style/root.scss.
+ *
+ * Units: px
+ */
 export const TABLET = 600;
 export const DESKTOP = 800;
 export const HUD_HEIGHT = 50;
-
 
 // -----------------------------------------------------------------------------
 // DEVICE TYPE
 // -----------------------------------------------------------------------------
 
-// DO NOT CHANGE THIS. If you absolutely must change this, you'll probably
-// want to change the corresponding scss variables in style/nipple.scss.
+/*
+ * DO NOT CHANGE THIS. If you absolutely must change this, you'll probably
+ * want to change the corresponding scss variables in style/nipple.scss.
+ *
+ * Units: px
+ */
 export const NIPPLE_RADIUS = 50;
 
 let _isTouchDevice = false;
@@ -65,15 +83,23 @@ if ('maxTouchPoints' in navigator) {
     }
 }
 
+/*
+ * Whether the device should you touch features (NippleJS).
+ */
 export const IS_TOUCH_DEVICE = _isTouchDevice;
-
 
 // -----------------------------------------------------------------------------
 // LOCAL STORAGE SCORES
 // -----------------------------------------------------------------------------
 
+/*
+ * Max number of scores to show per game mode.
+ */
 export const NUM_SCORES = 5;
 
+/*
+ * Local game scores object. Initialize if it doesn't already exist.
+ */
 export let SCORES = JSON.parse(localStorage.getItem('score_data'));
 
 if (!SCORES) {
@@ -83,3 +109,36 @@ if (!SCORES) {
         'Collector': [],
     };
 }
+
+// -----------------------------------------------------------------------------
+// PLAYER SETTINGS
+// -----------------------------------------------------------------------------
+
+/*
+ * Player dimensions
+ */
+export const PLAYER_WIDTH = 5;
+export const PLAYER_LENGTH = 100;
+
+// -----------------------------------------------------------------------------
+// ORB_SETTINGS
+// -----------------------------------------------------------------------------
+
+/*
+ * Approximate speed of orbs. An orbs initial speed will be chosen randomly
+ * between ORB_SPEED and ORB_SPEED + 1. See orbGenerator:_initOrb.
+ */
+export const ORB_SPEED = 3;
+
+/*
+ * Orb size. If you change one of these, make sure to change the other! We use
+ * the square to save computations during the game loop. See player:checkCollision.
+ */
+export const ORB_RADIUS = 10;
+export const ORB_RADIUS_SQUARE = ORB_RADIUS**2;
+
+/*
+ * Number of orbs per 1000 pixels of canvas perimeter.
+ */
+export const ORB_DENSITY = 10;
+

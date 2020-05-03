@@ -29,11 +29,17 @@
 
 
 <script>
+import * as game from 'game/core';
+
 import Hud from './Game/Hud.vue';
 import Pause from './Game/Pause.vue';
 import GameOver from './Game/GameOver.vue';
 
 export default {
     components: { Hud, Pause, GameOver },
+
+    mounted() {
+        game.initCanvas();
+    }
 };
 </script>

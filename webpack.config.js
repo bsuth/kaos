@@ -21,11 +21,11 @@ let getConfig = (data) => ({
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            components: path.resolve(__dirname, 'frontend/components'),
-            style: path.resolve(__dirname, 'frontend/style'),
-            lib: path.resolve(__dirname, 'frontend/lib'),
             globals: path.resolve(__dirname, 'frontend/globals'),
-            canvas: path.resolve(__dirname, 'frontend/canvas'),
+            style: path.resolve(__dirname, 'frontend/style'),
+            components: path.resolve(__dirname, 'frontend/components'),
+            lib: path.resolve(__dirname, 'frontend/lib'),
+            game: path.resolve(__dirname, 'frontend/game'),
         },
     },
 
