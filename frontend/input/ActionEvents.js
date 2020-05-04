@@ -15,6 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import {
+    DURATION_EVENT_PREFIX,
+    DURATION_EVENTS,
+    ACTION_EVENTS,
+} from 'globals';
+
 // -----------------------------------------------------------------------------
 // STATE / CONSTANTS
 // -----------------------------------------------------------------------------
@@ -22,34 +28,14 @@
 let _activeActions = {};
 let _restoreActions = {};
 
-export const CORE_ACTION_EVENTS = Object.freeze({
-    MOVE_UP: 'move-up',
-    MOVE_DOWN: 'move-down',
-    MOVE_LEFT: 'move-left',
-    MOVE_RIGHT: 'move-right',
+export const DURATION_EVENT_NEGATIONS = Object.freeze({
+    [DURATION_EVENTS.UP]: [ DURATION_EVENTS.DOWN ],
+    [DURATION_EVENTS.DOWN]: [ DURATION_EVENTS.UP ],
+    [DURATION_EVENTS.LEFT]: [ DURATION_EVENTS.LEFT ],
+    [DURATION_EVENTS.RIGHT]: [ DURATION_EVENTS.RIGHT ],
+    [DURATION_EVENTS.ROTATE]: [ DURATION_EVENTS.ROTATE_CC ],
+    [DURATION_EVENTS.ROTATE_CC]: [ DURATION_EVENTS.ROTATE ],
 });
-
-export const MENU_ACTION_EVENTS = Object.freeze({
-    // README: You should use the '-end' events for the accept/back buttons,
-    // since if either callback changes the context, the action will not be
-    // removed from _activeActions, as the context actions have changed.
-    ACCEPT: 'menu-accept',
-    BACK: 'menu-back',
-    PREV: 'menu-prev',
-    NEXT: 'menu-next',
-});
-
-export const GAME_ACTION_EVENTS = Object.freeze({
-    ROTATE: 'game-rotate',
-    ROTATE_CC: 'game-rotate-cc',
-    RED: 'game-red',
-    PURPLE: 'game-purple',
-    GREEN: 'game-green',
-    CYAN: 'game-cyan',
-    CYCLE_COLOR: 'game-cycle-color',
-    PAUSE: 'game-pause',
-});
-
 
 // -----------------------------------------------------------------------------
 // API

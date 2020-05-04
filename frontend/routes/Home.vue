@@ -25,6 +25,8 @@
 
 <script>
 import { TABLET, DESKTOP, IS_TOUCH_DEVICE } from 'globals';
+import { ACTION_EVENTS } from 'events';
+
 import { setContext, CONTEXTS } from 'lib/input/State'
 import * as game from 'game/core'
 
@@ -43,19 +45,19 @@ export default {
         enter: function() {
             setContext(CONTEXTS.MENU);
             window.addEventListener('resize', this.resize);
-            window.addEventListener('move-down-start', this.next);
-            window.addEventListener('move-up-start', this.prev);
-            window.addEventListener('menu-accept-end', this.accept);
-            window.addEventListener('menu-back-end', this.back);
+            window.addEventListener(ACTION_EVENTS.DOWN, this.next);
+            window.addEventListener(ACTION_EVENTS.UP, this.prev);
+            window.addEventListener(ACTION_EVENTS.ACCEPT, this.accept);
+            window.addEventListener(ACTION_EVENTS.BACK, this.back);
             window.addEventListener('mode-change', this.updateMode);
             window.dispatchEvent(new Event('menu-enter'));
         },
         leave: function() {
             window.removeEventListener('resize', this.resize);
-            window.removeEventListener('move-down-start', this.next);
-            window.removeEventListener('move-up-start', this.prev);
-            window.removeEventListener('menu-accept-end', this.accept);
-            window.removeEventListener('menu-back-end', this.back);
+            window.removeEventListener(ACTION_EVENTS.DOWN, this.next);
+            window.removeEventListener(ACTION_EVENTS.UP, this.prev);
+            window.removeEventListener(ACTION_EVENTS.ACCEPT, this.accept);
+            window.removeEventListener(ACTION_EVENTS.BACK, this.back);
             window.removeEventListener('mode-change', this.updateMode);
             window.dispatchEvent(new Event('menu-leave'));
         },
@@ -80,8 +82,8 @@ export default {
         },
         enterSubMenu: function() {
             this.isSubMenu = true;
-            window.removeEventListener('move-down-start', this.next);
-            window.removeEventListener('move-up-start', this.prev);
+            window.removeEventListener(ACTION_EVENTS.DOWN, this.next);
+            window.removeEventListener(ACTION_EVENTS.UP, this.prev);
         },
 
         // EVENT LISTENER FUNCTIONS
@@ -103,8 +105,8 @@ export default {
         },
         back: function() {
             this.isSubMenu = false;
-            window.addEventListener('move-down-start', this.next);
-            window.addEventListener('move-up-start', this.prev);
+            window.addEventListener(ACTION_EVENTS.DOWN, this.next);
+            window.addEventListener(ACTION_EVENTS.UP, this.prev);
         },
         prev: function() {
             (this.activeItem === 0) ?

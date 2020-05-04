@@ -16,6 +16,6 @@
  */
 
 import * as Gamepad from './Gamepad';
-import * as Keyboard from '../../input/Keyboard';
+import * as Keyboard from './Keyboard';
 import * as Touch from './Touch';
 export { MENU_ACTION_EVENTS, GAME_ACTION_EVENTS } from './ActionEvents';

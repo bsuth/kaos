@@ -26,6 +26,7 @@ let getConfig = (data) => ({
             components: path.resolve(__dirname, 'frontend/components'),
             lib: path.resolve(__dirname, 'frontend/lib'),
             game: path.resolve(__dirname, 'frontend/game'),
+            events: path.resolve(__dirname, 'frontend/events'),
         },
     },
 

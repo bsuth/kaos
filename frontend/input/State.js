@@ -15,7 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as Gamepad from './Gamepad';
-import * as Keyboard from '../../input/Keyboard';
-import * as Touch from './Touch';
-export { MENU_ACTION_EVENTS, GAME_ACTION_EVENTS } from './ActionEvents';
+// -----------------------------------------------------------------------------
+// STATE / CONSTANTS
+// -----------------------------------------------------------------------------
+
+let _currentContext = 'MENU';
+
+export const CONTEXTS = Object.freeze({
+    MENU: 'MENU',
+    GAME: 'GAME',
+});
+
+
+// -----------------------------------------------------------------------------
+// API
+// -----------------------------------------------------------------------------
+
+export function getContext()
+{
+    return _currentContext;
+}
+
+export function setContext(context)
+{
+    context = context.toUpperCase();
+
+    if (context in CONTEXTS && context != _currentContext)
+        _currentContext = context;
+}
