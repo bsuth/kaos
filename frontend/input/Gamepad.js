@@ -15,8 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { getContext } from './State';
-import { CORE_ACTION_EVENTS, registerAction, unregisterAction } from './ActionEvents';
+import { getContext } from 'state';
+import { ACTION_EVENTS, register, unregister } from 'events';
+
 import * as Xbox from './Gamepad/Xbox';
 import * as PS4 from './Gamepad/PS4';
 
@@ -69,47 +70,32 @@ function inputLoop()
         let context = getContext();
 
         // Register button events
-        for (let [id, action] of Object.entries(_buttonMap[context])) {
-            (_gamepad.buttons[id].pressed) ?
-                registerAction(id, action) :
-                unregisterAction(id, action);
-        }
+        for (let [id, event] of Object.entries(_buttonMap[context]))
+            (_gamepad.buttons[id].pressed) ?  register(event) : unregister(event);
 
         // Register trigger events
-        for (let [id, action] of Object.entries(_triggerMap[context])) {
+        for (let [id, event] of Object.entries(_triggerMap[context])) {
             // Triggers have values (unpressed=-1, pressed=1), with 0 being a
             // half press. This isn't very useful so we transform these values
             // to (unpressed=0, pressed=1)
             let axis = (_gamepad.axes[id] + 1) / 2;
 
             // Trigger must be pressed a certain amount before event fires
-            (axis > 0.1) ?
-                registerAction(id, action) :
-                unregisterAction(id, action);
+            (axis > 0.1) ?  register(event) : unregister(event);
         }
 
-        // Register discrete axis events
-        for (let [id, {X_AXIS_ID, Y_AXIS_ID}] of Object.entries(_axisGroups)) {
+        // Register axis action events
+        for (let { X_AXIS_ID, Y_AXIS_ID } of _axisGroups) {
             let x = _gamepad.axes[X_AXIS_ID];
             let y = _gamepad.axes[Y_AXIS_ID];
 
-            if (Math.abs(x) > 0.1) {
-                (x < 0) ? 
-                    registerAction(id, CORE_ACTION_EVENTS.MOVE_LEFT) :
-                    registerAction(id, CORE_ACTION_EVENTS.MOVE_RIGHT);
-            } else {
-                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_LEFT);
-                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_RIGHT);
-            }
+            (Math.abs(x) > 0.1) ?
+                register(ACTION_EVENTS[x < 0 ? 'LEFT' : 'RIGHT']) :
+                unregister(ACTION_EVENTS[x < 0 ? 'LEFT' : 'RIGHT']);
 
-            if (Math.abs(y) > 0.1) {
-                (y < 0) ? 
-                    registerAction(id, CORE_ACTION_EVENTS.MOVE_UP) :
-                    registerAction(id, CORE_ACTION_EVENTS.MOVE_DOWN);
-            } else {
-                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_UP);
-                unregisterAction(id, CORE_ACTION_EVENTS.MOVE_DOWN);
-            }
+            (Math.abs(y) > 0.1) ?
+                register(ACTION_EVENTS[y < 0 ? 'UP' : 'DOWN']) :
+                unregister(ACTION_EVENTS[y < 0 ? 'UP' : 'DOWN']);
         }
 
         window.requestAnimationFrame(inputLoop);

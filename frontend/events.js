@@ -146,11 +146,12 @@ export function register(event)
             window.dispatchEvent(new Event(negateEvent + '-end'));
         }
 
-        event += '-start';
+        window.dispatchEvent(new Event(event + '-start'));
+    } else {
+        window.dispatchEvent(new Event(event));
     }
 
     _activeEventBuffer.push(event);
-    window.dispatchEvent(new Event(event));
 }
 
 /*

@@ -17,6 +17,8 @@
 
 import {
     COLORS,
+    PLAYER_MOVE_SPEED,
+    PLAYER_ROTATE_SPEED,
     PLAYER_WIDTH,
     PLAYER_LENGTH,
     ORB_RADIUS,
@@ -43,8 +45,11 @@ export default class Player {
         this.x2 = 0;
         this.y1 = 0;
         this.y2 = 0;
-
         this.theta = 0;
+
+        this.vx = 0;
+        this.vy = 0;
+        this.rotateDir = 0;
 
         /* Prevent recomputing values in game loop to save time */
         this.cache = {
@@ -95,14 +100,75 @@ export default class Player {
      * Update the player.
      */
     update() {
-        this.updateCache(); 
+        this._updatePosition();
+        this._updateRotate();
+        this._updateCache(); 
+    }
+
+    /*
+     * Move the player relative to his current position.
+     */
+    _updatePosition() {
+        let { vx, vy } = this;
+
+        vx *= PLAYER_MOVE_SPEED;
+        vy *= PLAYER_MOVE_SPEED;
+
+        // Prevent player from moving off screen
+        vx = (vx < 0) ?
+            Math.max(vx, -this.cache.minX) : 
+            Math.min(vx, canvas.width - this.cache.maxX);
+
+        vy = (vy < 0) ?
+            Math.max(vy, -this.cache.minY) :
+            Math.min(vy, canvas.height - this.cache.maxY);
+
+        // Update player position
+        this.x1 += vx;
+        this.y1 += vy;
+
+        this.x2 += vx;
+        this.y2 += vy;
+    }
+
+    /*
+     * Rotate the player.
+     */
+    _updateRotate() {
+        if (this.rotateDir == 0)
+            return;
+
+        let theta = Math.sign(this.rotateDir) * PLAYER_ROTATE_SPEED;
+        let sin = Math.sin(theta);
+        let cos = Math.cos(theta);
+        
+        let { x1, y1, x2, y2 } = this;
+
+        // Use center of line as point of rotation
+        let centerX = (x1 + x2) / 2;
+        let centerY = (y1 + y2) / 2;
+
+        // Translate to origin before applying rotation
+        x1 -= centerX;
+        y1 -= centerY;
+        x2 -= centerX;
+        y2 -= centerY;
+
+        // Apply rotation + translate back
+        this.x1 = centerX + (x1 * cos - y1 * sin);
+        this.y1 = centerY  + (x1 * sin + y1 * cos);
+        this.x2 = centerX + (x2 * cos - y2 * sin);
+        this.y2 = centerY + (x2 * sin + y2 * cos);
+
+        // Record the total rotation
+        this.theta += theta;
     }
 
     /*
      * Update the cache. This should be run before any checkCollision or
      * checkSpin calls.
      */
-    updateCache() {
+    _updateCache() {
         let { x1, x2, y1, y2 } = this;
 
         if (x1 < x2) {
@@ -181,54 +247,4 @@ export default class Player {
     // -------------------------------------------------------------------------
     // MOVEMENT METHODS
     // -------------------------------------------------------------------------
-
-    /*
-     * Move the player relative to his current position.
-     */
-    moveRel(dx, dy) {
-        // Prevent player from moving off screen
-        dx = (dx < 0) ?
-            Math.max(dx, -this.cache.minX) : 
-            Math.min(dx, canvas.width - this.cache.maxX);
-
-        dy = (dy < 0) ?
-            Math.max(dy, -this.cache.minY) :
-            Math.min(dy, canvas.height - this.cache.maxY);
-
-        // Update player position
-        this.x1 += dx;
-        this.y1 += dy;
-
-        this.x2 += dx;
-        this.y2 += dy;
-    }
-
-    /*
-     * Rotate the player.
-     */
-    rotate(theta) {
-        let sin = Math.sin(theta);
-        let cos = Math.cos(theta);
-        
-        let { x1, y1, x2, y2 } = this;
-
-        // Use center of line as point of rotation
-        let centerX = (x1 + x2) / 2;
-        let centerY = (y1 + y2) / 2;
-
-        // Translate to origin before applying rotation
-        x1 -= centerX;
-        y1 -= centerY;
-        x2 -= centerX;
-        y2 -= centerY;
-
-        // Apply rotation + translate back
-        this.x1 = centerX + (x1 * cos - y1 * sin);
-        this.y1 = centerY  + (x1 * sin + y1 * cos);
-        this.x2 = centerX + (x2 * cos - y2 * sin);
-        this.y2 = centerY + (x2 * sin + y2 * cos);
-
-        // Record the total rotation
-        this.theta += theta;
-    }
 }

@@ -33,7 +33,7 @@
 
 
 <script>
-import { setContext, CONTEXTS } from 'lib/input/State'
+import { setContext, CONTEXTS } from 'input/state';
 
 export default {
     props: [ 'items' ],

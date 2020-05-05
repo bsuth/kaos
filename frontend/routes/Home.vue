@@ -26,9 +26,8 @@
 <script>
 import { TABLET, DESKTOP, IS_TOUCH_DEVICE } from 'globals';
 import { ACTION_EVENTS } from 'events';
-
-import { setContext, CONTEXTS } from 'lib/input/State'
-import * as game from 'game/core'
+import { setContext, CONTEXTS } from 'input/state';
+import * as game from 'game/core';
 
 import List from './Home/List.vue';
 import Preview from './Home/Preview.vue';

@@ -15,7 +15,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as Gamepad from './Gamepad';
-import * as Keyboard from './Keyboard';
-import * as Touch from './Touch';
-export { MENU_ACTION_EVENTS, GAME_ACTION_EVENTS } from './ActionEvents';
+// import * as Gamepad from './Gamepad';
+import './Keyboard';

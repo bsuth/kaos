@@ -120,6 +120,12 @@ if (!SCORES) {
 export const PLAYER_WIDTH = 5;
 export const PLAYER_LENGTH = 100;
 
+/*
+ * Player speeds
+ */
+export const PLAYER_MOVE_SPEED = 5;
+export const PLAYER_ROTATE_SPEED = Math.PI / 40;
+
 // -----------------------------------------------------------------------------
 // ORB_SETTINGS
 // -----------------------------------------------------------------------------
@@ -141,62 +147,3 @@ export const ORB_RADIUS_SQUARE = ORB_RADIUS**2;
  * Number of orbs per 1000 pixels of canvas perimeter.
  */
 export const ORB_DENSITY = 10;
-
-// -----------------------------------------------------------------------------
-// CUSTOM EVENTS
-// -----------------------------------------------------------------------------
-
-/*
- * Custom event prefixes.
- */
-export const DURATION_EVENT_PREFIX = 'duration';
-export const ACTION_EVENT_PREFIX = 'action';
-
-/*
- * Duration events are events with a start-end lifecycle, where the game state
- * will have to monitor/adjust parameter based on whether a duration event is
- * currently active. Each duration event fires a '-start' event when the input
- * is first registered and an '-end' event when the input device has returned
- * to its natural state. Lifecycle indicators, such as '-start' and '-end', are
- * suffixed to each duration event.
- *
- * Ex) When the player wants to rotate, they may hold down a button to perform a
- * constant rotation. The game needs to know when the player wants to start
- * rotating and constantly apply rotations until indicated to stop. Thus, the
- * game will listen for the 'duration-rotate-start' event and apply rotations
- * until the 'duration-rotate-end' event is received.
- */
-export const DURATION_EVENTS = Object.freeze({
-    UP: DURATION_EVENT_PREFIX + '-up',
-    DOWN: DURATION_EVENT_PREFIX + '-down',
-    LEFT: DURATION_EVENT_PREFIX + '-left',
-    RIGHT: DURATION_EVENT_PREFIX + '-right',
-    ROTATE: DURATION_EVENT_PREFIX + '-rotate',
-    ROTATE_CC: DURATION_EVENT_PREFIX + '-rotate-cc',
-});
-
-/*
- * Action events are one-time player input events that lack a start-end
- * lifecycle. They are emitted whenever the input is initially registered (on
- * 'keydown' events for keyboard or the first frame a gamepad button is pressed)
- * and cannot be repeated until the input device has returned to its natural
- * state (on 'keyup' for keyboard or after the gamepad button has detected a
- * non-pressed button state).
- */
-export const ACTION_EVENTS = Object.freeze({
-    // Menu
-    UP: ACTION_EVENT_PREFIX + '-up',
-    DOWN: ACTION_EVENT_PREFIX + '-down',
-    LEFT: ACTION_EVENT_PREFIX + '-left',
-    RIGHT: ACTION_EVENT_PREFIX + '-right',
-    ACCEPT: ACTION_EVENT_PREFIX + '-accept',
-    BACK: ACTION_EVENT_PREFIX + '-back',
-
-    // Game
-    RED: ACTION_EVENT_PREFIX + '-red',
-    PURPLE: ACTION_EVENT_PREFIX + '-purple',
-    GREEN: ACTION_EVENT_PREFIX + '-green',
-    CYAN: ACTION_EVENT_PREFIX + '-cyan',
-    CYCLE_COLOR: ACTION_EVENT_PREFIX + '-cycle-color',
-    PAUSE: ACTION_EVENT_PREFIX + '-pause',
-});

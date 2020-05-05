@@ -16,10 +16,10 @@
  */
 
 import {
-    MENU_ACTION_EVENTS,
-    GAME_ACTION_EVENTS,
-} from '../ActionEvents';
-import { CONTEXTS } from '../State';
+    DURATION_EVENTS,
+    ACTION_EVENTS,
+} from 'events';
+import { CONTEXTS } from 'state';
 
 // -----------------------------------------------------------------------------
 // STATE / CONSTANTS
@@ -34,17 +34,17 @@ export const REGEX = /.*X-Box.*/;
 
 export const BUTTONS = {
     [CONTEXTS.MENU]: {
-        0: MENU_ACTION_EVENTS.ACCEPT, // A
-        1: MENU_ACTION_EVENTS.BACK,   // B
+        0: ACTION_EVENTS.ACCEPT, // A
+        1: ACTION_EVENTS.BACK, // B
     },
     [CONTEXTS.GAME]: {
-        0: GAME_ACTION_EVENTS.GREEN,     // A
-        1: GAME_ACTION_EVENTS.PURPLE,    // B
-        2: GAME_ACTION_EVENTS.CYAN,      // X
-        3: GAME_ACTION_EVENTS.RED,       // Y
-        4: GAME_ACTION_EVENTS.ROTATE_CC, // LB
-        5: GAME_ACTION_EVENTS.ROTATE,    // RB
-        7: GAME_ACTION_EVENTS.PAUSE,     // START
+        0: ACTION_EVENTS.GREEN, // A
+        1: ACTION_EVENTS.PURPLE, // B
+        2: ACTION_EVENTS.CYAN, // X
+        3: ACTION_EVENTS.RED, // Y
+        4: DURATION_EVENTS.ROTATE_CC, // LB
+        5: DURATION_EVENTS.ROTATE, // RB
+        7: ACTION_EVENTS.PAUSE, // START
     },
 };
 
@@ -55,12 +55,12 @@ export const BUTTONS = {
 
 export const TRIGGERS = {
     [CONTEXTS.MENU]: {
-        2: MENU_ACTION_EVENTS.PREV, // L_TRIGGER
-        5: MENU_ACTION_EVENTS.NEXT, // R_TRIGGER
+        2: ACTION_EVENTS.LEFT, // L_TRIGGER
+        5: ACTION_EVENTS.RIGHT, // R_TRIGGER
     },
     [CONTEXTS.GAME]: {
-        2: GAME_ACTION_EVENTS.ROTATE_CC, // L_TRIGGER
-        5: GAME_ACTION_EVENTS.ROTATE, // R_TRIGGER
+        2: DURATION_EVENTS.ROTATE_CC, // L_TRIGGER
+        5: DURATION_EVENTS.ROTATE, // R_TRIGGER
     },
 };
 

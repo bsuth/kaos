@@ -17,7 +17,7 @@
 
 import Vue from 'vue';
 import App from './App.vue';
-import 'lib/input';
+import 'input';
 import './style/root.scss';
 
 // -----------------------------------------------------------------------------

@@ -15,8 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { NIPPLE_RADIUS, IS_TOUCH_DEVICE, HUD_HEIGHT } from 'globals';
-import { setContext, CONTEXTS } from 'lib/input/State';
+import { COLORS, NIPPLE_RADIUS, IS_TOUCH_DEVICE, HUD_HEIGHT } from 'globals';
+import { DURATION_EVENTS, ACTION_EVENTS } from 'events';
+import { setContext, CONTEXTS } from 'input/state';
 
 import * as modes from './modes';
 import * as orbGenerator from './orbGenerator';
@@ -26,8 +27,6 @@ import Player from './player';
 // GAME STATE
 // -----------------------------------------------------------------------------
 
-export let player = new Player();
-
 export const state = {
     tStart: null,
     mode: '',
@@ -36,75 +35,51 @@ export const state = {
     paused: false,
 };
 
-export let canvas = null;
+export let player = new Player();
 
+export let canvas = null;
 let _ctx = null;
 
-let activeActions = {};
-let restoreActions = {};
-let actionStartHandlers = {};
-let actionEndHandlers = {};
-
 // -----------------------------------------------------------------------------
-// GAME ACTIONS
+// TODO
 // -----------------------------------------------------------------------------
 
-export const ACTIONS = {
-    'move-up': {
-        callback: () => player.moveRel(0, -5),
-        negateActions: [ 'move-down' ],
+export const DURATION_EVENT_LISTENERS = {
+    [DURATION_EVENTS.UP]: {
+        start: () => _playerVelStart('vy', -1),
+        end: () => _playerVelEnd('vy'),
     },
-    'move-down': {
-        callback: () => player.moveRel(0, 5),
-        negateActions: [ 'move-up' ],
+    [DURATION_EVENTS.DOWN]: {
+        start: () => _playerVelStart('vy', 1),
+        end: () => _playerVelEnd('vy'),
     },
-    'move-left': {
-        callback: () => player.moveRel(-5, 0),
-        negateActions: [ 'move-right' ],
+    [DURATION_EVENTS.LEFT]: {
+        start: () => _playerVelStart('vx', -1),
+        end: () => _playerVelEnd('vx'),
     },
-    'move-right': {
-        callback: () => player.moveRel(5, 0),
-        negateActions: [ 'move-left' ],
+    [DURATION_EVENTS.RIGHT]: {
+        start: () => _playerVelStart('vx', 1),
+        end: () => _playerVelEnd('vx'),
     },
-    'game-rotate': {
-        callback: () => player.rotate(Math.PI / 40),
-        negateActions: [ 'game-rotate-cc' ],
+    [DURATION_EVENTS.ROTATE]: {
+        start: () => { player.rotateDir = 1; },
+        end: () => { player.rotateDir = 0; },
     },
-    'game-rotate-cc': {
-        callback: () => player.rotate(-Math.PI / 40),
-        negateActions: [ 'game-rotate' ],
-    },
-    'game-red': {
-        callback: () => player.color = 0,
-        negateActions: [ 'game-rotate' ],
-    },
-    'game-purple': {
-        callback: () => player.color = 1,
-        negateActions: [ 'game-red' ],
-    },
-    'game-green': {
-        callback: () => player.color = 2,
-        negateActions: [ 'game-green' ],
-    },
-    'game-cyan': {
-        callback: () => player.color = 3,
-        negateActions: [ 'game-cyan' ],
-    },
-    'game-cycle-color': {
-        callback: () => { 
-            player.color = ++player.color % 4;
-            delete activeActions['game-cycle-color'];
-        },
-        negateActions: []
-    },
-    'game-pause': {
-        callback: () => {
-            pause();
-            delete activeActions['game-pause'];
-        },
-        negateActions: [],
+    [DURATION_EVENTS.ROTATE_CC]: {
+        start: () => { player.rotateDir = -1; },
+        end: () => { player.rotateDir = 0; },
     },
 };
+
+export const ACTION_EVENT_LISTENERS = {
+    [ACTION_EVENTS.RED]: () => { player.colorId = 0; },
+    [ACTION_EVENTS.PURPLE]: () => { player.colorId = 1; },
+    [ACTION_EVENTS.GREEN]: () => { player.colorId = 2; },
+    [ACTION_EVENTS.CYAN]: () => { player.colorId = 3; },
+    [ACTION_EVENTS.CYCLE_COLOR]: () => { player.colorId = ++player.colorId % COLORS.length; },
+    [ACTION_EVENTS.PAUSE]: pause,
+};
+
 
 // -----------------------------------------------------------------------------
 // MAIN (GAMELOOP)
@@ -138,10 +113,6 @@ function _update() {
  * Run the game, woo!
  */
 export function gameloop() {
-    // Process keys
-    for (let action in activeActions)
-        ACTIONS[action].callback();  
-
     _draw();
     _update();
 
@@ -204,42 +175,14 @@ export function enter() {
     // Set context
     setContext(CONTEXTS.GAME);
 
-    // -------------------------------------------------------------------------
-    // TODO: REFACTOR ME
-    activeActions = {};
-    restoreActions = {};
+    for (let [event, listener] of Object.entries(ACTION_EVENT_LISTENERS))
+        window.addEventListener(event, listener);
 
-    // Build actionHandlers
-    for ( let action in ACTIONS ) {
-        actionStartHandlers[action] = () => {
-            for (let negateAction of ACTIONS[action].negateActions) {
-                if (negateAction in activeActions) {
-                    restoreActions[negateAction] = true;
-                    delete activeActions[negateAction];
-                }
-            }
-            activeActions[action] = true;
-        };
-
-        actionEndHandlers[action] = () => {
-            delete activeActions[action];
-            delete restoreActions[action];
-
-            for (let negateAction of ACTIONS[action].negateActions) {
-                if (negateAction in restoreActions) {
-                    activeActions[negateAction] = true;
-                    delete restoreActions[negateAction];
-                }
-            }
-        };
+    for (let [event, listener] of Object.entries(DURATION_EVENT_LISTENERS)) {
+        window.addEventListener(event + '-start', listener.start);
+        window.addEventListener(event + '-end', listener.end);
     }
-    // -------------------------------------------------------------------------
-    
-    // Start event listeners.
-    for ( let action in ACTIONS ) {
-        window.addEventListener(`${action}-start`, actionStartHandlers[action]);
-        window.addEventListener(`${action}-end`, actionEndHandlers[action]);
-    }
+
     window.addEventListener('game-resume', resume);
     window.addEventListener('resize', _resize);
 
@@ -258,10 +201,14 @@ export function enter() {
 export function leave() {
     state.gameover = true;
 
-    for ( let action in ACTIONS ) {
-        window.removeEventListener(`${action}-start`, actionStartHandlers[action]);
-        window.removeEventListener(`${action}-end`, actionEndHandlers[action]);
+    for (let [event, listener] of Object.entries(ACTION_EVENT_LISTENERS))
+        window.removeEventListener(event, listener);
+
+    for (let [event, listener] of Object.entries(DURATION_EVENT_LISTENERS)) {
+        window.removeEventListener(event + '-start', listener.start);
+        window.removeEventListener(event + '-end', listener.end);
     }
+
     window.addEventListener('game-resume', resume);
     window.removeEventListener('resize', _resize);
 
@@ -300,8 +247,7 @@ export function resume() {
 /*
  * Restart the game.
  */
-export function restart()
-{
+export function restart() {
     setContext(CONTEXTS.GAME);
     enter();
 
@@ -320,8 +266,7 @@ export function restart()
  * Adjust the canvas' internal width and height. This is necessary to prevent
  * stretching/squashing when the canvas is drawn.
  */
-function _resize() 
-{
+function _resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight - HUD_HEIGHT;
 
@@ -330,4 +275,48 @@ function _resize()
         canvas.height -= NIPPLE_RADIUS * 2;
         canvas.style.paddingBottom = NIPPLE_RADIUS * 2 + 'px';
     }
+}
+
+// -----------------------------------------------------------------------------
+// HELPERS
+// -----------------------------------------------------------------------------
+
+/*
+ * x and y components for 45 degree angle unit velocity vector.
+ */
+const _diagLength = 1 / Math.sqrt(2);
+
+/*
+ * An abstraction for updating the player velocity vector when a new direction
+ * is added, normalizing for 45 degree angle inputs (simultaneous input in both
+ * dimensions). 
+ *
+ * dim should be one of [ 'vx', 'vy' ]
+ * dir should be one of [ 1, -1 ]
+ */
+function _playerVelStart(dim, dir) {
+    let dimOpp = (dim == 'vx') ? 'vy' : 'vx';
+
+    if (player[dimOpp] != 0) {
+        player[dimOpp] = Math.sign(player[dimOpp]) * _diagLength;
+        player[dim] = dir * _diagLength;
+        console.log(player[dimOpp], player[dim]);
+    } else {
+        player[dim] = dir;
+    }
+}
+
+/*
+ * An abstraction for updating the player velocity vector when a new direction
+ * is removed, restoring previously altered values in the opposite dimension
+ * when necessary.
+ *
+ * dim should be one of [ 'vx', 'vy' ]
+ */
+function _playerVelEnd(dim) {
+    let dimOpp = (dim == 'vx') ? 'vy' : 'vx';
+    
+    if (player[dimOpp] != 0)
+        player[dimOpp] = Math.sign(player[dimOpp]);
+    player[dim] = 0;
 }

@@ -22,13 +22,11 @@ import {
     unregister,
 } from 'events';
 
-import { CONTEXTS, getContext } from './State';
+import { CONTEXTS, getContext } from 'input/state';
 
 // -----------------------------------------------------------------------------
 // DEFAULT MAPPINGS
 // -----------------------------------------------------------------------------
-
-export const ID = 'KEYBOARD';
 
 const MAPPINGS = {
     [CONTEXTS.MENU]: {
