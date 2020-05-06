@@ -15,5 +15,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// import * as Gamepad from './Gamepad';
+import './Gamepad';
 import './Keyboard';

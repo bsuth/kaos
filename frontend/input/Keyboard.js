@@ -20,7 +20,7 @@ import {
     ACTION_EVENTS,
     register,
     unregister,
-} from 'events';
+} from './events';
 
 import { CONTEXTS, getContext } from 'input/state';
 

@@ -16,11 +16,10 @@
  */
 
 import {
-    CORE_ACTION_EVENTS,
-    MENU_ACTION_EVENTS,
-    GAME_ACTION_EVENTS,
-} from '../ActionEvents';
-import { CONTEXTS } from '../State';
+    DURATION_EVENTS,
+    ACTION_EVENTS,
+} from '../events';
+import { CONTEXTS } from 'input/state';
 
 // -----------------------------------------------------------------------------
 // STATE / CONSTANTS
@@ -35,29 +34,17 @@ export const REGEX = /.*Sony.*Controller.*/;
 
 export const BUTTONS = {
     [CONTEXTS.MENU]: {
-        0: MENU_ACTION_EVENTS.ACCEPT,       // X
-        1: MENU_ACTION_EVENTS.BACK,         // Circle
-        4: MENU_ACTION_EVENTS.PREV,         // LB
-        5: MENU_ACTION_EVENTS.NEXT,         // RB
-        6: MENU_ACTION_EVENTS.PREV,         // L_TRIGGER
-        7: MENU_ACTION_EVENTS.NEXT,         // R_TRIGGER
-        12: CORE_ACTION_EVENTS.MOVE_UP,     // DPAD_UP
-        13: CORE_ACTION_EVENTS.MOVE_DOWN,   // DPAD_DOWN
+        0: ACTION_EVENTS.ACCEPT, // A
+        1: ACTION_EVENTS.BACK, // B
     },
     [CONTEXTS.GAME]: {
-        0: GAME_ACTION_EVENTS.CYAN,         // X
-        1: GAME_ACTION_EVENTS.RED,          // Circle 
-        2: GAME_ACTION_EVENTS.PURPLE,       // Square
-        3: GAME_ACTION_EVENTS.GREEN,        // Triangle
-        4: GAME_ACTION_EVENTS.ROTATE_CC,    // LB
-        5: GAME_ACTION_EVENTS.ROTATE,       // RB
-        6: GAME_ACTION_EVENTS.ROTATE_CC,    // L_TRIGGER
-        7: GAME_ACTION_EVENTS.ROTATE,       // R_TRIGGER
-        9: GAME_ACTION_EVENTS.PAUSE,        // START
-        12: CORE_ACTION_EVENTS.MOVE_UP,     // DPAD_UP
-        13: CORE_ACTION_EVENTS.MOVE_DOWN,   // DPAD_DOWN
-        14: CORE_ACTION_EVENTS.MOVE_LEFT,   // DPAD_LEFT
-        15: CORE_ACTION_EVENTS.MOVE_RIGHT,  // DPAD_RIGHT
+        0: ACTION_EVENTS.GREEN, // A
+        1: ACTION_EVENTS.PURPLE, // B
+        2: ACTION_EVENTS.CYAN, // X
+        3: ACTION_EVENTS.RED, // Y
+        4: DURATION_EVENTS.ROTATE_CC, // LB
+        5: DURATION_EVENTS.ROTATE, // RB
+        7: ACTION_EVENTS.PAUSE, // START
     },
 };
 
@@ -68,10 +55,12 @@ export const BUTTONS = {
 
 export const TRIGGERS = {
     [CONTEXTS.MENU]: {
-        // PS4 Triggers are buttons.
+        2: ACTION_EVENTS.LEFT, // L_TRIGGER
+        5: ACTION_EVENTS.RIGHT, // R_TRIGGER
     },
     [CONTEXTS.GAME]: {
-        // PS4 Triggers are buttons.
+        2: DURATION_EVENTS.ROTATE_CC, // L_TRIGGER
+        5: DURATION_EVENTS.ROTATE, // R_TRIGGER
     },
 };
 
@@ -81,12 +70,56 @@ export const TRIGGERS = {
 // -----------------------------------------------------------------------------
 
 export const AXES = {
-    0: { // L_STICK
-        X_AXIS_ID: 0,
-        Y_AXIS_ID: 1,
+    [CONTEXTS.MENU]: {
+        0: { // L_STICK_X
+            [-1]: ACTION_EVENTS.LEFT,
+            [1]: ACTION_EVENTS.RIGHT,
+        },
+        1: { // L_STICK_Y
+            [-1]: ACTION_EVENTS.UP,
+            [1]: ACTION_EVENTS.DOWN,
+        },
+        3: { // R_STICK_X
+            [-1]: ACTION_EVENTS.LEFT,
+            [1]: ACTION_EVENTS.RIGHT,
+        },
+        4: { // R_STICK_Y
+            [-1]: ACTION_EVENTS.UP,
+            [1]: ACTION_EVENTS.DOWN,
+        },
+        6: { // DPAD_X
+            [-1]: ACTION_EVENTS.LEFT,
+            [1]: ACTION_EVENTS.RIGHT,
+        },
+        7: { // DPAD_Y
+            [-1]: ACTION_EVENTS.UP,
+            [1]: ACTION_EVENTS.DOWN,
+        },
     },
-    1: { // R_STICK
-        X_AXIS_ID: 2,
-        Y_AXIS_ID: 3,
+    [CONTEXTS.GAME]: {
+        0: { // L_STICK_X
+            [-1]: DURATION_EVENTS.LEFT,
+            [1]: DURATION_EVENTS.RIGHT,
+        },
+        1: { // L_STICK_Y
+            [-1]: DURATION_EVENTS.UP,
+            [1]: DURATION_EVENTS.DOWN,
+        },
+        3: { // R_STICK_X
+            [-1]: DURATION_EVENTS.LEFT,
+            [1]: DURATION_EVENTS.RIGHT,
+        },
+        4: { // R_STICK_Y
+            [-1]: DURATION_EVENTS.UP,
+            [1]: DURATION_EVENTS.DOWN,
+        },
+        6: { // DPAD_X
+            [-1]: DURATION_EVENTS.LEFT,
+            [1]: DURATION_EVENTS.RIGHT,
+        },
+        7: { // DPAD_Y
+            [-1]: DURATION_EVENTS.UP,
+            [1]: DURATION_EVENTS.DOWN,
+        },
     },
 };

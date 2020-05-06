@@ -18,8 +18,8 @@
 import {
     DURATION_EVENTS,
     ACTION_EVENTS,
-} from 'events';
-import { CONTEXTS } from 'state';
+} from '../events';
+import { CONTEXTS } from 'input/state';
 
 // -----------------------------------------------------------------------------
 // STATE / CONSTANTS
@@ -70,16 +70,56 @@ export const TRIGGERS = {
 // -----------------------------------------------------------------------------
 
 export const AXES = {
-    0: { // L_STICK
-        X_AXIS_ID: 0,
-        Y_AXIS_ID: 1,
+    [CONTEXTS.MENU]: {
+        0: { // L_STICK_X
+            [-1]: ACTION_EVENTS.LEFT,
+            [1]: ACTION_EVENTS.RIGHT,
+        },
+        1: { // L_STICK_Y
+            [-1]: ACTION_EVENTS.UP,
+            [1]: ACTION_EVENTS.DOWN,
+        },
+        3: { // R_STICK_X
+            [-1]: ACTION_EVENTS.LEFT,
+            [1]: ACTION_EVENTS.RIGHT,
+        },
+        4: { // R_STICK_Y
+            [-1]: ACTION_EVENTS.UP,
+            [1]: ACTION_EVENTS.DOWN,
+        },
+        6: { // DPAD_X
+            [-1]: ACTION_EVENTS.LEFT,
+            [1]: ACTION_EVENTS.RIGHT,
+        },
+        7: { // DPAD_Y
+            [-1]: ACTION_EVENTS.UP,
+            [1]: ACTION_EVENTS.DOWN,
+        },
     },
-    1: { // R_STICK
-        X_AXIS_ID: 3,
-        Y_AXIS_ID: 4,
-    },
-    2: { // DPAD
-        X_AXIS_ID: 6,
-        Y_AXIS_ID: 7,
+    [CONTEXTS.GAME]: {
+        0: { // L_STICK_X
+            [-1]: DURATION_EVENTS.LEFT,
+            [1]: DURATION_EVENTS.RIGHT,
+        },
+        1: { // L_STICK_Y
+            [-1]: DURATION_EVENTS.UP,
+            [1]: DURATION_EVENTS.DOWN,
+        },
+        3: { // R_STICK_X
+            [-1]: DURATION_EVENTS.LEFT,
+            [1]: DURATION_EVENTS.RIGHT,
+        },
+        4: { // R_STICK_Y
+            [-1]: DURATION_EVENTS.UP,
+            [1]: DURATION_EVENTS.DOWN,
+        },
+        6: { // DPAD_X
+            [-1]: DURATION_EVENTS.LEFT,
+            [1]: DURATION_EVENTS.RIGHT,
+        },
+        7: { // DPAD_Y
+            [-1]: DURATION_EVENTS.UP,
+            [1]: DURATION_EVENTS.DOWN,
+        },
     },
 };

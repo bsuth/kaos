@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import * as events from './events';
+
 // -----------------------------------------------------------------------------
 // STATE / CONSTANTS
 // -----------------------------------------------------------------------------
@@ -40,6 +42,12 @@ export function setContext(context)
 {
     context = context.toUpperCase();
 
-    if (context in CONTEXTS && context != _currentContext)
+    // Don't change the context if its already set
+    if (context in CONTEXTS && context != _currentContext) {
+        // Clear event buffers w/ old context actions
+        events.clear();
+
+        // Change the context
         _currentContext = context;
+    }
 }

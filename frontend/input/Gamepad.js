@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { getContext } from 'state';
-import { ACTION_EVENTS, register, unregister } from 'events';
+import { getContext } from 'input/state';
+import { register, unregister } from './events';
 
 import * as Xbox from './Gamepad/Xbox';
 import * as PS4 from './Gamepad/PS4';
@@ -30,8 +30,7 @@ export const ID = 'GAMEPAD';
 let _gamepad = null;
 let _buttonMap = Xbox.BUTTONS;
 let _triggerMap = Xbox.TRIGGERS;
-let _axisGroups = Xbox.AXES;
-
+let _axisMap = Xbox.AXES;
 
 // -----------------------------------------------------------------------------
 // EVENT LISTENERS
@@ -43,13 +42,13 @@ window.addEventListener('gamepadconnected', event => {
     if (Xbox.REGEX.test(_gamepad.id)) {
         _buttonMap = Xbox.BUTTONS;
         _triggerMap = Xbox.TRIGGERS;
-        _axisGroups = Xbox.AXES;
+        _axisMap = Xbox.AXES;
     }
 
     if (PS4.REGEX.test(_gamepad.id)) {
         _buttonMap = PS4.BUTTONS;
         _triggerMap = PS4.TRIGGERS;
-        _axisGroups = PS4.AXES;
+        _axisMap = PS4.AXES;
     }
 
     window.requestAnimationFrame(inputLoop);
@@ -59,13 +58,11 @@ window.addEventListener('gamepaddisconnected', _ => {
     _gamepad = null;
 });
 
-
 // -----------------------------------------------------------------------------
-// HELPERS
+// GAMEPAD INPUT LOOP
 // -----------------------------------------------------------------------------
 
-function inputLoop()
-{
+function inputLoop() {
     if (_gamepad) {
         let context = getContext();
 
@@ -76,26 +73,22 @@ function inputLoop()
         // Register trigger events
         for (let [id, event] of Object.entries(_triggerMap[context])) {
             // Triggers have values (unpressed=-1, pressed=1), with 0 being a
-            // half press. This isn't very useful so we transform these values
-            // to (unpressed=0, pressed=1)
-            let axis = (_gamepad.axes[id] + 1) / 2;
-
-            // Trigger must be pressed a certain amount before event fires
-            (axis > 0.1) ?  register(event) : unregister(event);
+            // half press. Originally, a transformation was used here to map
+            // [-1, 1] -> [0, 1]. However, when the gamepad is first connected,
+            // the axis is given a default value of 0, despite the  trigger being
+            // in an unpressed state. Thus, we simply check a POSITIVE threshold
+            // value to make sure the event is not fired when the gamepad is
+            // first connected, as well as for subsequent presses.
+            (_gamepad.axes[id] > 0.3) ?  register(event) : unregister(event);
         }
 
         // Register axis action events
-        for (let { X_AXIS_ID, Y_AXIS_ID } of _axisGroups) {
-            let x = _gamepad.axes[X_AXIS_ID];
-            let y = _gamepad.axes[Y_AXIS_ID];
+        for (let [id, events] of Object.entries(_axisMap[context])) {
+            let axis = _gamepad.axes[id];
+            let event = events[Math.sign(axis)];
 
-            (Math.abs(x) > 0.1) ?
-                register(ACTION_EVENTS[x < 0 ? 'LEFT' : 'RIGHT']) :
-                unregister(ACTION_EVENTS[x < 0 ? 'LEFT' : 'RIGHT']);
-
-            (Math.abs(y) > 0.1) ?
-                register(ACTION_EVENTS[y < 0 ? 'UP' : 'DOWN']) :
-                unregister(ACTION_EVENTS[y < 0 ? 'UP' : 'DOWN']);
+            // Axis must pass a threshold before firing an event
+            (Math.abs(axis) > 0.3) ?  register(event) : unregister(event);
         }
 
         window.requestAnimationFrame(inputLoop);

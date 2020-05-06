@@ -108,20 +108,27 @@ export const ACTION_EVENTS = Object.freeze({
  * Event buffers. This allows us to store/restore overridden events, as well as
  * prevent certain events from over-firing (ex. a button being pressed and held).
  */
-const _restoreEventBuffer = [];
-const _activeEventBuffer = [];
+let _restoreEventBuffer = [];
+let _activeEventBuffer = [];
 
 // -----------------------------------------------------------------------------
 // API
 // -----------------------------------------------------------------------------
 
 /*
+ * Clear the event buffers. Useful when changing context.
+ */
+export function clear() {
+    _restoreEventBuffer = [];
+    _activeEventBuffer = [];
+}
+
+/*
  * Registering events couples event types w/ custom logic when an event should
  * be started. For example, if a duration event fires and overrides another
  * event, we need to mark the latter as inactive and restore it later.
  */
-export function register(event)
-{
+export function register(event) {
     // Do not re-register events.
     if (_activeEventBuffer.includes(event))
         return;
@@ -147,6 +154,7 @@ export function register(event)
         }
 
         window.dispatchEvent(new Event(event + '-start'));
+        console.log(_activeEventBuffer, event);
     } else {
         window.dispatchEvent(new Event(event));
     }
@@ -159,8 +167,7 @@ export function register(event)
  * be ended. For example, if a duration event ends and it has previously
  * overridden another event, then that event should be restored.
  */
-export function unregister(event)
-{
+export function unregister(event) {
     // If stored event, simply pop. The '-end' event has already fired and
     // there is nothing to restore.
     let restoreIndex = _restoreEventBuffer.indexOf(event);

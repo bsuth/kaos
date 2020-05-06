@@ -16,7 +16,7 @@
  */
 
 import { COLORS, NIPPLE_RADIUS, IS_TOUCH_DEVICE, HUD_HEIGHT } from 'globals';
-import { DURATION_EVENTS, ACTION_EVENTS } from 'events';
+import { DURATION_EVENTS, ACTION_EVENTS } from 'input/events';
 import { setContext, CONTEXTS } from 'input/state';
 
 import * as modes from './modes';

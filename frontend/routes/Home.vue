@@ -25,7 +25,7 @@
 
 <script>
 import { TABLET, DESKTOP, IS_TOUCH_DEVICE } from 'globals';
-import { ACTION_EVENTS } from 'events';
+import { ACTION_EVENTS } from 'input/events';
 import { setContext, CONTEXTS } from 'input/state';
 import * as game from 'game/core';
 
