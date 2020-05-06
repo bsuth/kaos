@@ -17,10 +17,8 @@
 
 <template>
     <div id='hud'>
-        <div class='player-color' v-bind:class='nextColorClass' />
-        <span class='score'>
-            {{ state.score }}
-        </span>
+        Next Color: <div class='player-color' v-bind:class='nextColorClass' />
+        Score:<span class='score'> {{ state.score }} </span>
     </div>
 </template>
 
