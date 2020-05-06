@@ -67,8 +67,10 @@ function inputLoop() {
         let context = getContext();
 
         // Register button events
-        for (let [id, event] of Object.entries(_buttonMap[context]))
-            (_gamepad.buttons[id].pressed) ?  register(event) : unregister(event);
+        for (let [id, event] of Object.entries(_buttonMap[context])) {
+            let registerId = 'button' + id;
+            (_gamepad.buttons[id].pressed) ?  register(event, registerId) : unregister(event, registerId);
+        }
 
         // Register trigger events
         for (let [id, event] of Object.entries(_triggerMap[context])) {
@@ -79,16 +81,21 @@ function inputLoop() {
             // in an unpressed state. Thus, we simply check a POSITIVE threshold
             // value to make sure the event is not fired when the gamepad is
             // first connected, as well as for subsequent presses.
-            (_gamepad.axes[id] > 0.3) ?  register(event) : unregister(event);
+            let registerId = 'trigger' + id;
+            (_gamepad.axes[id] > 0.3) ?  register(event, registerId) : unregister(event, registerId);
         }
 
         // Register axis action events
         for (let [id, events] of Object.entries(_axisMap[context])) {
+            let registerId = 'axis' + id;
             let axis = _gamepad.axes[id];
-            let event = events[Math.sign(axis)];
 
-            // Axis must pass a threshold before firing an event
-            (Math.abs(axis) > 0.3) ?  register(event) : unregister(event);
+            if (Math.abs(axis) > 0.3) {
+                register(events[Math.sign(axis)], registerId);
+            } else {
+                for (let [_, event] of Object.entries(events))
+                    unregister(event, registerId);
+            }
         }
 
         window.requestAnimationFrame(inputLoop);

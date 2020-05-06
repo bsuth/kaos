@@ -108,8 +108,8 @@ export const ACTION_EVENTS = Object.freeze({
  * Event buffers. This allows us to store/restore overridden events, as well as
  * prevent certain events from over-firing (ex. a button being pressed and held).
  */
-let _restoreEventBuffer = [];
-let _activeEventBuffer = [];
+let _restoreEventBuffer = {};
+let _activeEventBuffer = {};
 
 // -----------------------------------------------------------------------------
 // API
@@ -119,8 +119,8 @@ let _activeEventBuffer = [];
  * Clear the event buffers. Useful when changing context.
  */
 export function clear() {
-    _restoreEventBuffer = [];
-    _activeEventBuffer = [];
+    _restoreEventBuffer = {};
+    _activeEventBuffer = {};
 }
 
 /*
@@ -128,37 +128,42 @@ export function clear() {
  * be started. For example, if a duration event fires and overrides another
  * event, we need to mark the latter as inactive and restore it later.
  */
-export function register(event) {
+export function register(event, id) {
+    if (_activeEventBuffer[event] === undefined)
+        _activeEventBuffer[event] = [];
+    if (_restoreEventBuffer[event] === undefined)
+        _restoreEventBuffer[event] = [];
+
+    let activeEventIds = _activeEventBuffer[event];
+    let restoreEventIds = _restoreEventBuffer[event];
+
     // Do not re-register events.
-    if (_activeEventBuffer.includes(event))
+    if (activeEventIds.includes(id) || restoreEventIds.includes(id))
         return;
 
-    let eventType = _getType(event);
     // Nothing to do if event is not a valid type.
+    let eventType = _getType(event);
     if (![TYPE_DURATION, TYPE_ACTION].includes(eventType))
         return;
 
+    // Add the event
+    if (restoreEventIds.length)
+        activeEventIds = restoreEventIds;
+    activeEventIds.push(id);
+
     if (eventType == TYPE_DURATION) {
-        // Do not re-register stored events.
-        if (_restoreEventBuffer.includes(event))
-            return;
-
         let negateEvent = DURATION_EVENT_NEGATIONS[event];
-        let negateIndex = _activeEventBuffer.indexOf(negateEvent);
+        let negateEventIds = _activeEventBuffer[negateEvent];
 
-        if (negateIndex != -1) {
+        if (negateEventIds && negateEventIds.length) {
             // Event has been overridden, store for later.
-            _restoreEventBuffer.push(negateEvent);
-            _smartPop(_activeEventBuffer, negateIndex);
+            _restoreEventBuffer[negateEvent] = negateEventIds;
+            _activeEventBuffer[negateEvent] = [];
             window.dispatchEvent(new Event(negateEvent + '-end'));
         }
 
         window.dispatchEvent(new Event(event + '-start'));
-    } else {
-        window.dispatchEvent(new Event(event));
     }
-
-    _activeEventBuffer.push(event);
 }
 
 /*
@@ -166,40 +171,52 @@ export function register(event) {
  * be ended. For example, if a duration event ends and it has previously
  * overridden another event, then that event should be restored.
  */
-export function unregister(event) {
+export function unregister(event, id) {
+    if (_activeEventBuffer[event] === undefined)
+        _activeEventBuffer[event] = [];
+    if (_restoreEventBuffer[event] === undefined)
+        _restoreEventBuffer[event] = [];
+
+    let activeEventIds = _activeEventBuffer[event];
+    let restoreEventIds = _restoreEventBuffer[event];
+
     // If stored event, simply pop. The '-end' event has already fired and
     // there is nothing to restore.
-    let restoreIndex = _restoreEventBuffer.indexOf(event);
+    let restoreIndex = restoreEventIds.indexOf(id);
     if (restoreIndex != -1) {
-        _smartPop(_restoreEventBuffer, restoreIndex);
+        _smartPop(restoreEventIds, restoreIndex);
         return;
     }
-
-    // Nothing to do if event is not active.
-    let index = _activeEventBuffer.indexOf(event);
-    if (index == -1)
-        return;
 
     // Nothing to do if event is not a valid type.
     let eventType = _getType(event);
     if (![TYPE_DURATION, TYPE_ACTION].includes(eventType))
         return;
 
+    // Nothing to do if event is not active.
+    let activeIndex = activeEventIds.indexOf(id);
+    if (activeIndex == -1)
+        return;
+
+    _smartPop(activeEventIds, activeIndex);
+
     if (eventType == TYPE_DURATION) {
         window.dispatchEvent(new Event(event + '-end'));
 
         let negateEvent = DURATION_EVENT_NEGATIONS[event];
-        let negateIndex = _restoreEventBuffer.indexOf(negateEvent);
+        let negateEventIds = _restoreEventBuffer[negateEvent];
 
         // Restore the previously stored event to active.
-        if (negateIndex != -1) {
-            _smartPop(_restoreEventBuffer, negateIndex);
-            _activeEventBuffer.push(negateEvent);
+        if (!activeEventIds.length && negateEventIds && negateEventIds.length) {
+            _activeEventBuffer[negateEvent] = negateEventIds;
+            _restoreEventBuffer[negateEvent] = [];
             window.dispatchEvent(new Event(negateEvent + '-start'));
         }
+    } else {
+        // Dispatch action events on unpress due to conflicting actions
+        // (menu accept causes player to immediately turn green on xbox)
+        window.dispatchEvent(new Event(event));
     }
-
-    _smartPop(_activeEventBuffer, index);
 }
 
 // -----------------------------------------------------------------------------

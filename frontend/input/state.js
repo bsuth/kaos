@@ -44,9 +44,6 @@ export function setContext(context)
 
     // Don't change the context if its already set
     if (context in CONTEXTS && context != _currentContext) {
-        // Clear event buffers w/ old context actions
-        events.clear();
-
         // Change the context
         _currentContext = context;
     }

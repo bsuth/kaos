@@ -41,6 +41,8 @@ export default {
             game.leave();
             this.leave();
             window.dispatchEvent(new Event('main-enter'));
+            // Wait for transition to end
+            setTimeout(() => game.reset(), 500);
         },
     },
 
@@ -54,7 +56,7 @@ export default {
     },
 
     mounted() {
-        window.addEventListener('game-pause-start', this.enter);
+        window.addEventListener('game-pause', this.enter);
     },
 };
 </script>

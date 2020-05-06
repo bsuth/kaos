@@ -219,6 +219,7 @@ export function leave() {
  * Reset the game state.
  */
 export function reset() {
+    state.paused = false;
     state.gameover = false;
     state.score = 0;
 
@@ -247,6 +248,7 @@ export function start() {
  */
 export function pause() {
     state.paused = true;
+    window.dispatchEvent(new Event('game-pause'));
 }
 
 /*

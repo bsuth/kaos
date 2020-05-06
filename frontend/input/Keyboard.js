@@ -61,12 +61,16 @@ const MAPPINGS = {
 
 window.addEventListener('keydown', event => {
     let contextMapping = MAPPINGS[getContext()];
-    if (event.key in contextMapping)
-        register(contextMapping[event.key]);
+    if (event.key in contextMapping) {
+        let registerId = 'key' + event.key;
+        register(contextMapping[event.key], registerId);
+    }
 });
 
 window.addEventListener('keyup', event => {
     let contextMapping = MAPPINGS[getContext()];
-    if (event.key in contextMapping)
-        unregister(contextMapping[event.key]);
+    if (event.key in contextMapping) {
+        let registerId = 'key' + event.key;
+        unregister(contextMapping[event.key], registerId);
+    }
 });
