@@ -33,6 +33,7 @@
 
 
 <script>
+import { ACTION_EVENTS } from 'input/events';
 import { setContext, CONTEXTS } from 'input/state';
 
 export default {
@@ -43,18 +44,21 @@ export default {
         enter: function() {
             setContext(CONTEXTS.MENU);
             this.$el.style.display = 'flex';
-            window.addEventListener('move-down-start', this.next);
-            window.addEventListener('move-up-start', this.prev);
-            window.addEventListener('menu-back-end', this.leave);
-            window.addEventListener('menu-accept-end', this.accept);
+
+            window.addEventListener(ACTION_EVENTS.DOWN, this.next);
+            window.addEventListener(ACTION_EVENTS.UP, this.prev);
+            window.addEventListener(ACTION_EVENTS.ACCEPT, this.accept);
+            window.addEventListener(ACTION_EVENTS.BACK, this.leave);
         },
         leave: function() {
             this.$el.style.display = 'none';
             this.activeItem = 0;
-            window.removeEventListener('move-down-start', this.next);
-            window.removeEventListener('move-up-start', this.prev);
-            window.removeEventListener('menu-back-end', this.leave);
-            window.removeEventListener('menu-accept-end', this.accept);
+
+            window.removeEventListener(ACTION_EVENTS.DOWN, this.next);
+            window.removeEventListener(ACTION_EVENTS.UP, this.prev);
+            window.removeEventListener(ACTION_EVENTS.ACCEPT, this.accept);
+            window.removeEventListener(ACTION_EVENTS.BACK, this.leave);
+
             setContext(CONTEXTS.GAME);
         },
 

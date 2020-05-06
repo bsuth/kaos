@@ -154,7 +154,6 @@ export function register(event) {
         }
 
         window.dispatchEvent(new Event(event + '-start'));
-        console.log(_activeEventBuffer, event);
     } else {
         window.dispatchEvent(new Event(event));
     }

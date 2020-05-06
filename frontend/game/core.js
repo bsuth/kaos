@@ -191,7 +191,6 @@ export function enter() {
     window.dispatchEvent(new Event('game-enter'));
 
     orbGenerator.enter();
-    console.log('entered');
 }
 
 /*
@@ -300,7 +299,6 @@ function _playerVelStart(dim, dir) {
     if (player[dimOpp] != 0) {
         player[dimOpp] = Math.sign(player[dimOpp]) * _diagLength;
         player[dim] = dir * _diagLength;
-        console.log(player[dimOpp], player[dim]);
     } else {
         player[dim] = dir;
     }
