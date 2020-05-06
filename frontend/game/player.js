@@ -79,6 +79,13 @@ export default class Player {
         this.y2 = canvasCenterY;
     }
 
+    reset() {
+        this.initCanvas();
+        this.rotateDir = 0;
+        this.vx = 0;
+        this.vy = 0;
+    }
+
     // -------------------------------------------------------------------------
     // GAMELOOP METHODS
     // -------------------------------------------------------------------------

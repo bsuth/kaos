@@ -223,6 +223,16 @@ export function leave() {
  */
 export function start() {
     state.tStart = Date.now();
+
+    // Check if need to clean up from a previous game
+    if (state.gameover) {
+        state.gameover = false;
+
+        // Reset game component states
+        orbGenerator.reset();
+        player.reset();
+    }
+
     gameloop();
 }
 
@@ -247,12 +257,11 @@ export function resume() {
  * Restart the game.
  */
 export function restart() {
-    setContext(CONTEXTS.GAME);
     enter();
 
     state.gameover = false;
-    for (let orb of orbGenerator.orbs)
-        orbGenerator.initOrb(orb);
+    orbGenerator.reset();
+    player.reset();
 
     start();
 }

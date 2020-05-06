@@ -51,6 +51,11 @@ export function leave() {
     window.removeEventListener('resize', _resize);
 }
 
+export function reset() {
+    for (let orb of orbs)
+        initOrb(orb);
+}
+
 // -------------------------------------------------------------------------
 // EVENT LISTENERS
 // -------------------------------------------------------------------------
