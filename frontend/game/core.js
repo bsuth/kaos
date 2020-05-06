@@ -215,6 +215,21 @@ export function leave() {
     orbGenerator.leave();
 }
 
+/*
+ * Reset the game state.
+ */
+export function reset() {
+    state.gameover = false;
+    state.score = 0;
+
+    // Reset game component states
+    orbGenerator.reset();
+    player.reset();
+
+    // Reset canvas
+    _ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 // -----------------------------------------------------------------------------
 // GAME STATE API
 // -----------------------------------------------------------------------------
@@ -224,17 +239,6 @@ export function leave() {
  */
 export function start() {
     state.tStart = Date.now();
-
-    // Check if need to clean up from a previous game
-    if (state.gameover) {
-        state.gameover = false;
-        state.score = 0;
-
-        // Reset game component states
-        orbGenerator.reset();
-        player.reset();
-    }
-
     gameloop();
 }
 
@@ -259,13 +263,8 @@ export function resume() {
  * Restart the game.
  */
 export function restart() {
+    reset();
     enter();
-
-    state.gameover = false;
-    state.score = 0;
-    orbGenerator.reset();
-    player.reset();
-
     start();
 }
 

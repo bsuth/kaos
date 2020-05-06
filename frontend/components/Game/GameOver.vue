@@ -73,6 +73,8 @@ export default {
             game.leave();
             this.leave();
             window.dispatchEvent(new Event('main-enter'));
+            // Wait for transition to end
+            setTimeout(() => game.reset(), 500);
         },
 
         // HELPER FUNCTIONS
