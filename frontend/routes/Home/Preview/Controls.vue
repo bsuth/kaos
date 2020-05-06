@@ -34,8 +34,8 @@
 
 
 <script>
-import { IS_TOUCH_DEVICE } from 'globals';
 import Carousel from './Carousel.vue';
+import { ACTION_EVENTS } from 'input/events';
 
 export default {
     components: { Carousel },
@@ -57,31 +57,24 @@ export default {
     watch: {
         isActive: function(value) {
             if (value) {
-                window.addEventListener('menu-next-start', this.next);
-                window.addEventListener('menu-prev-start', this.prev);
+                window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
+                window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
             } else {
-                window.removeEventListener('menu-next-start', this.next);
-                window.removeEventListener('menu-prev-start', this.prev);
+                window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
+                window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
             }
         },
 
     },
 
     data() {
-        let data = { activeItem: 0, };
-
-        if (IS_TOUCH_DEVICE) {
-            data.items = [
-                { label: 'Touch', data: 'KeyboardControls.svg' },
-            ];
-        } else {
-            data.items = [
+        return {
+            activeItem: 0,
+            items: [
                 { label: 'Keyboard', data: 'KeyboardControls.svg' },
                 { label: 'Xbox', data: 'XboxControls.svg' },
-            ];
-        }
-
-        return data;
+            ],
+        };
     },
 }
 </script>

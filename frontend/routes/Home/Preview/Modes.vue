@@ -33,6 +33,7 @@
 
 <script>
 import Carousel from './Carousel.vue';
+import { ACTION_EVENTS } from 'input/events';
 
 export default {
     components: { Carousel },
@@ -60,11 +61,11 @@ export default {
         },
         isActive: function(value) {
             if (value) {
-                window.addEventListener('menu-next-start', this.next);
-                window.addEventListener('menu-prev-start', this.prev);
+                window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
+                window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
             } else {
-                window.removeEventListener('menu-next-start', this.next);
-                window.removeEventListener('menu-prev-start', this.prev);
+                window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
+                window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
             }
         },
 
@@ -80,6 +81,13 @@ export default {
             ],
         }
     },
+
+    mounted() {
+        if (this.isActive) {
+            window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
+            window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
+        }
+    }
 }
 </script>
 
