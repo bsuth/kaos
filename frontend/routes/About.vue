@@ -28,25 +28,26 @@
             while the frontend is written in <a href='https://vuejs.org/'>VueJS</a>.
         </p>
         <p>
-            Kaos is in its current state a complete game. That being said, it is
-            still far from perfect and there is a lot of work to be done before
-            we can say that we're satisfied with the project. And once we hit that
-            point, there are several features we wish to implement:
-            <ul>
-                <li>Global Scoreboards</li>
-                <li>Customizable Settings</li>
-                <li>Multiplayer Game Modes?</li>
-            </ul>
-            For any questions or concerns, please feel free to 
+            Kaos is currently a work in progress. This is simply a demo/proof of
+            concept for the ideal game we are pushing for in the long run. Some
+            future goals include: audio, game animations, global leaderboards,
+            and multiplayer game modes.
+        </p>
+        <p>
+            There is still a lot of
+            work to be done before we can say that we're satisfied with this
+            project, but the demo will continuously get updated as the game
+            progresses to a more complete state. If you have any questions or
+            concerns, please feel free to 
             <a href='https://github.com/kaos-game/kaos/issues'>
                 create an issue
             </a>
-            on Github and we'll try to respond at our earliest convenience (please
-            check for duplicate issues).
+            on Github and we'll try to respond as soon as possible (please
+            check for duplicate issues first!).
         </p>
         <p>
-            We had a ton of fun with this project and hope that you can enjoy it
-            as much as we have.
+            So far we have had a ton of fun with this project and hope that you
+            can enjoy it as much as we have.
         </p>
         <br />
         <p>Best regards,</p>
