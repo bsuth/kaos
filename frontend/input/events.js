@@ -68,8 +68,8 @@ export const DURATION_EVENTS = Object.freeze({
 export const DURATION_EVENT_NEGATIONS = Object.freeze({
     [DURATION_EVENTS.UP]: DURATION_EVENTS.DOWN,
     [DURATION_EVENTS.DOWN]: DURATION_EVENTS.UP,
-    [DURATION_EVENTS.LEFT]: DURATION_EVENTS.LEFT,
-    [DURATION_EVENTS.RIGHT]: DURATION_EVENTS.RIGHT,
+    [DURATION_EVENTS.LEFT]: DURATION_EVENTS.RIGHT,
+    [DURATION_EVENTS.RIGHT]: DURATION_EVENTS.LEFT,
     [DURATION_EVENTS.ROTATE]: DURATION_EVENTS.ROTATE_CC,
     [DURATION_EVENTS.ROTATE_CC]: DURATION_EVENTS.ROTATE,
 });
@@ -186,6 +186,8 @@ export function unregister(event) {
         return;
 
     if (eventType == TYPE_DURATION) {
+        window.dispatchEvent(new Event(event + '-end'));
+
         let negateEvent = DURATION_EVENT_NEGATIONS[event];
         let negateIndex = _restoreEventBuffer.indexOf(negateEvent);
 
@@ -195,8 +197,6 @@ export function unregister(event) {
             _activeEventBuffer.push(negateEvent);
             window.dispatchEvent(new Event(negateEvent + '-start'));
         }
-
-        window.dispatchEvent(new Event(event + '-end'));
     }
 
     _smartPop(_activeEventBuffer, index);
