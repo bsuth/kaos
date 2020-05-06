@@ -33,6 +33,7 @@ export const state = {
     modeUpdate: () => {},
     gameover: false,
     paused: false,
+    score: 0,
 };
 
 export let player = new Player();
@@ -227,6 +228,7 @@ export function start() {
     // Check if need to clean up from a previous game
     if (state.gameover) {
         state.gameover = false;
+        state.score = 0;
 
         // Reset game component states
         orbGenerator.reset();
@@ -260,6 +262,7 @@ export function restart() {
     enter();
 
     state.gameover = false;
+    state.score = 0;
     orbGenerator.reset();
     player.reset();
 

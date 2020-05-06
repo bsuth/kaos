@@ -31,7 +31,7 @@ import { state, player } from 'game/core';
 export default {
     computed: {
         nextColorClass: function() {
-            switch(player.color) {
+            switch(player.colorId) {
             case 0:
                 return 'purple';
             case 1:

@@ -17,17 +17,27 @@
 
 <template>
     <footer>
-        <span>© copyright bitch</span>
+        <span />
     </footer>
 </template>
 
 
 <style lang='scss' scoped>
+@import 'style/palette';
+
 footer {
+    min-height: 100px;
     height: 100px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    span {
+        width: 20%;
+        max-width: 100px;
+        height: 3px;
+        border-bottom: 3px solid $white;
+    }
 }
 </style>
