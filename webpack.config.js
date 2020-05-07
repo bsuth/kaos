@@ -44,8 +44,9 @@ let getConfig = (data) => ({
                     'sass-loader',
                     'postcss-loader',
                 ]
-            }
-        ]
+            },
+            ...data.rules,
+        ],
     },
 
     plugins: [
@@ -72,7 +73,6 @@ module.exports = (env) => {
     let data = {
         mode: 'production',
         dist: 'dist',
-        
     };
 
     if (env && env.development) {
@@ -94,6 +94,19 @@ module.exports = (env) => {
         console.log('----------------');
         console.log('PRODUCTION BUILD');
         console.log('----------------');
+
+        data.rules = [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                    }
+                }
+            }
+        ];
     }
 
     return getConfig(data);
