@@ -95,7 +95,7 @@ export function draw(ctx) {
 export function update() {
     let { width, height } = canvas;
 
-    for (let orb of this.orbs) {
+    for (let orb of orbs) {
         orb.x += orb.vx;
         orb.y += orb.vy;
 

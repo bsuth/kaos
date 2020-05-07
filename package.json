@@ -12,7 +12,8 @@
     "dev": "webpack-dev-server --env.development",
     "build": "webpack",
     "serve": "node backend/index.js",
-    "start": "npm run build; npm run serve"
+    "start": "npm run build; npm run serve",
+    "deploy": "npm run build; git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",

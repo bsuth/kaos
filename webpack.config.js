@@ -24,7 +24,6 @@ let getConfig = (data) => ({
             globals: path.resolve(__dirname, 'frontend/globals'),
             style: path.resolve(__dirname, 'frontend/style'),
             components: path.resolve(__dirname, 'frontend/components'),
-            lib: path.resolve(__dirname, 'frontend/lib'),
             game: path.resolve(__dirname, 'frontend/game'),
             input: path.resolve(__dirname, 'frontend/input'),
         },
