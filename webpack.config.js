@@ -87,14 +87,12 @@ module.exports = (env) => {
             }
         };
 
+        data.rules = [];
+
         console.log('-----------------');
         console.log('DEVELOPMENT BUILD');
         console.log('-----------------');
     } else {
-        console.log('----------------');
-        console.log('PRODUCTION BUILD');
-        console.log('----------------');
-
         data.rules = [
             {
                 test: /\.js$/,
@@ -107,6 +105,10 @@ module.exports = (env) => {
                 }
             }
         ];
+
+        console.log('----------------');
+        console.log('PRODUCTION BUILD');
+        console.log('----------------');
     }
 
     return getConfig(data);
