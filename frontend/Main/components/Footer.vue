@@ -16,46 +16,28 @@
 -->
 
 <template>
-    <nav>
-        <ul>
-            <Logo />
-            <Link v-for='(link, index) in links' :key='index' v-bind='link' />
-        </ul>
-    </nav>
+    <footer>
+        <span />
+    </footer>
 </template>
 
 
-<script>
-import Logo from './Navbar/Logo';
-import Link from './Navbar/Link';
-
-export default {
-    components: { Logo, Link },
-
-    data() {
-        return {
-            links: [
-                { label: 'HOME', href: '/', },
-                { label: 'SCORE', href: '/score', },
-                { label: 'ABOUT', href: '/about', },
-                { label: 'GITHUB', href: 'https://github.com/kaos-game', external: true, },
-            ],
-        }
-    },
-}
-</script>
-
-
 <style lang='scss' scoped>
-nav ul {
-    height: 70px;
-    margin: 0;
-    padding: 0;
+@import 'style/palette';
+
+footer {
+    min-height: 100px;
+    height: 100px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    * { margin: 0 10px; }
+    span {
+        width: 20%;
+        max-width: 100px;
+        height: 3px;
+        border-bottom: 3px solid $white;
+    }
 }
 </style>

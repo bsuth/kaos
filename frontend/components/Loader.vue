@@ -16,36 +16,34 @@
 -->
 
 <template>
-    <div id='score'>
-        <Leaderboard 
-            v-for='(categoryScores, category) in scores'
-            :key='category'
-            :category='category'
-            :scores='categoryScores'
-        />
+    <div id='loader'>
+        loading!
     </div>
 </template>
 
 
 <script>
-import { SCORES } from 'globals';
-import Leaderboard from '../components/Leaderboard.vue';
-
 export default {
-    components: { Leaderboard },
+    components: {},
 
-    data() {
-        return {
-            scores: SCORES,
-        };
-    },
-}
+    mounted() {
+        console.log('dynamic load here!');
+    }
+};
 </script>
 
 
-<style lang='scss' scoped>
-#score {
-    width: 100%;
-    margin: 20px auto 0;
+<style lang='scss'>
+#loader {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    /* This is needed to prevent the canvas from blocking certain clickables! */
+    position: relative;
+    transition: opacity .5s ease-out;
+
+    > *:nth-child(2) { flex-grow: 1; }
 }
 </style>

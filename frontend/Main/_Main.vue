@@ -18,48 +18,39 @@
 <template>
     <div id='main'>
         <Header />
-        <transition-group id='home' name='fade' mode='out-in'>
-            <List
-                v-if='depth == 0'
-                v-cloak
-                :key='0'
-                :items='items'
-                :activeIndex='activeIndex'
-            />
-            <div v-else v-cloak :key='1'>
-                <component :is='items[activeIndex].preview' />
-            </div>
-        </transition-group>
+        <Navbar />
+        <transition name='fade' mode='out-in'>
+            <router-view />
+        </transition>
         <Footer />
     </div>
 </template>
 
 <script>
+import router from './router.js';
+
 import { ACTION_EVENTS } from 'input/events';
 import { setContext, CONTEXTS } from 'input/state';
 import * as game from 'game/core';
 
-import Header from 'components/Header.vue';
-import Footer from 'components/Footer.vue';
-
-import List from 'components/List.vue';
-
-import Modes from 'components/Preview/Modes.vue';
-import Leaderboard from 'components/Leaderboard.vue';
-import Controls from 'components/Preview/Controls.vue';
+import Header from './components/Header.vue';
+import Navbar from './components/Navbar.vue';
+import Footer from './components/Footer.vue';
 
 // -----------------------------------------------------------------------------
 // COMPONENT
 // -----------------------------------------------------------------------------
 
 export default {
-    components: { Header, Footer, List, Modes, Leaderboard, Controls },
+    router,
+    components: { Header, Navbar, Footer },
 
     methods: {
         // ---------------------------------------------------------------------
         // LIFECYCLE FUNCTIONS
         // ---------------------------------------------------------------------
 
+        /*
         enter: function() {
             setContext(CONTEXTS.MENU);
             window.addEventListener(ACTION_EVENTS.BACK, this.surface);
@@ -94,38 +85,19 @@ export default {
         // Depth functions
         dive: function() { ++this.depth; },
         surface: function() { --this.depth; },
+        */
     },
 
     data() {
         return {
             depth: 0,
             selectedMode: 'Timed',
-
-            activeIndex: 0,
-            items: [
-                {
-                    label: 'PLAY',
-                    href: 'play',
-                    action: this.dive,
-                    preview: Modes,
-                },
-                {
-                    label: 'SCORES',
-                    action: this.dive,
-                    preview: Leaderboard,
-                },
-                {
-                    label: 'CONTROLS',
-                    action: this.dive,
-                    preview: Controls,
-                },
-            ],
         }
     },
 
     mounted() {
-        this.enter();
-        window.addEventListener('main-enter', this.enter);
+        // this.enter();
+        // window.addEventListener('main-enter', this.enter);
     },
 };
 </script>

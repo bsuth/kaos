@@ -16,25 +16,24 @@
 -->
 
 <template>
-    <li>
-        <router-link to='/' id='logo'>
-            <div id='logo-wrapper-white'>
+    <header>
+        <router-link id='logo' to='/'>
+            <div id='logo-white'>
                 <object data='LogoWhite.svg' type='image/svg+xml' />
             </div>
-            <div id='logo-wrapper-color'>
+            <div id='logo-color'>
                 <object data="LogoColor.svg" type="image/svg+xml" />
             </div>
         </router-link>
-    </li>
+    </header>
 </template>
-
 
 <script>
 export default {
     mounted() {
         let logo = document.getElementById('logo');
-        let logoWhite= document.getElementById('logo-wrapper-white');
-        let logoColor = document.getElementById('logo-wrapper-color');
+        let logoWhite= document.getElementById('logo-white');
+        let logoColor = document.getElementById('logo-color');
 
         logo.addEventListener('mouseenter', () => {
             logoWhite.classList.remove('wipe-in');
@@ -55,8 +54,23 @@ export default {
 }
 </script>
 
+<style lang='scss' scoped>
+@import 'style/globals';
+@import 'style/mixins/flex';
 
-<style lang='scss'>
+// -----------------------------------------------------------------------------
+// HEADER
+// -----------------------------------------------------------------------------
+
+header {
+    margin: 30px 0 10px 0;
+    @include flex-center;
+}
+
+// -----------------------------------------------------------------------------
+// LOGO
+// -----------------------------------------------------------------------------
+
 #logo {
     width: 50px;
     height: 50px;
@@ -77,25 +91,29 @@ export default {
         animation-timing-function: ease-out;
     }
 
-    @media only screen and (min-width: 350px) {
-        width: 65px;
-        height: 65px;
+    @media only screen and (min-width: $TABLET) {
+        width: 120px;
+        height: 120px;
     }
 }
 
-#logo-wrapper-color {
+#logo-color {
     left: -100%;
     object { left: 100%; }
 }
 
+// -----------------------------------------------------------------------------
+// ANIMATIONS
+// -----------------------------------------------------------------------------
+
 .wipe-in {
     animation-name: wrapper-wipein;
-    object { animation-name: wipein; }
+    object { animation-name: svg-wipein; }
 }
 
 .wipe-out {
     animation-name: wrapper-wipeout;
-    object { animation-name: wipeout; }
+    object { animation-name: svg-wipeout; }
 }
 
 @keyframes wrapper-wipein {
@@ -103,7 +121,7 @@ export default {
     to { left: 0; }
 }
 
-@keyframes wipein {
+@keyframes svg-wipein {
     from { left: 100%; }
     to { left: 0; }
 }
@@ -113,7 +131,7 @@ export default {
     to { left: 100%; }
 }
 
-@keyframes wipeout {
+@keyframes svg-wipeout {
     from { left: 0; }
     to { left: -100%; }
 }

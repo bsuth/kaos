@@ -16,43 +16,13 @@
 -->
 
 <template>
-    <li>
-        <a v-if='external' :href='href' class='external'>{{ label }}</a>
-        <router-link v-else :to='href'>{{ label }}</router-link>
-    </li>
+    <Controls />
 </template>
 
-
 <script>
+import Controls from '../components/Controls.vue';
+
 export default {
-    props: [ 'href', 'label', 'external' ],
-}
+    components: { Controls },
+};
 </script>
-
-
-<style lang='scss' scoped>
-@import 'style/palette';
-@import 'style/mixins/underline';
-
-a {
-    /* core */
-    font-weight: bold;
-    @include underline-core;
-    &:hover { @include underline-active; }
-    &.external::after { content: '↗'; }
-
-    /* mobile */
-    font-size: 3.5vw;
-
-    /* tablet */
-    @media only screen and (min-width: 450px) {
-        font-size: 16px;
-    }
-}
-
-@for $i from 1 through length($palette) {
-    li:nth-child(4n + #{$i + 1}) a {
-        @include underline-bg(nth($palette, $i));
-    }
-}
-</style>

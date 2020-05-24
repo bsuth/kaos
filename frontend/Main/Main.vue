@@ -17,34 +17,33 @@
 
 <template>
     <div id='main'>
-        <Navbar />
+        <Header />
         <transition name='fade' mode='out-in'>
-            <keep-alive>
-                <router-view></router-view>
-            </keep-alive>
+            <router-view />
         </transition>
         <Footer />
     </div>
 </template>
 
-
 <script>
-import router from '../router';
-import Navbar from './Main/Navbar.vue';
-import Footer from './Main/Footer.vue';
+import router from './router.js';
+
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
 
 export default {
-    router: router,
-    components: { Navbar, Footer },
+    router,
+    components: { Header, Footer },
 };
 </script>
 
-
 <style lang='scss'>
+@import 'style/mixins/flex';
+
 #main {
     height: 100%;
 
-    display: flex;
+    @include flex-center;
     flex-direction: column;
 
     /* This is needed to prevent the canvas from blocking certain clickables! */

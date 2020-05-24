@@ -18,42 +18,38 @@
 <template>
     <div id='app'>
         <transition-group name='fade' mode='out-in'>
-            <component 
-                v-for='(item, index) in items'
-                :key='item.label'
-                :is='item.component'
-                v-show='index == activeItem'
-            />
+            <!-- <component --> 
+            <!--     v-for='(item, index) in items' -->
+            <!--     :key='item.label' -->
+            <!--     :is='item.component' -->
+            <!--     v-show='index == activeItem' -->
+            <!-- /> -->
+            <component :key='activeItem' :is='items[activeItem]' />
         </transition-group>
     </div>
 </template>
 
 
 <script>
-import Main from 'components/Main';
-import Game from 'components/Game';
+import Loader from 'components/Loader.vue';
 
 export default {
-    components: { Main, Game },
-
-    methods: {
-        enterMain() { this.activeItem = 0; },
-        enterGame() { this.activeItem = 1; },
+    components: {
+        Loader,
+        Main: () => import('./Main/Main.vue'),
+        Game: () => import('./components/Game.vue'),
     },
 
     data() {
         return {
             activeItem: 0,
-            items: [
-                { label: 'main', component: Main },
-                { label: 'game', component: Game },
-            ],
+            items: [ 'Loader', 'Main', 'Game' ],
         };
     },
 
     mounted() {
-        window.addEventListener('main-enter', this.enterMain);
-        window.addEventListener('game-enter', this.enterGame);
+        console.log('loaded app');
+        ++this.activeItem;
     },
 };
 </script>
