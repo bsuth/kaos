@@ -16,84 +16,103 @@
 -->
 
 <template>
-    <Carousel
-        :items='items'
-        :activeItem='activeItem'
-        :isActive='isActive'
-        @update-active-item='activeItem = $event'
-    >
-        <div class='gif'
-            v-for='(item, index) in items'
-            v-show='index == activeItem'
-            :key='item.label'
-        >{{ item.label }} gif</div>
-    </Carousel>
+    <div class='swiper-container'>
+        <div class='swiper-wrapper'>
+            <div v-for='(item, index) in items' :key='index' class='swiper-slide'>
+                <p>gif here</p>
+                <p>{{ item.label }}</p>
+                <p>{{ item.description }}</p>
+            </div>
+        </div>
+
+        <!-- If we need pagination -->
+        <div class='swiper-pagination'></div>
+
+        <!-- If we need navigation buttons -->
+        <div class='swiper-button-prev'></div>
+        <div class='swiper-button-next'></div>
+    </div>
 </template>
 
 
 <script>
-import Carousel from './Carousel.vue';
+import Swiper from 'swiper';
+import 'swiper/css/swiper.min.css'
 import { ACTION_EVENTS } from 'input/events';
 
 export default {
-    components: { Carousel },
-    props: [ 'isActive' ],
-
-    methods: {
-        prev: function() {
-            (this.activeItem === 0) ?
-                this.activeItem = this.items.length - 1 :
-                --this.activeItem;
-        },
-        next: function(event) {
-            (this.activeItem === this.items.length - 1) ?
-                this.activeItem = 0 :
-                ++this.activeItem;
-        },
-    },
-
-    watch: {
-        activeItem: function() {
-            let event = new CustomEvent('mode-change', {
-                detail: this.items[this.activeItem].label,
-            });
-            window.dispatchEvent(event);
-        },
-        isActive: function(value) {
-            if (value) {
-                window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
-                window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
-            } else {
-                window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
-                window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
-            }
-        },
-
-    },
+    components: { },
 
     data() {
         return {
             activeItem: 0,
             items: [
-                { label: 'Timed', },
-                { label: 'Spin2Win', },
-                { label: 'Collector', },
+                {
+                    label: 'Timed',
+                    description: 'Survive as long possible.',
+                },
+                {
+                    label: 'Spin2Win',
+                    description: 'Gain points by completing full rotations.',
+                },
+                {
+                    label: 'Collector',
+                    description: 'Collect orbs of the same color as your own.',
+                },
             ],
-        }
+        };
     },
 
     mounted() {
-        if (this.isActive) {
-            window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
-            window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
-        }
+        let swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            grabCursor: true,
+
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
     }
 }
 </script>
 
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import 'style/palette';
+
+// -----------------------------------------------------------------------------
+// SWIPER CLASSES
+// -----------------------------------------------------------------------------
+
+.swiper-container {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    background-position: center;
+    background-size: cover;
+}
+
+.swiper-pagination-bullet {
+    background: $white;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    background: $red;
+}
 
 .gif {
     border: 2px solid $grey;    

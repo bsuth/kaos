@@ -18,12 +18,6 @@
 <template>
     <div id='app'>
         <transition-group name='fade' mode='out-in'>
-            <!-- <component --> 
-            <!--     v-for='(item, index) in items' -->
-            <!--     :key='item.label' -->
-            <!--     :is='item.component' -->
-            <!--     v-show='index == activeItem' -->
-            <!-- /> -->
             <component :key='activeItem' :is='items[activeItem]' />
         </transition-group>
     </div>
@@ -48,7 +42,6 @@ export default {
     },
 
     mounted() {
-        console.log('loaded app');
         ++this.activeItem;
     },
 };

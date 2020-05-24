@@ -34,7 +34,7 @@
 
 
 <script>
-import Carousel from './Carousel.vue';
+import Carousel from 'components/Carousel.vue';
 import { ACTION_EVENTS } from 'input/events';
 
 export default {
