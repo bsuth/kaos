@@ -59,11 +59,21 @@ window.addEventListener('gamepaddisconnected', _ => {
 });
 
 // -----------------------------------------------------------------------------
+// GAMEPAD SETUP
+// -----------------------------------------------------------------------------
+function updateGamepad() {
+    return navigator.getGamepads ?
+        navigator.getGamepads()[0] : (navigator.webkitGetGamepads ?
+        navigator.webkitGetGamepads[0] : [] )
+}
+
+// -----------------------------------------------------------------------------
 // GAMEPAD INPUT LOOP
 // -----------------------------------------------------------------------------
 
 function inputLoop() {
     if (_gamepad) {
+        _gamepad = updateGamepad();
         let context = getContext();
 
         // Register button events
