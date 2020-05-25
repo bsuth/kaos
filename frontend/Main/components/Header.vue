@@ -72,12 +72,13 @@ header {
 // -----------------------------------------------------------------------------
 
 #logo {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
 
     display: block;
     position: relative;
     overflow: hidden;
+    outline: 0;
 
     * {
         width: 100%;

@@ -16,19 +16,23 @@
 -->
 
 <template>
+    <!-- swiper wrapper -->
     <div class='swiper-container'>
+        <!-- slide wrapper -->
         <div class='swiper-wrapper'>
-            <div v-for='(item, index) in items' :key='index' class='swiper-slide'>
-                <p>gif here</p>
-                <p>{{ item.label }}</p>
-                <p>{{ item.description }}</p>
+            <!-- slides -->
+            <div v-for='(slide, index) in slides' :key='index' class='swiper-slide'>
+                <img src='mode-gif-placeholder.png' />
+                <div class='divider' />
+                <h3>{{ slide.label }}</h3>
+                <p>{{ slide.description }}</p>
             </div>
         </div>
 
-        <!-- If we need pagination -->
+        <!-- pagination -->
         <div class='swiper-pagination'></div>
 
-        <!-- If we need navigation buttons -->
+        <!-- navigation buttons -->
         <div class='swiper-button-prev'></div>
         <div class='swiper-button-next'></div>
     </div>
@@ -40,13 +44,31 @@ import Swiper from 'swiper';
 import 'swiper/css/swiper.min.css'
 import { ACTION_EVENTS } from 'input/events';
 
+const INVALID_SWIPER_ACCEPT_CLASSES = [
+    'swiper-button-prev',
+    'swiper-button-next',
+    'swiper-pagination-bullet',
+];
+
 export default {
-    components: { },
+    methods: {
+        next: function() {
+            this.swiper.slideNext();
+        },
+
+        prev: function() {
+            this.swiper.slidePrev();
+        },
+
+        accept: function() {
+            let slide = this.slides[this.swiper.activeIndex].label;
+            console.log(slide);
+        },
+    },
 
     data() {
         return {
-            activeItem: 0,
-            items: [
+            slides: [
                 {
                     label: 'Timed',
                     description: 'Survive as long possible.',
@@ -64,7 +86,7 @@ export default {
     },
 
     mounted() {
-        let swiper = new Swiper('.swiper-container', {
+        this.swiper = new Swiper('.swiper-container', {
             effect: 'coverflow',
             slidesPerView: 'auto',
             centeredSlides: true,
@@ -79,7 +101,29 @@ export default {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+
+            on: {
+                click: (event) => {
+                    let classList = event.target.classList;
+
+                    for (let cssClass of INVALID_SWIPER_ACCEPT_CLASSES)
+                        if (classList.contains(cssClass))
+                            return;
+
+                    this.accept();
+                },
+            },
         });
+
+        window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
+        window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
+        window.addEventListener(ACTION_EVENTS.ACCEPT, this.accept);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
+        window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
+        window.removeEventListener(ACTION_EVENTS.ACCEPT, this.accept);
     }
 }
 </script>
@@ -89,7 +133,7 @@ export default {
 @import 'style/palette';
 
 // -----------------------------------------------------------------------------
-// SWIPER CLASSES
+// SWIPER CONTAINER
 // -----------------------------------------------------------------------------
 
 .swiper-container {
@@ -98,24 +142,70 @@ export default {
     padding-bottom: 50px;
 }
 
+// -----------------------------------------------------------------------------
+// SWIPER SLIDE
+// -----------------------------------------------------------------------------
+
 .swiper-slide {
     width: 300px;
     height: 300px;
-    border: 1px solid red;
+    border: 1px solid $white;
     background-position: center;
     background-size: cover;
+
+    img {
+        width: 100%;
+        height: 210px;
+    }
+
+    .divider {
+        width: 50%;
+        height: 2px;
+        margin: 5px auto;
+        background: $grey;
+    }
+
+    h3, p {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    p { font-size: 12px; }
 }
+
+.swiper-slide-active {
+    border: 1px solid $cyan;
+}
+
+// -----------------------------------------------------------------------------
+// SWIPER PAGINATION
+// -----------------------------------------------------------------------------
 
 .swiper-pagination-bullet {
     background: $white;
 }
 
-.swiper-button-prev, .swiper-button-next {
-    background: $red;
+.swiper-pagination-bullet-active {
+    background: $green;
 }
 
-.gif {
-    border: 2px solid $grey;    
-    border-radius: 8px;
+// -----------------------------------------------------------------------------
+// SWIPER NAVIGATION
+// -----------------------------------------------------------------------------
+
+.swiper-button-prev {
+    left: 35px;
+}
+
+.swiper-button-next {
+    right: 35px;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    color: $purple;
+}
+
+.swiper-button-disabled {
+    color: $white;
 }
 </style>

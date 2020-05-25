@@ -16,10 +16,11 @@
 -->
 
 <template>
-    <div>
+    <div id='play'>
         <p>
             Dodge orbs of colors different than your own.<br />
-            Move, rotate, and change your color to survive.
+            Move, rotate and change colors to survive.<br />
+            Click any panel to begin.
         </p>
         <ModeSelect />
     </div>
@@ -30,7 +31,6 @@ import ModeSelect from '../components/ModeSelect.vue';
 
 export default {
     components: { ModeSelect },
-
 
     methods: {
         // ---------------------------------------------------------------------
@@ -77,4 +77,13 @@ export default {
 </script>
 
 <style lang='scss'>
+@import 'style/mixins/flex';
+
+#play {
+    width: 100%;
+    @include flex-center;
+    flex-direction: column;
+
+    p { text-align: center; }
+}
 </style>
