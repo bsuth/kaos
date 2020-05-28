@@ -47,10 +47,6 @@ export default {
                     action: () => this.goto('/play'),
                 },
                 {
-                    label: 'ABOUT',
-                    action: () => this.goto('/about'),
-                },
-                {
                     label: 'SCORES',
                     action: () => this.goto('/scores'),
                 },

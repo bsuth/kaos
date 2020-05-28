@@ -18,9 +18,6 @@
 <template>
     <table>
         <tr>
-            <th><h2>{{ category }}</h2></th>
-        </tr>
-        <tr>
             <td>Date</td>
             <td>Score</td>
         </tr>
@@ -34,7 +31,7 @@
 
 <script>
 export default {
-    props: [ 'category', 'scores' ],
+    props: [ 'scores' ],
 }
 </script>
 

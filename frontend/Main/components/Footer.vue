@@ -17,7 +17,18 @@
 
 <template>
     <footer>
-        <span />
+        <ul>
+            <li>
+                <router-link id='logo' to='/about'>
+                    about
+                </router-link>
+            </li>
+            <li>
+                <a href='https://github.com/kaos-game/kaos'>
+                    github
+                </a>
+            </li>
+        </ul>
     </footer>
 </template>
 
@@ -26,18 +37,12 @@
 @import 'style/palette';
 
 footer {
-    min-height: 100px;
-    height: 100px;
+    min-height: 50px;
+    height: 50px;
+}
 
+ul {
     display: flex;
-    justify-content: center;
-    align-items: center;
-
-    span {
-        width: 20%;
-        max-width: 100px;
-        height: 3px;
-        border-bottom: 3px solid $white;
-    }
+    li { margin: 0 10px; }
 }
 </style>

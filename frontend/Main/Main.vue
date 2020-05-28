@@ -17,10 +17,12 @@
 
 <template>
     <div id='main'>
+        <div class='padding' />
         <Header />
         <transition name='fade' mode='out-in'>
             <router-view />
         </transition>
+        <div class='padding' />
         <Footer />
     </div>
 </template>
@@ -43,13 +45,19 @@ export default {
 #main {
     height: 100%;
 
-    @include flex-center;
+    display: flex;
+    align-items: center;
     flex-direction: column;
 
     /* This is needed to prevent the canvas from blocking certain clickables! */
     position: relative;
     transition: opacity .5s ease-out;
 
-    > *:nth-child(2) { flex-grow: 1; }
+    .padding {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        transition: all 2s ease-out;
+    }
 }
 </style>

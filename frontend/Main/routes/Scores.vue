@@ -17,35 +17,137 @@
 
 <template>
     <div id='score'>
-        <Leaderboard 
-            v-for='(categoryScores, category) in scores'
-            :key='category'
-            :category='category'
-            :scores='categoryScores'
-        />
+        <div class='pagination'>
+            <div id='active-border' />
+            <span
+                v-for='(categoryScores, category) in scores'
+                :key='category'
+                class='pagination-slide'
+            >
+                {{ category }}
+            </span>
+        </div>
+        <div class='swiper-container'>
+            <div class='swiper-wrapper'>
+                <div
+                    v-for='(categoryScores, category) in scores'
+                    :key='category'
+                    :data-category='category'
+                    class='swiper-slide'
+                >
+                    <Leaderboard :scores='categoryScores' />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 
 <script>
+import Swiper from 'swiper';
 import { SCORES } from 'globals';
+import { ACTION_EVENTS } from 'input/events';
 import Leaderboard from '../components/Leaderboard.vue';
 
 export default {
     components: { Leaderboard },
+
+    methods: {
+        next: function() { this.swiper.slideNext(); },
+        prev: function() { this.swiper.slidePrev(); },
+    },
 
     data() {
         return {
             scores: SCORES,
         };
     },
+
+    mounted() {
+        let root = document.getElementById('score');
+        let activeBorder = document.getElementById('active-border');
+
+        this.swiperSlides = root.getElementsByClassName('swiper-slide');
+        this.paginationSlides = root.getElementsByClassName('pagination-slide');
+
+        this.swiper = new Swiper('.swiper-container', {
+            grabCursor: true,
+
+            on: {
+                slideChangeTransitionEnd: () => {
+                    for (let i = 0; i < this.swiperSlides.length; ++i) {
+                        let slide = this.swiperSlides[i];
+                        let pagination = this.paginationSlides[i];
+
+                        if (slide.classList.contains('swiper-slide-active')) {
+                            let rect = pagination.getBoundingClientRect();
+                            let activeBorder = document.getElementById('active-border');
+                            activeBorder.style.left = rect.x + 'px';
+                            activeBorder.style.top = rect.y + 'px';
+                            activeBorder.style.width = rect.width + 'px';
+                            activeBorder.style.height = rect.height + 'px';
+                        }
+                    }
+                },
+            },
+        });
+
+        window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
+        window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
+        window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
+    },
 }
 </script>
 
 
 <style lang='scss' scoped>
+@import 'style/palette';
+@import 'style/mixins/flex';
+
 #score {
     width: 100%;
     margin: 20px auto 0;
+}
+
+// -----------------------------------------------------------------------------
+// SWIPER CONTAINER
+// -----------------------------------------------------------------------------
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+// -----------------------------------------------------------------------------
+// SWIPER SLIDE
+// -----------------------------------------------------------------------------
+
+.swiper-slide {
+    width: 300px;
+    background-position: center;
+    background-size: cover;
+}
+
+// -----------------------------------------------------------------------------
+// CUSTOM PAGINATION
+// -----------------------------------------------------------------------------
+
+.pagination {
+    @include flex-center;
+
+    * {
+        padding: 10px;
+        border: 1px solid transparent;
+    }
+
+    #active-border {
+        position: absolute;
+        border: 2px solid $cyan;
+        border-radius: 2px;
+    }
 }
 </style>

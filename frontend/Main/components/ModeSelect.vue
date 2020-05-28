@@ -52,13 +52,8 @@ const INVALID_SWIPER_ACCEPT_CLASSES = [
 
 export default {
     methods: {
-        next: function() {
-            this.swiper.slideNext();
-        },
-
-        prev: function() {
-            this.swiper.slidePrev();
-        },
+        next: function() { this.swiper.slideNext(); },
+        prev: function() { this.swiper.slidePrev(); },
 
         accept: function() {
             let slide = this.slides[this.swiper.activeIndex].label;
@@ -124,12 +119,12 @@ export default {
         window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
         window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
         window.removeEventListener(ACTION_EVENTS.ACCEPT, this.accept);
-    }
+    },
 }
 </script>
 
 
-<style lang='scss'>
+<style lang='scss' scoped>
 @import 'style/palette';
 
 // -----------------------------------------------------------------------------
