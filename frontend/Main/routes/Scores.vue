@@ -17,8 +17,7 @@
 
 <template>
     <div id='score'>
-        <div class='pagination'>
-            <div id='active-border' />
+        <div class='pagination-wrapper'>
             <span
                 v-for='(categoryScores, category) in scores'
                 :key='category'
@@ -53,6 +52,16 @@ export default {
     components: { Leaderboard },
 
     methods: {
+        goto: function(idx) {
+            this.swiper.slideTo(idx);
+
+            for (let i = 0; i < this.paginationSlides.length; ++i) {
+                let cl = this.paginationSlides[i].classList;
+                (i == idx) ?
+                    cl.add('pagination-slide-active') :
+                    cl.remove('pagination-slide-active');
+            }
+        },
         next: function() { this.swiper.slideNext(); },
         prev: function() { this.swiper.slidePrev(); },
     },
@@ -69,24 +78,23 @@ export default {
 
         this.swiperSlides = root.getElementsByClassName('swiper-slide');
         this.paginationSlides = root.getElementsByClassName('pagination-slide');
+        this.paginationSlides[0].classList.add('pagination-slide-active');
+
+        for (let i = 0; i < this.paginationSlides.length; ++i)
+            this.paginationSlides[i].onclick = () => this.goto(i);
 
         this.swiper = new Swiper('.swiper-container', {
             grabCursor: true,
 
             on: {
-                slideChangeTransitionEnd: () => {
+                slideChangeTransitionStart: () => {
                     for (let i = 0; i < this.swiperSlides.length; ++i) {
                         let slide = this.swiperSlides[i];
                         let pagination = this.paginationSlides[i];
 
-                        if (slide.classList.contains('swiper-slide-active')) {
-                            let rect = pagination.getBoundingClientRect();
-                            let activeBorder = document.getElementById('active-border');
-                            activeBorder.style.left = rect.x + 'px';
-                            activeBorder.style.top = rect.y + 'px';
-                            activeBorder.style.width = rect.width + 'px';
-                            activeBorder.style.height = rect.height + 'px';
-                        }
+                        slide.classList.contains('swiper-slide-active') ?
+                            pagination.classList.add('pagination-slide-active') :
+                            pagination.classList.remove('pagination-slide-active');
                     }
                 },
             },
@@ -106,6 +114,7 @@ export default {
 
 <style lang='scss' scoped>
 @import 'style/palette';
+@import 'style/mixins/underline';
 @import 'style/mixins/flex';
 
 #score {
@@ -136,18 +145,24 @@ export default {
 // CUSTOM PAGINATION
 // -----------------------------------------------------------------------------
 
-.pagination {
+.pagination-wrapper {
     @include flex-center;
+}
 
-    * {
-        padding: 10px;
-        border: 1px solid transparent;
-    }
+.pagination-slide {
+    margin: 0 10px;
+    cursor: pointer;
+    @include underline-core;
+}
 
-    #active-border {
-        position: absolute;
-        border: 2px solid $cyan;
-        border-radius: 2px;
+.pagination-slide-active {
+    @include underline-active;
+    @include underline-bg($red);
+}
+
+@for $i from 1 through length($palette) {
+    .pagination-slide:nth-child(4n + #{$i}) {
+        @include underline-bg(nth($palette, $i));
     }
 }
 </style>

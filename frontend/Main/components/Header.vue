@@ -71,9 +71,6 @@ header {
 // -----------------------------------------------------------------------------
 
 #logo {
-    width: 80px;
-    height: 80px;
-
     display: block;
     position: relative;
     overflow: hidden;
@@ -90,6 +87,12 @@ header {
         animation-fill-mode: forwards;
         animation-timing-function: ease-out;
     }
+
+    /* mobile */
+    width: 80px;
+    height: 80px;
+
+    /* mobile */
 
     @media only screen and (min-width: $TABLET) {
         width: 120px;

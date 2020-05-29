@@ -31,10 +31,6 @@
 
         <!-- pagination -->
         <div class='swiper-pagination'></div>
-
-        <!-- navigation buttons -->
-        <div class='swiper-button-prev'></div>
-        <div class='swiper-button-next'></div>
     </div>
 </template>
 
@@ -92,11 +88,6 @@ export default {
                 clickable: true,
             },
 
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-
             on: {
                 click: (event) => {
                     let classList = event.target.classList;
@@ -123,7 +114,6 @@ export default {
 }
 </script>
 
-
 <style lang='scss' scoped>
 @import 'style/palette';
 
@@ -145,8 +135,6 @@ export default {
     width: 300px;
     height: 300px;
     border: 1px solid $white;
-    background-position: center;
-    background-size: cover;
 
     img {
         width: 100%;
@@ -170,37 +158,5 @@ export default {
 
 .swiper-slide-active {
     border: 1px solid $cyan;
-}
-
-// -----------------------------------------------------------------------------
-// SWIPER PAGINATION
-// -----------------------------------------------------------------------------
-
-.swiper-pagination-bullet {
-    background: $white;
-}
-
-.swiper-pagination-bullet-active {
-    background: $green;
-}
-
-// -----------------------------------------------------------------------------
-// SWIPER NAVIGATION
-// -----------------------------------------------------------------------------
-
-.swiper-button-prev {
-    left: 35px;
-}
-
-.swiper-button-next {
-    right: 35px;
-}
-
-.swiper-button-prev, .swiper-button-next {
-    color: $purple;
-}
-
-.swiper-button-disabled {
-    color: $white;
 }
 </style>

@@ -38,6 +38,7 @@ export default {
 
 <style lang='scss' scoped>
 @import 'style/palette';
+@import 'style/mixins/flex';
 
 table {
     width: 80%;
@@ -54,11 +55,12 @@ table {
     td {
         width: 30%;
         height: 50px;
+
+        @include flex-center;
+
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        text-align: center; 
-        vertical-align: middle;
     }
 }
 </style>

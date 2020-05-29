@@ -16,65 +16,119 @@
 -->
 
 <template>
-    <Carousel
-        :items='items'
-        :activeItem='activeItem'
-        :isActive='isActive'
-        @update-active-item='activeItem = $event'
-    >
-        <object
-            v-for='(item, index) in items'
-            v-show='index == activeItem'
-            :key='item.label'
-            :data='item.data'
-            type='image/svg+xml'
-        />
-    </Carousel>
+    <!-- swiper wrapper -->
+    <div class='swiper-container'>
+        <!-- slide wrapper -->
+        <div class='swiper-wrapper'>
+            <!-- slides -->
+            <div v-for='(slide, index) in slides' :key='index' class='swiper-slide'>
+                <object :data='slide.data' type='image/svg+xml' />
+                <div class='divider' />
+                <h3>{{ slide.label }}</h3>
+            </div>
+        </div>
+
+        <!-- pagination -->
+        <div class='swiper-pagination'></div>
+    </div>
 </template>
 
 
 <script>
-import Carousel from 'components/Carousel.vue';
+import Swiper from 'swiper';
+import 'swiper/css/swiper.min.css'
 import { ACTION_EVENTS } from 'input/events';
 
+const INVALID_SWIPER_ACCEPT_CLASSES = [
+    'swiper-button-prev',
+    'swiper-button-next',
+    'swiper-pagination-bullet',
+];
+
 export default {
-    components: { Carousel },
-    props: [ 'isActive' ],
-
     methods: {
-        prev: function() {
-            (this.activeItem === 0) ?
-                this.activeItem = this.items.length - 1 :
-                --this.activeItem;
-        },
-        next: function(event) {
-            (this.activeItem === this.items.length - 1) ?
-                this.activeItem = 0 :
-                ++this.activeItem;
-        },
-    },
-
-    watch: {
-        isActive: function(value) {
-            if (value) {
-                window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
-                window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
-            } else {
-                window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
-                window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
-            }
-        },
-
+        next: function() { this.swiper.slideNext(); },
+        prev: function() { this.swiper.slidePrev(); },
     },
 
     data() {
         return {
-            activeItem: 0,
-            items: [
+            slides: [
                 { label: 'Keyboard', data: 'KeyboardControls.svg' },
                 { label: 'Xbox', data: 'XboxControls.svg' },
             ],
         };
     },
+
+    mounted() {
+        this.swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            grabCursor: true,
+
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        window.addEventListener(ACTION_EVENTS.RIGHT, this.next);
+        window.addEventListener(ACTION_EVENTS.LEFT, this.prev);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
+        window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
+    },
 }
 </script>
+
+
+<style lang='scss' scoped>
+@import 'style/globals';
+@import 'style/palette';
+
+// -----------------------------------------------------------------------------
+// SWIPER CONTAINER
+// -----------------------------------------------------------------------------
+
+.swiper-container {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+// -----------------------------------------------------------------------------
+// SWIPER SLIDE
+// -----------------------------------------------------------------------------
+
+.swiper-slide {
+    width: 300px;
+    height: 300px;
+    border: 1px solid $white;
+
+    object {
+        width: 100%;
+        height: 230px;
+    }
+
+    .divider {
+        width: 50%;
+        height: 2px;
+        margin: 5px auto;
+        background: $grey;
+    }
+
+    h3, p {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    p { font-size: 12px; }
+}
+
+.swiper-slide-active {
+    border: 1px solid $cyan;
+}
+</style>
