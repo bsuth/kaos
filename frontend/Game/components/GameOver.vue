@@ -28,7 +28,7 @@
 <script>
 import { NUM_SCORES, SCORES } from 'globals';
 import * as game from 'game/core';
-import Dialog from './Dialog.vue';
+import Dialog from 'components/Dialog.vue';
 
 export default {
     components: { Dialog },

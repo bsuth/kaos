@@ -33,21 +33,6 @@ export default {
     components: { ModeSelect },
 
     methods: {
-        // ---------------------------------------------------------------------
-        // LIFECYCLE FUNCTIONS
-        // ---------------------------------------------------------------------
-
-        enter: function() {
-            setContext(CONTEXTS.MENU);
-            window.addEventListener('mode-change', this.updateMode);
-            window.dispatchEvent(new Event('menu-enter'));
-        },
-
-        leave: function() {
-            window.removeEventListener('mode-change', this.updateMode);
-            window.dispatchEvent(new Event('menu-leave'));
-        },
-
         // ITEM ACTIONS
         play: function() {
             this.leave();
@@ -57,21 +42,6 @@ export default {
             // Wait for transition to end
             setTimeout(() => game.start(), 500);
         },
-
-        updateMode: function(event) {
-            this.selectedMode = event.detail;
-        },
-    },
-
-    data() {
-        return {
-            selectedMode: 'Timed',
-        }
-    },
-
-    mounted() {
-        // this.enter();
-        // window.addEventListener('main-enter', this.enter);
     },
 };
 </script>

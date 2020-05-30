@@ -21,7 +21,7 @@
 
 
 <script>
-import Dialog from './Dialog.vue';
+import Dialog from 'components/Dialog.vue';
 import * as game from 'game/core';
 
 export default {

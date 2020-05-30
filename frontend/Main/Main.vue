@@ -29,6 +29,7 @@
 
 <script>
 import router from './router.js';
+import { CONTEXTS, setContext } from 'input/state';
 
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
@@ -36,6 +37,10 @@ import Footer from './components/Footer.vue';
 export default {
     router,
     components: { Header, Footer },
+
+    mounted() {
+        setContext(CONTEXTS.MENU);
+    },
 };
 </script>
 

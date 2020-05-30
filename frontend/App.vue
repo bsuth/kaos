@@ -25,13 +25,26 @@
 
 
 <script>
+import * as game from 'game/core';
 import Loader from 'components/Loader.vue';
 
 export default {
     components: {
         Loader,
         Main: () => import('./Main/Main.vue'),
-        Game: () => import('./components/Game.vue'),
+        Game: () => import('./Game/Game.vue'),
+    },
+
+    methods: {
+        startGame: function(mode) {
+            ++this.activeItem;
+
+            // Wait for transition to end
+            setTimeout(() => {
+                game.enter();
+                game.start()
+            }, 500);
+        },
     },
 
     data() {

@@ -31,9 +31,9 @@
 <script>
 import * as game from 'game/core';
 
-import Hud from './Game/Hud.vue';
-import Pause from './Game/Pause.vue';
-import GameOver from './Game/GameOver.vue';
+import Hud from './components/Hud.vue';
+import Pause from './components/Pause.vue';
+import GameOver from './components/GameOver.vue';
 
 export default {
     components: { Hud, Pause, GameOver },

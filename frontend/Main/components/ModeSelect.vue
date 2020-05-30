@@ -38,11 +38,10 @@
 <script>
 import Swiper from 'swiper';
 import 'swiper/css/swiper.min.css'
+
 import { ACTION_EVENTS } from 'input/events';
 
 const INVALID_SWIPER_ACCEPT_CLASSES = [
-    'swiper-button-prev',
-    'swiper-button-next',
     'swiper-pagination-bullet',
 ];
 
@@ -52,8 +51,9 @@ export default {
         prev: function() { this.swiper.slidePrev(); },
 
         accept: function() {
-            let slide = this.slides[this.swiper.activeIndex].label;
-            console.log(slide);
+            let mode = this.slides[this.swiper.activeIndex].label;
+            let app = this.$root.$children[0];
+            app.startGame(mode);
         },
     },
 
