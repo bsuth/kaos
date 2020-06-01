@@ -22,27 +22,21 @@
 
 <script>
 import Dialog from 'components/Dialog.vue';
-import * as game from 'game/core';
+import * as engine from 'engine/core';
 
 export default {
     components: { Dialog },
 
     methods: {
-        // LIFECYCLE FUNCTIONS
-        enter: function() { this.$refs.dialog.enter(); },
-        leave: function() { this.$refs.dialog.leave(); },
-
         // ACTION FUNCTIONS
         resume: function() {
-            this.leave();
             window.dispatchEvent(new Event('game-resume'));
         },
         quit: function() {
-            game.leave();
-            this.leave();
+            engine.leave();
             window.dispatchEvent(new Event('main-enter'));
             // Wait for transition to end
-            setTimeout(() => game.reset(), 500);
+            setTimeout(() => engine.reset(), 500);
         },
     },
 

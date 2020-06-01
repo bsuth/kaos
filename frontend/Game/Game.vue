@@ -19,17 +19,14 @@
     <div id='game'>
         <canvas id='canvas' />
         <Hud />
-        <Pause />
-        <GameOver />
-        <div id='nipple'>
-            <div id='zone_joystick' />
-        </div>
+        <component :is='dialog' />
     </div>
 </template>
 
 
 <script>
-import * as game from 'game/core';
+import * as engine from 'engine/core';
+import * as canvas from './canvas';
 
 import Hud from './components/Hud.vue';
 import Pause from './components/Pause.vue';
@@ -38,8 +35,40 @@ import GameOver from './components/GameOver.vue';
 export default {
     components: { Hud, Pause, GameOver },
 
+    data() {
+        return {
+            dialog: null,
+            gamestate: engine.state,
+        };
+    },
+
+    computed: {
+        gameover: function() {
+            return this.gamestate.gameover;
+        },
+    },
+
+    watch: {
+        gameover: function() {
+            this.dialog = 'GameOver';
+        },
+    },
+
     mounted() {
-        game.initCanvas();
-    }
+        engine.initCanvas();
+        engine.enter();
+        engine.start()
+    },
+
+    beforeDestroy() {
+        engine.leave();
+    },
 };
 </script>
+
+<style lang='scss' scoped>
+#game {
+    height: 100%;
+    position: relative;
+}
+</style>

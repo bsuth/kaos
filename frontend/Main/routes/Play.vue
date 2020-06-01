@@ -31,18 +31,6 @@ import ModeSelect from '../components/ModeSelect.vue';
 
 export default {
     components: { ModeSelect },
-
-    methods: {
-        // ITEM ACTIONS
-        play: function() {
-            this.leave();
-            game.setMode(this.selectedMode);
-            game.enter();
-
-            // Wait for transition to end
-            setTimeout(() => game.start(), 500);
-        },
-    },
 };
 </script>
 

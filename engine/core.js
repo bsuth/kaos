@@ -17,7 +17,6 @@
 
 import { COLORS, NIPPLE_RADIUS, IS_TOUCH_DEVICE, HUD_HEIGHT } from 'globals';
 import { DURATION_EVENTS, ACTION_EVENTS } from 'input/events';
-import { setContext, CONTEXTS } from 'input/state';
 
 import * as modes from './modes';
 import * as orbGenerator from './orbGenerator';
@@ -173,9 +172,6 @@ export function setMode(mode) {
  * event listeners that need to be active when the code is running.
  */
 export function enter() { 
-    // Set context
-    setContext(CONTEXTS.GAME);
-
     for (let [event, listener] of Object.entries(ACTION_EVENT_LISTENERS))
         window.addEventListener(event, listener);
 

@@ -24,7 +24,7 @@
 
 
 <script>
-import { state, player } from 'game/core';
+import { state, player } from 'engine/core';
 
 export default {
     computed: {

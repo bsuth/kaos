@@ -17,15 +17,16 @@
 
 <template>
     <div id='app'>
-        <transition-group name='fade' mode='out-in'>
-            <component :key='activeItem' :is='items[activeItem]' />
-        </transition-group>
+        <transition name='fade' mode='out-in'>
+            <component :is='component' />
+        </transition>
     </div>
 </template>
 
 
 <script>
-import * as game from 'game/core';
+import * as engine from 'engine/core';
+import { CONTEXTS, setContext } from 'input/state';
 import Loader from 'components/Loader.vue';
 
 export default {
@@ -37,25 +38,21 @@ export default {
 
     methods: {
         startGame: function(mode) {
-            ++this.activeItem;
-
-            // Wait for transition to end
-            setTimeout(() => {
-                game.enter();
-                game.start()
-            }, 500);
+            setContext(CONTEXTS.GAME);
+            engine.setMode(mode);
+            this.component = 'Game';
         },
     },
 
     data() {
         return {
-            activeItem: 0,
-            items: [ 'Loader', 'Main', 'Game' ],
+            component: 'Loader',
         };
     },
 
     mounted() {
-        ++this.activeItem;
+        setContext(CONTEXTS.MENU);
+        this.component = 'Main';
     },
 };
 </script>

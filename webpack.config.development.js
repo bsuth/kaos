@@ -52,9 +52,8 @@ module.exports = {
             globals: path.resolve(__dirname, 'frontend/globals'),
             style: path.resolve(__dirname, 'frontend/style'),
             components: path.resolve(__dirname, 'frontend/components'),
-            game: path.resolve(__dirname, 'engine'),
+            engine: path.resolve(__dirname, 'engine'),
             input: path.resolve(__dirname, 'frontend/input'),
-            mixins: path.resolve(__dirname, 'frontend/mixins'),
         },
     },
 

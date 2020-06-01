@@ -27,7 +27,7 @@
 
 <script>
 import { NUM_SCORES, SCORES } from 'globals';
-import * as game from 'game/core';
+import * as engine from 'engine/core';
 import Dialog from 'components/Dialog.vue';
 
 export default {
@@ -37,9 +37,9 @@ export default {
         // LIFECYCLE FUNCTIONS
         enter: function() {
             this.$refs.dialog.enter();
-            this.score = game.state.score;
+            this.score = engine.state.score;
 
-            let categoryScores = SCORES[game.state.mode];
+            let categoryScores = SCORES[engine.state.mode];
 
             let gameScore = {
                 score: this.score,
@@ -67,14 +67,14 @@ export default {
         // ACTION FUNCTIONS
         restart: function() {
             this.leave();
-            game.restart();
+            engine.restart();
         },
         quit: function() {
-            game.leave();
+            engine.leave();
             this.leave();
             window.dispatchEvent(new Event('main-enter'));
             // Wait for transition to end
-            setTimeout(() => game.reset(), 500);
+            setTimeout(() => engine.reset(), 500);
         },
 
         // HELPER FUNCTIONS
