@@ -180,12 +180,7 @@ export function enter() {
         window.addEventListener(event + '-end', listener.end);
     }
 
-    window.addEventListener('game-resume', resume);
     window.addEventListener('resize', _resize);
-
-    // Let everybody else know the game has been initialized (needed to update
-    // references such as the HUD's reference to the gameMode);
-    window.dispatchEvent(new Event('game-enter'));
 
     orbGenerator.enter();
 }
@@ -205,7 +200,6 @@ export function leave() {
         window.removeEventListener(event + '-end', listener.end);
     }
 
-    window.addEventListener('game-resume', resume);
     window.removeEventListener('resize', _resize);
 
     orbGenerator.leave();
@@ -244,7 +238,6 @@ export function start() {
  */
 export function pause() {
     state.paused = true;
-    window.dispatchEvent(new Event('game-pause'));
 }
 
 /*

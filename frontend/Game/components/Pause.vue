@@ -29,12 +29,8 @@ export default {
 
     methods: {
         // ACTION FUNCTIONS
-        resume: function() {
-            window.dispatchEvent(new Event('game-resume'));
-        },
         quit: function() {
             engine.leave();
-            window.dispatchEvent(new Event('main-enter'));
             // Wait for transition to end
             setTimeout(() => engine.reset(), 500);
         },
@@ -43,14 +39,10 @@ export default {
     data() {
         return {
             items: [
-                { label: 'Resume', action: this.resume },
+                { label: 'Resume', action: engine.resume },
                 { label: 'Quit', action: this.quit },
             ],
         };
-    },
-
-    mounted() {
-        window.addEventListener('game-pause', this.enter);
     },
 };
 </script>

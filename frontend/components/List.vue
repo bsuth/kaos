@@ -16,13 +16,14 @@
 -->
 
 <template>
-    <ul>
+    <ul class='kaos-list-ul'>
         <li
             v-for='(item, index) in items'
             :key='index'
             :class="{ 'active': index == activeIndex }"
             @mouseover='setActiveIndex(index)'
             @click='action'
+            class='kaos-list-li'
         >
             <a v-if='item.href' :href='item.href'>{{ item.label }}</a>
             <span v-else class='label'>{{ item.label }}</span>
@@ -81,7 +82,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import 'style/globals';
 @import 'style/palette';
 @import 'style/mixins/flex';
@@ -91,7 +92,7 @@ export default {
 // LIST
 // -----------------------------------------------------------------------------
 
-ul {
+.kaos-list-ul {
     /* core */
     @include flex-center;
     flex-direction: column;
@@ -101,7 +102,7 @@ ul {
 // LIST ITEM
 // -----------------------------------------------------------------------------
 
-li {
+.kaos-list-li {
     /* core */
     margin: 20px 0;
     cursor: pointer;
@@ -124,7 +125,7 @@ li {
 }
 
 @for $i from 1 through length($palette) {
-    li:nth-child(4n + #{$i}) .label {
+    .kaos-list-li:nth-child(4n + #{$i}) .label {
         @include underline-bg(nth($palette, $i));
     }
 }

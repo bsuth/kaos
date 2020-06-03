@@ -17,17 +17,13 @@
 
 <template>
     <div class='dialog'>
-        <slot />
-        <ul class='dialog-list'>
-            <li
-                v-for='(item, index) in items'
-                :key='item.label'
-                v-bind='item'
-                v-bind:class="{ 'activeItem': (index == activeItem) }"
-                @mouseover='activeItem = index'
-                @click='accept'
-            >{{ item.label }}</li>
-        </ul>
+        <span class='dialog-msg'>
+            <slot />
+        </span>
+        <List
+            :items='items'
+            :activeIndex='activeIndex'
+        />
     </div>
 </template>
 
@@ -36,50 +32,24 @@
 import { ACTION_EVENTS } from 'input/events';
 import { setContext, CONTEXTS } from 'input/state';
 
+import List from 'components/List.vue';
+
 export default {
+    components: { List },
     props: [ 'items' ],
 
-    methods: {
-        // LIFECYCLE FUNCTIONS
-        enter: function() {
-            setContext(CONTEXTS.MENU);
-            this.$el.style.display = 'flex';
-
-            window.addEventListener(ACTION_EVENTS.DOWN, this.next);
-            window.addEventListener(ACTION_EVENTS.UP, this.prev);
-            window.addEventListener(ACTION_EVENTS.ACCEPT, this.accept);
-            window.addEventListener(ACTION_EVENTS.BACK, this.leave);
-        },
-        leave: function() {
-            this.$el.style.display = 'none';
-            this.activeItem = 0;
-
-            window.removeEventListener(ACTION_EVENTS.DOWN, this.next);
-            window.removeEventListener(ACTION_EVENTS.UP, this.prev);
-            window.removeEventListener(ACTION_EVENTS.ACCEPT, this.accept);
-            window.removeEventListener(ACTION_EVENTS.BACK, this.leave);
-
-            setContext(CONTEXTS.GAME);
-        },
-
-        // EVENT LISTENER FUNCTIONS
-        prev: function() {
-            (this.activeItem === 0) ?
-                this.activeItem = this.items.length - 1 :
-                --this.activeItem;
-        },
-        next: function(event) {
-            (this.activeItem === this.items.length - 1) ?
-                this.activeItem = 0 :
-                ++this.activeItem;
-        },
-        accept: function() {
-            (this.items[this.activeItem].action)();
-        },
+    data() {
+        return {
+            activeIndex: 0,
+        };
     },
 
-    data() {
-        return { activeItem: 0 };
+    mounted() {
+        setContext(CONTEXTS.MENU);
+    },
+
+    beforeDestroy() {
+        setContext(CONTEXTS.GAME);
     },
 };
 </script>
@@ -87,6 +57,7 @@ export default {
 
 <style lang='scss' scoped>
 @import 'style/palette';
+@import 'style/mixins/flex';
 @import 'style/mixins/underline';
 
 // -----------------------------------------------------------------------------
@@ -95,39 +66,32 @@ export default {
 
 .dialog {
     width: 300px;
-    height: 180px;
+    padding: 20px;
+    @include flex-center;
+    flex-direction: column;
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background: $black;
     border: 2px solid $grey;
     border-radius: 10px;
 }
 
-.dialog-list {
-    margin-top: 5px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    li {
-        margin: 10px;
-        cursor: pointer;
-        @include underline-core;
-
-        &.activeItem { @include underline-active; }
-    }
+.dialog-msg {
+    text-align: center;
 }
+</style>
 
-@for $i from 1 through length($palette) {
-    li:nth-child(4n + #{$i}) {
-        @include underline-bg(nth($palette, $i));
+<style lang='scss'>
+
+// -----------------------------------------------------------------------------
+// LIST
+// -----------------------------------------------------------------------------
+
+.kaos-list-ul {
+    .kaos-list-li {
+        font-size: 16px;
     }
 }
 </style>

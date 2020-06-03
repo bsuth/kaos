@@ -16,7 +16,7 @@
 -->
 
 <template>
-    <Dialog ref='dialog' :items='items'>
+    <Dialog :items='items'>
         <span>
             Game Over!<br />
             Score: {{ score }}
@@ -34,44 +34,13 @@ export default {
     components: { Dialog },
 
     methods: {
-        // LIFECYCLE FUNCTIONS
-        enter: function() {
-            this.$refs.dialog.enter();
-            this.score = engine.state.score;
-
-            let categoryScores = SCORES[engine.state.mode];
-
-            let gameScore = {
-                score: this.score,
-                date: this.getDate(),
-            };
-
-            let saved = false;
-            for (let [index, scoreData] of Object.entries(categoryScores)) {
-                if (gameScore.score > scoreData.score) {
-                    categoryScores.splice(index, 0, gameScore);
-                    saved = true;
-                    break;
-                }
-            }
-
-            if (categoryScores.length > NUM_SCORES)
-                categoryScores.pop();
-            else if (!saved && categoryScores.length < NUM_SCORES)
-                categoryScores.push(gameScore);
-
-            localStorage.setItem('score_data', JSON.stringify(SCORES));
-        },
-        leave: function() { this.$refs.dialog.leave(); },
-
         // ACTION FUNCTIONS
         restart: function() {
-            this.leave();
             engine.restart();
         },
+
         quit: function() {
             engine.leave();
-            this.leave();
             window.dispatchEvent(new Event('main-enter'));
             // Wait for transition to end
             setTimeout(() => engine.reset(), 500);
@@ -99,13 +68,29 @@ export default {
 
     mounted() {
         window.addEventListener('game-over', this.enter);
+
+        this.score = engine.state.score;
+        let saved = false;
+        let categoryScores = SCORES[engine.state.mode];
+        let gameScore = {
+            score: this.score,
+            date: this.getDate(),
+        };
+
+        for (let [index, scoreData] of Object.entries(categoryScores)) {
+            if (gameScore.score > scoreData.score) {
+                categoryScores.splice(index, 0, gameScore);
+                saved = true;
+                break;
+            }
+        }
+
+        if (categoryScores.length > NUM_SCORES)
+            categoryScores.pop();
+        else if (!saved && categoryScores.length < NUM_SCORES)
+            categoryScores.push(gameScore);
+
+        localStorage.setItem('score_data', JSON.stringify(SCORES));
     },
 };
 </script>
-
-
-<style lang='scss' scoped>
-span {
-    text-align: center;
-}
-</style>

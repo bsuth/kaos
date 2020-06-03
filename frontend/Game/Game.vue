@@ -26,7 +26,7 @@
 
 <script>
 import * as engine from 'engine/core';
-import * as canvas from './canvas';
+import { ACTION_EVENTS } from 'input/events';
 
 import Hud from './components/Hud.vue';
 import Pause from './components/Pause.vue';
@@ -46,11 +46,17 @@ export default {
         gameover: function() {
             return this.gamestate.gameover;
         },
+        paused: function() {
+            return this.gamestate.paused;
+        },
     },
 
     watch: {
         gameover: function() {
-            this.dialog = 'GameOver';
+            this.dialog = (this.gameover) ? 'GameOver' : null;
+        },
+        paused: function() {
+            this.dialog = (this.paused) ? 'Pause' : null;
         },
     },
 

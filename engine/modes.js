@@ -34,7 +34,6 @@ export function timed() {
 
         if (player.checkCollision(orb)) {
             state.gameover = true;
-            window.dispatchEvent(new Event('game-over'));
             break;
         }
     }
@@ -57,7 +56,6 @@ export function spin2win() {
 
         if (player.checkCollision(orb)) {
             state.gameover = true;
-            window.dispatchEvent(new Event('game-over'));
             break;
         }
     }
@@ -81,9 +79,4 @@ export function collector() {
             }
         }   
     }
-
-    // Make sure to go through all orb collisions and update the score
-    // accordingly before marking the game as over.
-    if (state.gameover)
-        window.dispatchEvent(new Event('game-over'));
 }
