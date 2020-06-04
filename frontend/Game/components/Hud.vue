@@ -44,7 +44,6 @@ export default {
 
     data() {
         return {
-            // Dummy values before the gameMode is initialized
             state: state, 
             player: player, 
         };

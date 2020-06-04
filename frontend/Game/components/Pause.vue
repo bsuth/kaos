@@ -27,20 +27,11 @@ import * as engine from 'engine/core';
 export default {
     components: { Dialog },
 
-    methods: {
-        // ACTION FUNCTIONS
-        quit: function() {
-            engine.leave();
-            // Wait for transition to end
-            setTimeout(() => engine.reset(), 500);
-        },
-    },
-
     data() {
         return {
             items: [
                 { label: 'Resume', action: engine.resume },
-                { label: 'Quit', action: this.quit },
+                { label: 'Quit', action: this.$parent.quit },
             ],
         };
     },

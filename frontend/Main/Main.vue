@@ -32,10 +32,15 @@ import router from './router.js';
 
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import { setContext, CONTEXTS } from 'input/state';
 
 export default {
     router,
     components: { Header, Footer },
+
+    mounted() {
+        setContext(CONTEXTS.MENU);
+    },
 };
 </script>
 

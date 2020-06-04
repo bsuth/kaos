@@ -26,7 +26,6 @@
 
 <script>
 import * as engine from 'engine/core';
-import { CONTEXTS, setContext } from 'input/state';
 import Loader from 'components/Loader.vue';
 
 export default {
@@ -38,9 +37,11 @@ export default {
 
     methods: {
         startGame: function(mode) {
-            setContext(CONTEXTS.GAME);
             engine.setMode(mode);
             this.component = 'Game';
+        },
+        leaveGame: function() {
+            this.component = 'Main';
         },
     },
 
@@ -51,7 +52,6 @@ export default {
     },
 
     mounted() {
-        setContext(CONTEXTS.MENU);
         this.component = 'Main';
     },
 };

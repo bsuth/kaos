@@ -34,18 +34,6 @@ export default {
     components: { Dialog },
 
     methods: {
-        // ACTION FUNCTIONS
-        restart: function() {
-            engine.restart();
-        },
-
-        quit: function() {
-            engine.leave();
-            window.dispatchEvent(new Event('main-enter'));
-            // Wait for transition to end
-            setTimeout(() => engine.reset(), 500);
-        },
-
         // HELPER FUNCTIONS
         getDate: function() {
             let dateObj = new Date();
@@ -60,15 +48,13 @@ export default {
         return {
             score: 0,
             items: [
-                { label: 'Restart', action: this.restart },
-                { label: 'Quit', action: this.quit },
+                { label: 'Restart', action: engine.restart },
+                { label: 'Quit', action: this.$parent.quit },
             ],
         };
     },
 
     mounted() {
-        window.addEventListener('game-over', this.enter);
-
         this.score = engine.state.score;
         let saved = false;
         let categoryScores = SCORES[engine.state.mode];

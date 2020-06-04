@@ -27,6 +27,7 @@
 <script>
 import * as engine from 'engine/core';
 import { ACTION_EVENTS } from 'input/events';
+import { setContext, CONTEXTS } from 'input/state';
 
 import Hud from './components/Hud.vue';
 import Pause from './components/Pause.vue';
@@ -34,6 +35,13 @@ import GameOver from './components/GameOver.vue';
 
 export default {
     components: { Hud, Pause, GameOver },
+    
+    methods: {
+        quit: function() {
+            let app = this.$root.$children[0];
+            app.leaveGame();
+        },
+    },
 
     data() {
         return {
@@ -61,6 +69,7 @@ export default {
     },
 
     mounted() {
+        setContext(CONTEXTS.GAME);
         engine.initCanvas();
         engine.enter();
         engine.start()

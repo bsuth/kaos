@@ -25,10 +25,6 @@
 <script>
 export default {
     components: {},
-
-    mounted() {
-        console.log('dynamic load here!');
-    }
 };
 </script>
 
