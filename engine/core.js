@@ -190,8 +190,6 @@ export function enter() {
  * listeners that are no longer needed when the game is not running.
  */
 export function leave() {
-    state.gameover = true;
-
     for (let [event, listener] of Object.entries(ACTION_EVENT_LISTENERS))
         window.removeEventListener(event, listener);
 

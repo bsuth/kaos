@@ -76,6 +76,7 @@ export default {
     },
 
     beforeDestroy() {
+        engine.reset();
         engine.leave();
     },
 };
