@@ -50,6 +50,12 @@ export default {
             logoColor.classList.remove('wipe-in');
             logoColor.classList.add('wipe-out');
         });
+
+        // Prevent persistent focus so keybindings such as 'Enter' don't take
+        // us home.
+        logo.addEventListener('click', () => {
+            logo.blur();
+        });
     }
 }
 </script>
