@@ -15,39 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@import 'style/palette';
-@import 'style/canvas';
-@import 'style/transitions';
-@import 'style/nipple';
-@import 'style/swiper';
-
-* {
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-
-    color: $white;
-    background: $black;
-
-    font-family: 'Quicksand', arial;
-}
-
-a {
-    color: $white;
-    text-decoration: none;
-    outline: none;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
-object {
-    pointer-events: none;
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

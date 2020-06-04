@@ -16,53 +16,53 @@
 -->
 
 <template>
-    <div id='app'>
+    <div id='main'>
+        <div class='padding' />
+        <Header />
         <transition name='fade' mode='out-in'>
-            <component :is='component' />
+            <router-view />
         </transition>
+        <div class='padding' />
+        <Footer />
     </div>
 </template>
 
-
 <script>
-import * as engine from 'engine/core';
-import Loader from 'components/Loader.vue';
+import router from './router.js';
+
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+import { setContext, CONTEXTS } from 'input/state';
 
 export default {
-    components: {
-        Loader,
-        Main: () => import('./Main/Main.vue'),
-        Game: () => import('./Game/Game.vue'),
-    },
-
-    methods: {
-        startGame: function(mode) {
-            engine.setMode(mode);
-            this.component = 'Game';
-        },
-        leaveGame: function() {
-            this.component = 'Main';
-        },
-    },
-
-    data() {
-        return {
-            component: 'Loader',
-        };
-    },
+    router,
+    components: { Header, Footer },
 
     mounted() {
-        this.component = 'Main';
+        setContext(CONTEXTS.MENU);
     },
 };
 </script>
 
-
 <style lang='scss'>
-#app {
+@import 'style/mixins/flex';
+
+#main {
     height: 100%;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
     /* This is needed to prevent the canvas from blocking certain clickables! */
     position: relative;
+    transition: opacity .5s ease-out;
+
+    .padding {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        transition: all 2s ease-out;
+    }
 }
 </style>

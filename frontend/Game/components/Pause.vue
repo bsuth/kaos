@@ -16,53 +16,24 @@
 -->
 
 <template>
-    <div id='app'>
-        <transition name='fade' mode='out-in'>
-            <component :is='component' />
-        </transition>
-    </div>
+    <Dialog ref='dialog' :items='items' />
 </template>
 
 
 <script>
+import Dialog from 'components/Dialog.vue';
 import * as engine from 'engine/core';
-import Loader from 'components/Loader.vue';
 
 export default {
-    components: {
-        Loader,
-        Main: () => import('./Main/Main.vue'),
-        Game: () => import('./Game/Game.vue'),
-    },
-
-    methods: {
-        startGame: function(mode) {
-            engine.setMode(mode);
-            this.component = 'Game';
-        },
-        leaveGame: function() {
-            this.component = 'Main';
-        },
-    },
+    components: { Dialog },
 
     data() {
         return {
-            component: 'Loader',
+            items: [
+                { label: 'Resume', action: engine.resume },
+                { label: 'Quit', action: this.$parent.quit },
+            ],
         };
-    },
-
-    mounted() {
-        this.component = 'Main';
     },
 };
 </script>
-
-
-<style lang='scss'>
-#app {
-    height: 100%;
-
-    /* This is needed to prevent the canvas from blocking certain clickables! */
-    position: relative;
-}
-</style>

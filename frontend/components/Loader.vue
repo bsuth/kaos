@@ -16,53 +16,30 @@
 -->
 
 <template>
-    <div id='app'>
-        <transition name='fade' mode='out-in'>
-            <component :is='component' />
-        </transition>
+    <div id='loader'>
+        loading!
     </div>
 </template>
 
 
 <script>
-import * as engine from 'engine/core';
-import Loader from 'components/Loader.vue';
-
 export default {
-    components: {
-        Loader,
-        Main: () => import('./Main/Main.vue'),
-        Game: () => import('./Game/Game.vue'),
-    },
-
-    methods: {
-        startGame: function(mode) {
-            engine.setMode(mode);
-            this.component = 'Game';
-        },
-        leaveGame: function() {
-            this.component = 'Main';
-        },
-    },
-
-    data() {
-        return {
-            component: 'Loader',
-        };
-    },
-
-    mounted() {
-        this.component = 'Main';
-    },
+    components: {},
 };
 </script>
 
 
 <style lang='scss'>
-#app {
+#loader {
     height: 100%;
+
+    display: flex;
+    flex-direction: column;
 
     /* This is needed to prevent the canvas from blocking certain clickables! */
     position: relative;
+    transition: opacity .5s ease-out;
+
+    > *:nth-child(2) { flex-grow: 1; }
 }
 </style>
