@@ -16,18 +16,18 @@
  */
 
 import Vue from 'vue';
+import VueI18n from 'vue-i18n';
 
-import App from './App.vue';
-import locale from './locale';
-import 'input';
-import './style/root.scss';
+import en from './en';
+import ja from './ja';
 
 // -----------------------------------------------------------------------------
-// APP
-// -----------------------------------------------------------------------------
+// LOCALIZATION
+// ----------------------------------------------------------------------------
 
-new Vue({
-    el: '#app',
-    render: h => h(App),
-    i18n: locale,
+Vue.use(VueI18n);
+
+export default new VueI18n({
+    locale: 'en',
+    messages: { en, ja, },
 });

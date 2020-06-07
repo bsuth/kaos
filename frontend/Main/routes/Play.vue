@@ -17,11 +17,7 @@
 
 <template>
     <div id='play'>
-        <p>
-            Dodge orbs of colors different than your own.<br />
-            Move, rotate and change colors to survive.<br />
-            Click any panel to begin.
-        </p>
+        <p v-html="$t('message.howtoplay')" />
         <ModeSelect />
     </div>
 </template>

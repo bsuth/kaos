@@ -15,19 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Vue from 'vue';
-
-import App from './App.vue';
-import locale from './locale';
-import 'input';
-import './style/root.scss';
-
-// -----------------------------------------------------------------------------
-// APP
-// -----------------------------------------------------------------------------
-
-new Vue({
-    el: '#app',
-    render: h => h(App),
-    i18n: locale,
-});
+export default {
+    message: {
+        PLAY: 'プレイ',
+        SCORES: 'スコア',
+        SETTINGS: '設定',
+        howtoplay: `
+            test
+        `,
+    },
+};
