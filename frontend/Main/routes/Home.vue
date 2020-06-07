@@ -43,15 +43,15 @@ export default {
             activeIndex: 0,
             items: [
                 {
-                    label: 'PLAY',
+                    label: 'home.play',
                     action: () => this.goto('/play'),
                 },
                 {
-                    label: 'SCORES',
+                    label: 'home.scores',
                     action: () => this.goto('/scores'),
                 },
                 {
-                    label: 'SETTINGS',
+                    label: 'home.settings',
                     action: () => this.goto('/settings'),
                 },
             ],

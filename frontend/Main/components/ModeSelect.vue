@@ -24,8 +24,8 @@
             <div v-for='(slide, index) in slides' :key='index' class='swiper-slide'>
                 <img src='mode-gif-placeholder.png' />
                 <div class='divider' />
-                <h3>{{ slide.label }}</h3>
-                <p>{{ slide.description }}</p>
+                <h3>{{ $t(slide.label) }}</h3>
+                <p>{{ $t(slide.description) }}</p>
             </div>
         </div>
 
@@ -61,16 +61,16 @@ export default {
         return {
             slides: [
                 {
-                    label: 'Timed',
-                    description: 'Survive as long possible.',
+                    label: 'modes.timed.label',
+                    description: 'modes.timed.description',
                 },
                 {
-                    label: 'Spin2Win',
-                    description: 'Gain points by completing full rotations.',
+                    label: 'modes.spin.label',
+                    description: 'modes.spin.description',
                 },
                 {
-                    label: 'Collector',
-                    description: 'Collect orbs of the same color as your own.',
+                    label: 'modes.collector.label',
+                    description: 'modes.collector.description',
                 },
             ],
         };

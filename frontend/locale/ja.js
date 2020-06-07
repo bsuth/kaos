@@ -16,12 +16,28 @@
  */
 
 export default {
-    message: {
-        PLAY: 'プレイ',
-        SCORES: 'スコア',
-        SETTINGS: '設定',
-        howtoplay: `
-            test
-        `,
+    home: {
+        play: 'プレイ',
+        scores: 'スコア',
+        settings: '設定',
     },
+    modes: {
+        timed: {
+            label: 'タイム',
+            description: '生き延びる。',
+        },
+        spin: {
+            label: '回転ヒーロー',
+            description: '全回転すると点数集まる。',
+        },
+        collector: {
+            label: 'コレクター',
+            description: '同色玉集める。',
+        },
+    },
+    howtoplay: `
+        動きと回転と色を変わることができます。<br>
+        プレーヤーの色と違う玉触ったら、ゲームが終わります。<br>
+        うちのゲームモードをクリックするとゲームが始まります。
+    `,
 };

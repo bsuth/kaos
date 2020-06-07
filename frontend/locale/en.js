@@ -16,14 +16,31 @@
  */
 
 export default {
-    message: {
-        PLAY: 'PLAY',
-        SCORES: 'SCORES',
-        SETTINGS: 'SETTINGS',
-        howtoplay: `
-            Dodge orbs of colors different than your own.<br>
-            Move, rotate and change colors to survive.<br>
-            Click any panel to begin.
-        `,
+    home: {
+        play: 'PLAY',
+        scores: 'SCORES',
+        settings: 'SETTINGS',
+    },
+    modes: {
+        timed: {
+            label: 'Timed',
+            description: 'Survive as long as possible.',
+        },
+        spin: {
+            label: 'Spin2Win',
+            description: 'Gain points by completing full rotations.',
+        },
+        collector: {
+            label: 'Collector',
+            description: 'Collect orbs of the same color as your own.',
+        },
+    },
+    howtoplay: `
+        Dodge orbs of colors different than your own.<br>
+        Move, rotate and change colors to survive.<br>
+        Click any panel to begin.
+    `,
+    footer: {
+        
     },
 };

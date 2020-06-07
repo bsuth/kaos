@@ -28,6 +28,6 @@ import ja from './ja';
 Vue.use(VueI18n);
 
 export default new VueI18n({
-    locale: 'en',
+    locale: 'ja',
     messages: { en, ja, },
 });

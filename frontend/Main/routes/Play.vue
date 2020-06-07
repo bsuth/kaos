@@ -17,7 +17,7 @@
 
 <template>
     <div id='play'>
-        <p v-html="$t('message.howtoplay')" />
+        <p v-html="$t('howtoplay')" />
         <ModeSelect />
     </div>
 </template>
