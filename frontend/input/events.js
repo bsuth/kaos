@@ -163,6 +163,10 @@ export function register(event, id) {
         }
 
         window.dispatchEvent(new Event(event + '-start'));
+    } else {
+        // Dispatch action events on unpress due to conflicting actions
+        // (menu accept causes player to immediately turn green on xbox)
+        window.dispatchEvent(new Event(event));
     }
 }
 
@@ -212,10 +216,6 @@ export function unregister(event, id) {
             _restoreEventBuffer[negateEvent] = [];
             window.dispatchEvent(new Event(negateEvent + '-start'));
         }
-    } else {
-        // Dispatch action events on unpress due to conflicting actions
-        // (menu accept causes player to immediately turn green on xbox)
-        window.dispatchEvent(new Event(event));
     }
 }
 
