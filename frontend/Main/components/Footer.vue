@@ -20,7 +20,7 @@
         <ul>
             <li>
                 <router-link id='logo' to='/about'>
-                    about
+                    {{ $t('footer.about') }}
                 </router-link>
             </li>
             <li>
@@ -35,6 +35,7 @@
 
 <style lang='scss' scoped>
 @import 'style/palette';
+@import 'style/mixins/flex';
 
 footer {
     min-height: 50px;
@@ -42,7 +43,7 @@ footer {
 }
 
 ul {
-    display: flex;
+    @include flex-center;
     li { margin: 0 10px; }
 }
 </style>

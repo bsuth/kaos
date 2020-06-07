@@ -24,7 +24,7 @@
             <div v-for='(slide, index) in slides' :key='index' class='swiper-slide'>
                 <object :data='slide.data' type='image/svg+xml' />
                 <div class='divider' />
-                <h3>{{ slide.label }}</h3>
+                <h3>{{ $t(slide.label) }}</h3>
             </div>
         </div>
 
@@ -54,7 +54,7 @@ export default {
     data() {
         return {
             slides: [
-                { label: 'Keyboard', data: 'KeyboardControls.svg' },
+                { label: 'settings.keyboard', data: 'KeyboardControls.svg' },
                 { label: 'Xbox', data: 'XboxControls.svg' },
             ],
         };

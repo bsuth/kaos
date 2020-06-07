@@ -19,22 +19,21 @@
     <div id='score'>
         <div class='pagination-wrapper'>
             <span
-                v-for='(categoryScores, category) in scores'
-                :key='category'
+                v-for='(modeScores, mode) in scores'
+                :key='mode'
                 class='pagination-slide'
             >
-                {{ category }}
+                {{ $t(`modes.${mode}.label`) }}
             </span>
         </div>
         <div class='swiper-container'>
             <div class='swiper-wrapper'>
                 <div
-                    v-for='(categoryScores, category) in scores'
-                    :key='category'
-                    :data-category='category'
+                    v-for='(modeScores, mode) in scores'
+                    :key='mode'
                     class='swiper-slide'
                 >
-                    <Leaderboard :scores='categoryScores' />
+                    <Leaderboard :scores='modeScores' />
                 </div>
             </div>
         </div>

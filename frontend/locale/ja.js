@@ -35,9 +35,33 @@ export default {
             description: '同色玉を集める。',
         },
     },
+    leaderboard: {
+        date: '年月日',
+        score: 'スコア',
+    },
+    settings: {
+        keyboard: 'キーボード',        
+    },
     howtoplay: `
         動きと回転と色を変わることができます。<br>
         プレーヤーの色と異なる玉触れたら、ゲームが終わります。<br>
         ゲームモードをクリックするとゲームが始まります。
     `,
+    footer: {
+        about: 'kaos について',        
+    },
+    pause: {
+        resume: '続ける',        
+        quit: '辞める',        
+    },
+    gameover: {
+        gameover: 'ゲームオーバー',
+        score: 'スコア：',
+        restart: 'リスタート',        
+        quit: '辞める',        
+    },
+    hud: {
+        nextcolor: '次の色：',
+        score: 'スコア：',
+    },
 };

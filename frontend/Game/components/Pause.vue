@@ -16,7 +16,7 @@
 -->
 
 <template>
-    <Dialog ref='dialog' :items='items' />
+    <Dialog :items='items' />
 </template>
 
 
@@ -30,8 +30,8 @@ export default {
     data() {
         return {
             items: [
-                { label: 'Resume', action: engine.resume },
-                { label: 'Quit', action: this.$parent.quit },
+                { label: 'pause.resume', action: engine.resume },
+                { label: 'pause.quit', action: this.$parent.quit },
             ],
         };
     },

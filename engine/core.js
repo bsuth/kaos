@@ -147,13 +147,13 @@ export function initCanvas() {
  */
 export function setMode(mode) {
     switch (mode) {
-    case 'Timed':
+    case 'timed':
         state.modeUpdate = modes.timed;
         break;
-    case 'Spin2Win':
+    case 'spin':
         state.modeUpdate = modes.spin2win;
         break;
-    case 'Collector':
+    case 'collector':
         state.modeUpdate = modes.collector;
         break;
     default:

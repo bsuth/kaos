@@ -25,7 +25,7 @@
             @click='action'
             class='kaos-list-li'
         >
-            <a v-if='item.href' :href='item.href'>{{ item.label }}</a>
+            <a v-if='item.href' :href='item.href'>{{ $t(item.label) }}</a>
             <span v-else class='label'>{{ $t(item.label) }}</span>
         </li>
     </ul>

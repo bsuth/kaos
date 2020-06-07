@@ -35,12 +35,33 @@ export default {
             description: 'Collect orbs of the same color as your own.',
         },
     },
+    leaderboard: {
+        date: 'Date',
+        score: 'Score',
+    },
+    settings: {
+        keyboard: 'keyboard',        
+    },
     howtoplay: `
         Dodge orbs of colors different than your own.<br>
         Move, rotate and change colors to survive.<br>
         Click any panel to begin.
     `,
     footer: {
-        
+        about: 'about',        
+    },
+    pause: {
+        resume: 'Resume',        
+        quit: 'Quit',        
+    },
+    gameover: {
+        gameover: 'Game Over!',
+        score: 'Score: ',
+        restart: 'Restart',        
+        quit: 'Quit',        
+    },
+    hud: {
+        nextcolor: 'Next Color: ',
+        score: 'Score: ',
     },
 };

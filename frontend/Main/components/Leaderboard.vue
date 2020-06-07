@@ -18,8 +18,8 @@
 <template>
     <table>
         <tr>
-            <td>Date</td>
-            <td>Score</td>
+            <td>{{ $t('leaderboard.date') }}</td>
+            <td>{{ $t('leaderboard.score') }}</td>
         </tr>
         <tr v-for='(data, index) in scores' :key='index'>
             <td>{{ data.date }}</td>

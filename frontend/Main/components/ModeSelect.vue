@@ -39,6 +39,7 @@
 import Swiper from 'swiper';
 import 'swiper/css/swiper.min.css'
 
+import { MODES } from 'globals';
 import { ACTION_EVENTS } from 'input/events';
 
 const INVALID_SWIPER_ACCEPT_CLASSES = [
@@ -51,7 +52,7 @@ export default {
         prev: function() { this.swiper.slidePrev(); },
 
         accept: function() {
-            let mode = this.slides[this.swiper.activeIndex].label;
+            let mode = MODES[this.swiper.activeIndex];
             let app = this.$root.$children[0];
             app.startGame(mode);
         },

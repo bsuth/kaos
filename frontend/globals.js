@@ -29,6 +29,15 @@ export const COLORS = Object.freeze([
     '#4bb6d6', // cyan
 ]);
 
+/*
+ * Single-player game modes.
+ */
+export const MODES = Object.freeze([
+    'timed',
+    'spin',
+    'collector',
+]);
+
 // -----------------------------------------------------------------------------
 // MEDIA QUERIES
 // -----------------------------------------------------------------------------
@@ -103,11 +112,9 @@ export const NUM_SCORES = 5;
 export let SCORES = JSON.parse(localStorage.getItem('score_data'));
 
 if (!SCORES) {
-    SCORES = {
-        'Timed': [],
-        'Spin2Win': [],
-        'Collector': [],
-    };
+    SCORES = {};
+    for (let mode of MODES)
+        SCORES[mode] = [];
 }
 
 // -----------------------------------------------------------------------------

@@ -18,8 +18,8 @@
 <template>
     <Dialog :items='items'>
         <span>
-            Game Over!<br />
-            Score: {{ score }}
+            {{ $t('gameover.gameover') }}<br />
+            {{ $t('gameover.score') }}{{ score }}
         </span>
     </Dialog>
 </template>
@@ -48,8 +48,8 @@ export default {
         return {
             score: 0,
             items: [
-                { label: 'Restart', action: engine.restart },
-                { label: 'Quit', action: this.$parent.quit },
+                { label: 'gameover.restart', action: engine.restart },
+                { label: 'gameover.quit', action: this.$parent.quit },
             ],
         };
     },
