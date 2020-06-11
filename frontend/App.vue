@@ -17,6 +17,7 @@
 
 <template>
     <div id='app'>
+        <LocalePicker />
         <transition name='fade' mode='out-in'>
             <component :is='component' />
         </transition>
@@ -26,10 +27,12 @@
 
 <script>
 import * as engine from 'engine/core';
+import LocalePicker from 'components/LocalePicker.vue';
 import Loader from 'components/Loader.vue';
 
 export default {
     components: {
+        LocalePicker,
         Loader,
         Main: () => import('./Main/Main.vue'),
         Game: () => import('./Game/Game.vue'),
