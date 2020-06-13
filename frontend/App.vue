@@ -28,14 +28,14 @@
 <script>
 import * as engine from 'engine/core';
 import LocalePicker from 'components/LocalePicker.vue';
-import Loader from 'components/Loader.vue';
+import Main from './Main/Main.vue';
+import Game from './Game/Game.vue';
 
 export default {
     components: {
         LocalePicker,
-        Loader,
-        Main: () => import('./Main/Main.vue'),
-        Game: () => import('./Game/Game.vue'),
+        Main,
+        Game,
     },
 
     methods: {
@@ -50,12 +50,8 @@ export default {
 
     data() {
         return {
-            component: 'Loader',
+            component: 'Main',
         };
-    },
-
-    mounted() {
-        this.component = 'Main';
     },
 };
 </script>

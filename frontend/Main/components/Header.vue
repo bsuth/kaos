@@ -19,10 +19,10 @@
     <header>
         <router-link id='logo' to='/'>
             <div id='logo-white'>
-                <object data='LogoWhite.svg' type='image/svg+xml' />
+                <object data='logo/LogoWhite.svg' type='image/svg+xml' />
             </div>
             <div id='logo-color'>
-                <object data="LogoColor.svg" type="image/svg+xml" />
+                <object data="logo/LogoColor.svg" type="image/svg+xml" />
             </div>
         </router-link>
     </header>
@@ -57,7 +57,7 @@ export default {
             logo.blur();
         });
     }
-}
+};
 </script>
 
 <style lang='scss' scoped>

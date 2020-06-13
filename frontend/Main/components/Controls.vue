@@ -36,7 +36,7 @@
 
 <script>
 import Swiper from 'swiper';
-import 'swiper/css/swiper.min.css'
+import 'swiper/css/swiper.min.css';
 import { ACTION_EVENTS } from 'input/events';
 
 const INVALID_SWIPER_ACCEPT_CLASSES = [
@@ -54,8 +54,8 @@ export default {
     data() {
         return {
             slides: [
-                { label: 'settings.keyboard', data: 'KeyboardControls.svg' },
-                { label: 'Xbox', data: 'XboxControls.svg' },
+                { label: 'settings.keyboard', data: 'controls/KeyboardControls.svg' },
+                { label: 'Xbox', data: 'controls/XboxControls.svg' },
             ],
         };
     },
@@ -81,7 +81,7 @@ export default {
         window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
         window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
     },
-}
+};
 </script>
 
 

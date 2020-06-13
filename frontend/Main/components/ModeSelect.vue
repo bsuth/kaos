@@ -64,17 +64,17 @@ export default {
                 {
                     label: 'modes.timed.label',
                     description: 'modes.timed.description',
-                    icon: 'timed.svg',
+                    icon: 'modes/timed.svg',
                 },
                 {
                     label: 'modes.spin.label',
                     description: 'modes.spin.description',
-                    icon: 'spin.svg',
+                    icon: 'modes/spin.svg',
                 },
                 {
                     label: 'modes.collector.label',
                     description: 'modes.collector.description',
-                    icon: 'collector.svg',
+                    icon: 'modes/collector.svg',
                 },
             ],
         };
