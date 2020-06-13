@@ -107,7 +107,7 @@ export default {
         window.removeEventListener(ACTION_EVENTS.RIGHT, this.next);
         window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
     },
-}
+};
 </script>
 
 

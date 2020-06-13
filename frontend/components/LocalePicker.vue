@@ -65,7 +65,7 @@ export default {
         for (let el of this.$el.getElementsByClassName('locale-button'))
             this.locales.get(el.dataset.locale).button = el;
     }
-}
+};
 </script>
 
 <style lang='scss' scoped>
@@ -73,7 +73,7 @@ ul {
     width: 50px;
     position: absolute;
     top: 50px;
-    right: 50px;
+    left: 50px;
     z-index: 2;
 
     li {
