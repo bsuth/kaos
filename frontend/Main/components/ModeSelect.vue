@@ -22,7 +22,7 @@
         <div class='swiper-wrapper'>
             <!-- slides -->
             <div v-for='(slide, index) in slides' :key='index' class='swiper-slide'>
-                <img src='mode-gif-placeholder.png' />
+                <object :data='slide.icon' type='image/svg+xml' />
                 <div class='divider' />
                 <h3>{{ $t(slide.label) }}</h3>
                 <p>{{ $t(slide.description) }}</p>
@@ -37,7 +37,7 @@
 
 <script>
 import Swiper from 'swiper';
-import 'swiper/css/swiper.min.css'
+import 'swiper/css/swiper.min.css';
 
 import { MODES } from 'globals';
 import { ACTION_EVENTS } from 'input/events';
@@ -64,14 +64,17 @@ export default {
                 {
                     label: 'modes.timed.label',
                     description: 'modes.timed.description',
+                    icon: 'timed.svg',
                 },
                 {
                     label: 'modes.spin.label',
                     description: 'modes.spin.description',
+                    icon: 'spin.svg',
                 },
                 {
                     label: 'modes.collector.label',
                     description: 'modes.collector.description',
+                    icon: 'collector.svg',
                 },
             ],
         };
@@ -112,7 +115,7 @@ export default {
         window.removeEventListener(ACTION_EVENTS.LEFT, this.prev);
         window.removeEventListener(ACTION_EVENTS.ACCEPT, this.accept);
     },
-}
+};
 </script>
 
 <style lang='scss' scoped>
@@ -137,7 +140,7 @@ export default {
     height: 300px;
     border: 1px solid $white;
 
-    img {
+    object {
         width: 100%;
         height: 210px;
     }
