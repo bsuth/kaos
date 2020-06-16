@@ -33,7 +33,7 @@ console.log('-----------------');
 module.exports = {
     target: 'web',
     mode: 'development',
-    entry: [ './frontend/app.js', './frontend/style/root.scss' ],
+    entry: [ './src/app.js', './src/style/root.scss' ],
 
     devServer: {
         contentBase: path.join(__dirname, 'devdist'),
@@ -49,11 +49,11 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            globals: path.resolve(__dirname, 'frontend/globals'),
-            style: path.resolve(__dirname, 'frontend/style'),
-            components: path.resolve(__dirname, 'frontend/components'),
-            engine: path.resolve(__dirname, 'engine'),
-            input: path.resolve(__dirname, 'frontend/input'),
+            globals: path.resolve(__dirname, 'src/globals'),
+            style: path.resolve(__dirname, 'src/style'),
+            components: path.resolve(__dirname, 'src/components'),
+            engine: path.resolve(__dirname, 'src/engine'),
+            input: path.resolve(__dirname, 'src/input'),
         },
     },
 
@@ -79,10 +79,10 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'frontend/index.html'
+            template: 'src/index.html'
         }),
         new CopyWebpackPlugin([
-            { from: 'frontend/assets' }
+            { from: 'assets' }
         ]),
         new VueLoaderPlugin(),
     ],
