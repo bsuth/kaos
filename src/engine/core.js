@@ -268,12 +268,13 @@ export function restart() {
 function _resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight - HUD_HEIGHT;
+    _draw();
 
     // If touch device, make some room for the nipple.
-    if (IS_TOUCH_DEVICE) {
-        canvas.height -= NIPPLE_RADIUS * 2;
-        canvas.style.paddingBottom = NIPPLE_RADIUS * 2 + 'px';
-    }
+    // if (IS_TOUCH_DEVICE) {
+    //     canvas.height -= NIPPLE_RADIUS * 2;
+    //     canvas.style.paddingBottom = NIPPLE_RADIUS * 2 + 'px';
+    // }
 }
 
 // -----------------------------------------------------------------------------
