@@ -128,26 +128,26 @@ export default {
         });
 
         // ROTATE
-        document.getElementById('mobile-controls-rotate').addEventListener('mousedown', () => {
+        document.getElementById('mobile-controls-rotate').addEventListener('touchstart', () => {
             (getContext() == CONTEXTS.MENU) ?
                 register(ACTION_EVENTS.ACCEPT, 'mobile-controls-accept') :
                 register(DURATION_EVENTS.ROTATE, 'mobile-controls-rotate');
         });
 
-        document.getElementById('mobile-controls-rotate').addEventListener('mouseup', () => {
+        document.getElementById('mobile-controls-rotate').addEventListener('touchend', () => {
             (getContext() == CONTEXTS.MENU) ?
                 unregister(ACTION_EVENTS.ACCEPT, 'mobile-controls-accept') :
                 unregister(DURATION_EVENTS.ROTATE, 'mobile-controls-rotate');
         });
 
         // ROTATE-CC
-        document.getElementById('mobile-controls-rotate-cc').addEventListener('mousedown', () => {
+        document.getElementById('mobile-controls-rotate-cc').addEventListener('touchstart', () => {
             (getContext() == CONTEXTS.MENU) ?
                 register(ACTION_EVENTS.BACK, 'mobile-controls-back') :
                 register(DURATION_EVENTS.ROTATE_CC, 'mobile-controls-rotate-cc');
         });
 
-        document.getElementById('mobile-controls-rotate-cc').addEventListener('mouseup', () => {
+        document.getElementById('mobile-controls-rotate-cc').addEventListener('touchend', () => {
             (getContext() == CONTEXTS.MENU) ?
                 unregister(ACTION_EVENTS.BACK, 'mobile-controls-back') :
                 unregister(DURATION_EVENTS.ROTATE_CC, 'mobile-controls-rotate-cc');

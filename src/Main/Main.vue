@@ -17,8 +17,6 @@
 
 <template>
     <div id='main'>
-        <LocalePicker />
-        <Fullscreen />
         <div class='padding' />
         <Header />
         <transition name='fade' mode='out-in'>
@@ -33,14 +31,12 @@
 import { setContext, CONTEXTS } from 'input/state';
 import router from './router.js';
 
-import LocalePicker from './components/LocalePicker.vue';
-import Fullscreen from './components/Fullscreen.vue';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
 export default {
     router,
-    components: {LocalePicker, Fullscreen, Header, Footer },
+    components: { Header, Footer },
 
     mounted() {
         setContext(CONTEXTS.MENU);

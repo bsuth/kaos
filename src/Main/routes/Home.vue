@@ -16,17 +16,23 @@
 -->
 
 <template>
-    <List
-        :items='items'
-        :activeIndex='activeIndex'
-    />
+    <div>
+        <LocalePicker />
+        <Fullscreen />
+        <List
+            :items='items'
+            :activeIndex='activeIndex'
+        />
+    </div>
 </template>
 
 <script>
+import LocalePicker from '../components/LocalePicker.vue';
+import Fullscreen from '../components/Fullscreen.vue';
 import List from 'components/List';
 
 export default {
-    components: { List },
+    components: { LocalePicker, Fullscreen, List },
 
     methods: {
         goto: function(route) {

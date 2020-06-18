@@ -19,7 +19,7 @@ export default {
     home: {
         play: 'PLAY',
         scores: 'SCORES',
-        settings: 'SETTINGS',
+        settings: 'CONTROLS',
     },
     modes: {
         timed: {
