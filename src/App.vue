@@ -17,8 +17,6 @@
 
 <template>
     <div id='app'>
-        <LocalePicker />
-        <Fullscreen />
         <transition name='fade' mode='out-in'>
             <component :is='component' />
         </transition>
@@ -32,16 +30,8 @@ import * as engine from 'engine/core';
 import Main from './Main/Main.vue';
 import Game from './Game/Game.vue';
 
-import LocalePicker from 'components/LocalePicker.vue';
-import Fullscreen from 'components/Fullscreen.vue';
-
 export default {
-    components: {
-        Main,
-        Game,
-        LocalePicker,
-        Fullscreen,
-    },
+    components: { Main, Game },
 
     methods: {
         startGame: function(mode) {

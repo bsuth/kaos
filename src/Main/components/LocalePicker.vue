@@ -24,13 +24,17 @@
             @click='click(locale)'
             class='locale-button'
         >
-            <object :data='data.icon' type='image/svg+xml' />
+            <Sprite :sprite='data.sprite' />
         </li>
     </ul>
 </template>
 
 <script>
+import Sprite from 'components/Sprite';
+
 export default {
+    components: { Sprite },
+
     methods: {
         click: function(activeLocale) {
             if (this.active) {
@@ -55,8 +59,8 @@ export default {
         return {
             active: false,
             locales: new Map([
-                ['en', { icon: 'locale/en.svg', button: null }],
-                ['ja', { icon: 'locale/ja.svg', button: null }],
+                ['en', { sprite: 'locale-en', button: null }],
+                ['ja', { sprite: 'locale-ja', button: null }],
             ]),
         };
     },
@@ -69,16 +73,18 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import 'style/globals';
+
 ul {
-    width: 50px;
+    width: $SPRITE_SIZE;
     position: absolute;
     top: 50px;
     left: 50px;
     z-index: 2;
 
     li {
-        width: 50px;
-        height: 50px;
+        width: $SPRITE_SIZE;
+        height: $SPRITE_SIZE;
         position: absolute;
         top: 0;
         transition: 250ms top ease-in-out;
@@ -87,10 +93,5 @@ ul {
             cursor: pointer;
         }
     }
-}
-
-object {
-    width: 100%;
-    height: 100%;
 }
 </style>

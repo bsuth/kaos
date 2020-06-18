@@ -39,30 +39,26 @@ export const MODES = Object.freeze([
 ]);
 
 // -----------------------------------------------------------------------------
-// MEDIA QUERIES
+// CSS SIZES
 // -----------------------------------------------------------------------------
 
 /*
  * DO NOT CHANGE THESE. If you absolutely must change these, you'll probably
- * want to change the corresponding scss variables in style/root.scss.
+ * want to change the corresponding scss variables.
  *
  * Units: px
  */
+
+// globals.scss
 export const TABLET = 600;
 export const DESKTOP = 800;
 export const HUD_HEIGHT = 50;
+export const NIPPLE_RADIUS = 40;
+export const SPRITE_SIZE = 50;
 
 // -----------------------------------------------------------------------------
-// DEVICE TYPE
+// IS TOUCH DEVICE
 // -----------------------------------------------------------------------------
-
-/*
- * DO NOT CHANGE THIS. If you absolutely must change this, you'll probably
- * want to change the corresponding scss variables in style/nipple.scss.
- *
- * Units: px
- */
-export const NIPPLE_RADIUS = 50;
 
 let _isTouchDevice = false;
 
@@ -95,7 +91,9 @@ if ('maxTouchPoints' in navigator) {
 /*
  * Whether the device should you touch features (NippleJS).
  */
-export const IS_TOUCH_DEVICE = _isTouchDevice;
+// DEBUG, change back after mobile dev
+// export const IS_TOUCH_DEVICE = _isTouchDevice;
+export const IS_TOUCH_DEVICE = true;
 
 // -----------------------------------------------------------------------------
 // LOCAL STORAGE SCORES

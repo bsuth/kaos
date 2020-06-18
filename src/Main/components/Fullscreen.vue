@@ -17,15 +17,20 @@
 
 <template>
     <div id='fullscreen' v-on:click='toggleFullscreen()'>
-        <object data='fullscreen.svg' type='image/svg+xml' />
+        <Sprite :sprite='sprite' />
     </div>
 </template>
 
 <script>
+import Sprite from 'components/Sprite';
+
 export default {
+    components: { Sprite },
+
     data() {
         return {
             isFullscreen: false,
+            sprite: 'fs-enter',
         };
     },
 
@@ -40,7 +45,7 @@ export default {
         },
         fsChange: function(event, rest) {
             this.isFullscreen = !this.isFullscreen;
-            this.icon.style.left = (this.isFullscreen) ? 0 : '-100%';
+            this.sprite = (this.isFullscreen) ? 'fs-exit' : 'fs-enter';
         },
     },
 

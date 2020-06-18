@@ -20,21 +20,24 @@
         <canvas id='canvas' />
         <Hud />
         <component :is='dialog' />
+        <MobileControls v-if='enableMobileControls' />
     </div>
 </template>
 
 
 <script>
+import { IS_TOUCH_DEVICE } from 'globals';
 import * as engine from 'engine/core';
 import { ACTION_EVENTS } from 'input/events';
 import { setContext, CONTEXTS } from 'input/state';
 
+import MobileControls from './components/MobileControls.vue';
 import Hud from './components/Hud.vue';
 import Pause from './components/Pause.vue';
 import GameOver from './components/GameOver.vue';
 
 export default {
-    components: { Hud, Pause, GameOver },
+    components: { Hud, Pause, GameOver, MobileControls },
     
     methods: {
         quit: function() {
@@ -45,6 +48,7 @@ export default {
 
     data() {
         return {
+            enableMobileControls: IS_TOUCH_DEVICE,
             dialog: null,
             gamestate: engine.state,
         };
@@ -72,7 +76,7 @@ export default {
         setContext(CONTEXTS.GAME);
         engine.initCanvas();
         engine.enter();
-        engine.start()
+        engine.start();
     },
 
     beforeDestroy() {

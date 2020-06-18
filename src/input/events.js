@@ -128,7 +128,7 @@ export function clear() {
  * be started. For example, if a duration event fires and overrides another
  * event, we need to mark the latter as inactive and restore it later.
  */
-export function register(event, id) {
+export function register(event, id, debug = false) {
     if (_activeEventBuffer[event] === undefined)
         _activeEventBuffer[event] = [];
     if (_restoreEventBuffer[event] === undefined)
@@ -164,8 +164,6 @@ export function register(event, id) {
 
         window.dispatchEvent(new Event(event + '-start'));
     } else {
-        // Dispatch action events on unpress due to conflicting actions
-        // (menu accept causes player to immediately turn green on xbox)
         window.dispatchEvent(new Event(event));
     }
 }
