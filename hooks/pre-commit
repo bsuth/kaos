@@ -1,1 +1,1 @@
-find $(pwd)/frontend -name '*.js' | xargs npx eslint
+find $(pwd)/src -name '*.js' | xargs npx eslint
