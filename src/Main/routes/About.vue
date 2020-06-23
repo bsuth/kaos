@@ -16,43 +16,7 @@
 -->
 
 <template>
-    <div>
-        <p>
-            Kaos is a browser based game written by two brothers who wanted to
-            try their hand at game development. The concept and prototype were
-            first conceived over a long weekend while being stuck inside during
-            quarantine. The core game is written using the
-            <a href='https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API'>
-                Canvas API
-            </a>
-            while the frontend is written in <a href='https://vuejs.org/'>VueJS</a>.
-        </p>
-        <p>
-            Kaos is currently a work in progress. This is simply a demo/proof of
-            concept for the ideal game we are pushing for in the long run. Some
-            future goals include: audio, game animations, global leaderboards,
-            and multiplayer game modes.
-        </p>
-        <p>
-            There is still a lot of
-            work to be done before we can say that we're satisfied with this
-            project, but the demo will continuously get updated as the game
-            progresses to a more complete state. If you have any questions or
-            concerns, please feel free to 
-            <a href='https://github.com/kaos-game/kaos/issues'>
-                create an issue
-            </a>
-            on Github and we'll try to respond as soon as possible (please
-            check for duplicate issues first!).
-        </p>
-        <p>
-            So far we have had a ton of fun with this project and hope that you
-            can enjoy it as much as we have.
-        </p>
-        <br />
-        <p>Best regards,</p>
-        <p>the developers</p>
-    </div>
+    <div v-html="$t('about')"></div>
 </template>
 
 

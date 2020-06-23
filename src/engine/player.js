@@ -168,8 +168,13 @@ export default class Player {
         this.x2 = centerX + (x2 * cos - y2 * sin);
         this.y2 = centerY + (x2 * sin + y2 * cos);
 
-        // Record the total rotation
-        this.theta += theta;
+        if (Math.sign(this.rotateDir) != Math.sign(this.theta)) {
+            // Player has switched directions, start over
+            this.theta = theta;
+        } else {
+            // Record the total rotation
+            this.theta += theta;
+        }
     }
 
     /*

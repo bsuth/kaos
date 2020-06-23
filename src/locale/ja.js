@@ -19,12 +19,12 @@ export default {
     home: {
         play: 'プレイ',
         scores: 'スコア',
-        settings: '設定',
+        settings: 'コントロール',
     },
     modes: {
         timed: {
             label: 'タイム',
-            description: '生き延びる。',
+            description: 'できるまで生き延びる。',
         },
         spin: {
             label: '回転ヒーロー',
@@ -65,4 +65,22 @@ export default {
         nextcolor: '次の色：',
         score: 'スコア：',
     },
+    about: `
+        <p>
+            Kaosはゲーム開発について習いたい兄弟から開発されたウェブゲームです。
+            概念と試作はコロナ検疫間に生まれました。
+            <a href='https://developer.mozilla.org/ja/docs/Web/API/Canvas_API'>
+                Canvas API
+            </a>
+            を用いる仕組みがあって、フロントエンドに
+            <a href='https://vuejs.org/'>VueJS</a>
+            が使われています。
+        </p>
+        <p>
+            僕たちはKaos開発をよく楽しんでて、プレヤーも楽しめなら開発に足ります。
+            お時間をいただきありがとうございます。
+        </p>
+        <br />
+        <p>開発元</p>
+    `,
 };

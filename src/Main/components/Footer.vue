@@ -40,6 +40,7 @@
 footer {
     min-height: 50px;
     height: 50px;
+    margin-top: 50px;
 }
 
 ul {

@@ -16,20 +16,22 @@
 -->
 
 <template>
-    <!-- swiper wrapper -->
-    <div class='swiper-container'>
-        <!-- slide wrapper -->
-        <div class='swiper-wrapper'>
-            <!-- slides -->
-            <div v-for='(slide, index) in slides' :key='index' class='swiper-slide'>
-                <object :data='slide.data' type='image/svg+xml' />
-                <div class='divider' />
-                <h3>{{ $t(slide.label) }}</h3>
+    <div>
+        <!-- swiper wrapper -->
+        <div class='swiper-container'>
+            <!-- slide wrapper -->
+            <div class='swiper-wrapper'>
+                <!-- slides -->
+                <div v-for='(slide, index) in slides' :key='index' class='swiper-slide'>
+                    <object :data='slide.data' type='image/svg+xml' />
+                    <div class='divider' />
+                    <h3>{{ $t(slide.label) }}</h3>
+                </div>
             </div>
-        </div>
 
-        <!-- pagination -->
-        <div class='swiper-pagination'></div>
+            <!-- pagination -->
+            <div class='swiper-pagination'></div>
+        </div>
     </div>
 </template>
 

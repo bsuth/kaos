@@ -65,4 +65,23 @@ export default {
         nextcolor: 'Next Color: ',
         score: 'Score: ',
     },
+    about: `
+        <p>
+            Kaos is a browser based game written by two brothers who wanted to
+            try their hand at game development. The concept and prototype were
+            first conceived over a long weekend while being stuck inside during
+            quarantine. The core game is written using the
+            <a href='https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API'>
+                Canvas API
+            </a>
+            while the frontend is written in <a href='https://vuejs.org/'>VueJS</a>.
+        </p>
+        <p>
+            We have had a ton of fun with this project and hope that you
+            can enjoy it as much as we have.
+        </p>
+        <br />
+        <p>Best regards,</p>
+        <p>the developers</p>
+    `,
 };
