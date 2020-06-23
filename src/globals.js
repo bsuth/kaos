@@ -91,9 +91,7 @@ if ('maxTouchPoints' in navigator) {
 /*
  * Whether the device should you touch features (NippleJS).
  */
-// DEBUG, change back after mobile dev
-// export const IS_TOUCH_DEVICE = _isTouchDevice;
-export const IS_TOUCH_DEVICE = true;
+export const IS_TOUCH_DEVICE = _isTouchDevice;
 
 // -----------------------------------------------------------------------------
 // LOCAL STORAGE SCORES
@@ -151,4 +149,4 @@ export const ORB_RADIUS_SQUARE = ORB_RADIUS**2;
 /*
  * Number of orbs per 1000 pixels of canvas perimeter.
  */
-export const ORB_DENSITY = 10;
+export const ORB_DENSITY = 5;

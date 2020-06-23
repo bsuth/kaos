@@ -41,6 +41,7 @@ export default {
     },
     settings: {
         keyboard: 'キーボード',        
+        Xbox: 'Xbox',        
     },
     howtoplay: `
         動きと回転と色を変わることができます。<br>

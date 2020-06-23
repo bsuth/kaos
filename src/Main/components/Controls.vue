@@ -106,6 +106,7 @@ export default {
 .swiper-slide {
     width: 300px;
     height: 300px;
+    padding: 5px;
     border: 1px solid $white;
 
     object {
