@@ -40,8 +40,10 @@ export default {
         score: 'スコア',
     },
     settings: {
-        keyboard: 'キーボード',        
-        Xbox: 'Xbox',        
+        keyboard: 'キーボード',
+        xbox: 'Xbox',        
+        playstation: 'プレーステーション',        
+        mobile: 'モビール',        
     },
     howtoplay: `
         動きと回転と色を変わることができます。<br>

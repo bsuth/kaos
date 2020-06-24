@@ -41,7 +41,9 @@ export default {
     },
     settings: {
         keyboard: 'keyboard',        
-        Xbox: 'Xbox',        
+        xbox: 'Xbox',        
+        playstation: 'Playstation',        
+        mobile: 'Mobile',        
     },
     howtoplay: `
         Dodge orbs of colors different than your own.<br>

@@ -57,7 +57,9 @@ export default {
         return {
             slides: [
                 { label: 'settings.keyboard', data: 'controls/KeyboardControls.svg' },
-                { label: 'Xbox', data: 'controls/XboxControls.svg' },
+                { label: 'settings.xbox', data: 'controls/XboxControls.svg' },
+                { label: 'settings.playstation', data: 'controls/PlaystationControls.svg' },
+                { label: 'settings.mobile', data: 'controls/MobileControls.svg' },
             ],
         };
     },
