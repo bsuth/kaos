@@ -19,6 +19,7 @@
     <div id='main'>
         <div class='padding' />
         <Header />
+        <LocalePicker />
         <transition name='fade' mode='out-in'>
             <router-view />
         </transition>
@@ -31,12 +32,13 @@
 import { setContext, CONTEXTS } from 'input/state';
 import router from './router.js';
 
+import LocalePicker from './components/LocalePicker.vue';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
 export default {
     router,
-    components: { Header, Footer },
+    components: { LocalePicker, Header, Footer },
 
     mounted() {
         setContext(CONTEXTS.MENU);

@@ -13,8 +13,7 @@
     "prod": "python3 -m http.server --directory dist",
     "build:dev": "webpack --config webpack.config.development.js",
     "dev": "webpack-dev-server --config webpack.config.development.js",
-    "serve": "node backend/index.js",
-    "start": "npm run build; npm run serve",
+    "start": "npm run build; npm run prod",
     "deploy": "npm run build; git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
